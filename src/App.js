@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { history } from "../redux/configureStore";
+import { history } from "./redux/configureStore";
 import { ConnectedRouter } from 'connected-react-router';
 // import {Route} from 'react-router-dom';
 
