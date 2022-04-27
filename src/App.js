@@ -1,11 +1,19 @@
 import "./App.css";
-import Calendar from "react-calendar";
+import React from "react";
+import { history } from "../redux/configureStore";
+import { ConnectedRouter } from 'connected-react-router';
+// import {Route} from 'react-router-dom';
+
 
 function App() {
   return (
-    <div>
-      <Calendar />
-    </div>
+    <React.Fragment>
+      <ConnectedRouter history={history}>
+
+      </ConnectedRouter>
+    </React.Fragment>
+      
+    
   );
 }
 
