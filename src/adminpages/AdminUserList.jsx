@@ -38,47 +38,29 @@ const AdminUserList = (props) => {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(getUserListFB(id));
+    dispatch(getUserListFB());
   },[]);
 
   const userList = useSelector((state) => state.UserList.user_List);
 
   const [Level, setLevel] = React.useState();
 
+  // console.log(Level)
+
   const handlesetLevel = (e) => {
     setLevel(e.target.value)
 }
 
-  const params = useParams();
-
-    const id = params.id;
-
-    console.log(id)
-
   return (
     <React.Fragment>
-        
-      <div style={{width: "85%", height : "100vh", float : "left"}}>
-      <UserList style={{backgroundColor : "#808080"}}>
-          <Userdata style={{width : "10%", borderLeft: "0px solid gray"}}>이름</Userdata>
-          <Userdata style={{width : "28%"}}>email</Userdata>
-          <Userdata style={{width : "20%"}}>전화번호</Userdata>
-          <Userdata style={{width : "15%"}}>가입일자</Userdata>
-          <Userdata style={{width : "15%"}}>권한</Userdata>          
-        </UserList>
-
-        {props.userList.map ((data, idx) => { 
-          
-          console.log(userList[idx].userId)
-          
-          return ( 
-
-          <UserList key={data.userId}>
-            <Userdata style={{width : "10%" , borderLeft: "0px solid gray"}}>{data.userName}</Userdata>
-            <Userdata style={{width : "28%"}}>{data.userEmail}</Userdata>
-            <Userdata style={{width : "20%"}}>{data.phoneNumber}</Userdata>
-            <Userdata style={{width : "15%"}}>{data.createdAt}</Userdata>
-            <Userdata id="level" style={{width : "15%"}}>{data.userLevel === 10 ? "User" : "Admin"}</Userdata>
+          <UserList>
+            <Userdata style={{width : "10%" , borderLeft: "0px solid gray"}}>{props.e.userName}</Userdata>
+            <Userdata style={{width : "28%"}}>{props.e.userEmail}</Userdata>
+            <Userdata style={{width : "20%"}}>{props.e.phoneNumber}</Userdata>
+            <Userdata style={{width : "15%"}}>{props.e.createdAt}</Userdata>
+            <Userdata id="level" style={{width : "15%"}}>
+              {props.e.userLevel === 10 ? "User" : "Admin"}
+              </Userdata>
             <div>
               <Userdata style={{width : "10%"}} onClick={handleOpen}>권한설정</Userdata>
               <Modal
@@ -86,25 +68,20 @@ const AdminUserList = (props) => {
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
-              >
+                >
                 <Box sx={style}>
                   <Typography id="modal-modal-title" variant="h6" component="h2">
                     권한 설정하기
                   </Typography>
                   <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    <textarea onChange={handlesetLevel}>{props.userList.userLevel}</textarea>
+                    <input defaultValue={props.e.userLevel} onChange={handlesetLevel}></input>
                     <button onClick={() => {}}>설정확인</button>
+                    <button onClick={() => {}}>delete</button>
                   </Typography>
                 </Box>
               </Modal>
             </div>
           </UserList>
-        ) })}
-
-        
-
-        
-      </div>
     </React.Fragment>
   )
 }

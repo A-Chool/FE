@@ -15,68 +15,48 @@ const AdminUserPage = () => {
   },[]);
 
   const userList = useSelector((state) => state.UserList.user_List);
-  
-  
-  const [Level, setLevel] = React.useState(10);
 
-  console.log(Level) 
-  
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '13%',
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
-
-  
+  console.log(userList)
 
   return (
     <React.Fragment>
       <AdminSidebar />
-      <AdminUserList userList={userList}></AdminUserList>
+      <div style={{width: "85%", height : "100vh", float : "left"}}>
+      
+
+        <UserList style={{backgroundColor : "#808080"}}>
+          <Userdata style={{width : "10%", borderLeft: "0px solid gray"}}>이름</Userdata>
+          <Userdata style={{width : "28%"}}>email</Userdata>
+          <Userdata style={{width : "20%"}}>전화번호</Userdata>
+          <Userdata style={{width : "15%"}}>가입일자</Userdata>
+          <Userdata style={{width : "15%"}}>권한</Userdata>          
+        </UserList>
+
+        {
+          userList.map((e, idx)=>{
+            // console.log("포스트",postItem)
+            return(
+              <AdminUserList key={idx} e={e}></AdminUserList>
+            )
+          })
+        }
+        </div>
     </React.Fragment>
   )
 }
 
+const UserList = styled.div`
+  background-color : #F2F2F2;
+  width : 97%;
+  height : 40px;
+  margin : 10px auto;
+  text-align : center;
+`
 
+const Userdata = styled.p`
+  float : left;
+  margin : 10px auto;
+  border-left: 1px solid black;
+`
 
 export default AdminUserPage
-
-
-
-// import Box from '@mui/material/Box';
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
-
-// const [level, setLevel] = React.useState('');
-
-// const handleChange = (event) => {
-//   setLevel(event.target.value);
-// };
-
-// {/* <Box sx={{ minWidth: 120 }}>
-//             <FormControl>
-//               <InputLabel id="demo-simple-select-label">권한</InputLabel>
-//               <Select
-//                 labelId="demo-simple-select-label"
-//                 id="demo-simple-select"
-//                 value={level}
-//                 label="level"
-//                 onChange={handleChange}
-//               >
-//                 <MenuItem value={10}>User</MenuItem>
-//                 <MenuItem value={20}>Admin</MenuItem>
-//               </Select>
-//             </FormControl>
-//           </Box> */}
