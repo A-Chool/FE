@@ -5,6 +5,7 @@ import { connectRouter } from "connected-react-router";
 
 // 모듈
 import User from "./modules/user";
+import UserList from "./modules/UserList";
 
 
 // history를 페이지에서 편하게 사용할 수 있도록 준비
@@ -12,6 +13,7 @@ export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: User,
+  UserList : UserList,
   router: connectRouter(history),
 });
 
