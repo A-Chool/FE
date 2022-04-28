@@ -21,12 +21,6 @@ const Signup = () => {
   const [userPwCheck, setUserPwCheck] = React.useState("");
   const [phoneNumber, setPhoneNumber] = React.useState("");
 
-  const [emailerror, setEmailError] = React.useState(false);
-  const [userNameerror, setUserNameError] = React.useState(false);
-  const [userPwerror, setUserPwError] = React.useState(false);
-  const [userPwCheckerror, setUserPwCheckError] = React.useState(false);
-  const [phoneNumbererror, setPhoneNumberError] = React.useState(false);
-
   const signup = () => {
     if (
       email === "" ||
@@ -89,7 +83,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={email}
-            placeholder="이메일을 입력해주세요!"
+            placeholder="이메일 주소"
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -222,20 +216,6 @@ const CollectionBtn = styled.button`
   border: none;
   color: white;
 `;
-const CenterLineBox = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-`;
-const CenterLine = styled.div`
-  font-size: 20px;
-  text-decoration: none solid rgb(29, 28, 29);
-  background-color: #ffffff;
-  height: 1px;
-  width: 225px;
-  border-top: 1px solid #dddddd;
-`;
 
 const UserInput = styled.input`
   width: 450px;
@@ -246,49 +226,6 @@ const UserInput = styled.input`
   border-radius: 10px;
   padding: 10px 15px 10px 15px;
   margin-top: 10px;
-`;
-
-const SocialLogin = styled.div`
-  width: 480px;
-  height: 40px;
-  border-radius: 10px;
-  background-color: white;
-  border: 2px solid gray;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-`;
-const SocialGoogle = styled.div`
-  margin-left: 40px;
-`;
-const SocialKakao = styled.div`
-  margin-left: 30px;
-  margin-right: -30px;
-`;
-
-const InfutSingup = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-`;
-const SignupContents = styled.div`
-  color: #706f6f;
-  font-size: 15px;
-  font-weight: 700;
-`;
-const SignupBtn = styled.button`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  background-color: white;
-  border: none;
-  font-size: 15px;
-  font-weight: bold;
 `;
 
 export default Signup;
