@@ -1,0 +1,46 @@
+{
+  "login": [
+    {
+      "email": "r",
+      "password": "rr",
+      "id": 4
+    },
+    {
+      "email": "rkdh@naver.com",
+      "password": "1234123a3s",
+      "id": 5
+    }
+  ],
+
+  "signup": [
+    {
+      "email": "aaa@naver.com",
+
+      "id": 7
+    },
+    {
+      "email": "rkrk@naver.com",
+      "userName": "rkrk",
+      "userPw": "1a2a3a4a",
+      "userPwCheck": "1a2a3a4a",
+      "phoneNumber": "010-0223-3021",
+      "id": 8
+    },
+    {
+      "email": "rkdk@naver.com",
+      "userName": "rkrkrk",
+      "userPw": "1a2a3a4a",
+      "userPwCheck": "1a2a3a4a",
+      "phoneNumber": "010-2030-1111",
+      "id": 9
+    },
+    {
+      "email": "rkdk@naver.com",
+      "userName": "rkrkrk",
+      "userPw": "1a2a3a4a",
+      "userPwCheck": "1a2a3a4a",
+      "phoneNumber": "010-2030-1111",
+      "id": 10
+    }
+  ]
+}
