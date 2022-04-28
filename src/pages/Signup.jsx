@@ -92,7 +92,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userName}
-            placeholder="사용할 닉네임을 입력해주세요!"
+            placeholder="사용할 닉네임을 입력해주세요.(2글자 이상  10글자 이하) "
             onChange={(e) => {
               setUserName(e.target.value);
             }}
@@ -100,7 +100,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userPw}
-            placeholder="비밀번호를 입력해주세요!"
+            placeholder="비밀번호를 입력해주세요."
             onChange={(e) => {
               setUserPw(e.target.value);
             }}
@@ -108,7 +108,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userPwCheck}
-            placeholder="작성한 비밀번호를 한번더 입력해주세요!"
+            placeholder="작성한 비밀번호를 한번더 입력해주세요."
             onChange={(e) => {
               setUserPwCheck(e.target.value);
             }}
@@ -116,7 +116,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={phoneNumber}
-            placeholder="사용하시는 핸드폰번호를 입력해주세요!"
+            placeholder="저장할 핸드폰 번호를 입력해주세요.( ‘-’ 포함)"
             onChange={(e) => {
               setPhoneNumber(e.target.value);
             }}
@@ -222,10 +222,10 @@ const UserInput = styled.input`
   font-size: 18px;
   text-decoration: none solid rgb(29, 28, 29);
   background-color: #ffffff;
-  border: 2px solid #c4c4c4;
+  border: 1px solid #c4c4c4;
   border-radius: 10px;
   padding: 10px 15px 10px 15px;
-  margin-top: 10px;
+  margin-top: 15px;
 `;
 
 export default Signup;

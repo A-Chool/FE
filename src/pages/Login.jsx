@@ -185,7 +185,7 @@ const UserInput = styled.input`
   font-size: 18px;
   text-decoration: none solid rgb(29, 28, 29);
   background-color: #ffffff;
-  border: 2px solid #c4c4c4;
+  border: 1px solid #c4c4c4;
   border-radius: 10px;
   padding: 10px 15px 10px 15px;
   margin-top: 10px;
