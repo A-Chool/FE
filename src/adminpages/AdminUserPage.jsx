@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import AdminSidebar from "../components/AdminSideBar";
+import AdminSidebar from "./AdminSideBar";
 import {getUserListFB} from "../redux/modules/UserList"
 import AdminUserList from "./AdminUserList";
 
@@ -16,7 +16,7 @@ const AdminUserPage = () => {
 
   const userList = useSelector((state) => state.UserList.user_List);
 
-  console.log(userList)
+  // console.log(userList)
 
   return (
     <React.Fragment>
@@ -34,7 +34,6 @@ const AdminUserPage = () => {
 
         {
           userList.map((e, idx)=>{
-            // console.log("포스트",postItem)
             return(
               <AdminUserList key={idx} e={e}></AdminUserList>
             )

@@ -1,7 +1,7 @@
 import React from 'react';
-import StopWatch from '../components/StopWatch';
 
 import UserSidebar from '../components/UserSideBar';
+import StopWatch from '../components/StopWatch';
 
 const UserCheckIn = () => {
   return (

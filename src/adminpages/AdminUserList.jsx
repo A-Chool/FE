@@ -1,18 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { useParams } from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-
-import AdminSidebar from "../components/AdminSideBar";
 
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
-import {getUserListFB} from "../redux/modules/UserList"
-
-import { useEffect } from "react";
 
 const AdminUserList = (props) => {
   
@@ -27,25 +20,12 @@ const AdminUserList = (props) => {
     boxShadow: 24,
     p: 4,
   };
-
-  console.log(props)
   
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(getUserListFB());
-  },[]);
-
-  const userList = useSelector((state) => state.UserList.user_List);
-
   const [Level, setLevel] = React.useState();
-
-  // console.log(Level)
 
   const handlesetLevel = (e) => {
     setLevel(e.target.value)
