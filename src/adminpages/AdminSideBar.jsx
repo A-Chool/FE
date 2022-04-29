@@ -13,7 +13,7 @@ const AdminSidebar = () => {
           <Adminmenu>유저 관리</Adminmenu>
         </Link>
 
-        <Link to="/AdminTeamList" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
+        <Link to="/AdminTeamPage" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
           <Adminmenu>팀 관리</Adminmenu>
         </Link>
 

@@ -9,11 +9,11 @@ const UserSidebar = () => {
 
         <UserLogo>아무튼 출석</UserLogo>
 
-        <Link to="/UserCheckIn" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
+        <Link to="/UserCheckIn" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700", cursor: "pointer" }}>
           <Adminmenu>Check-In</Adminmenu>
         </Link>
 
-        <Link to="/UserTeamBoard" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
+        <Link to="/UserTeamBoard" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700", cursor: "pointer" }}>
           <Adminmenu>팀보드</Adminmenu>
         </Link>
 
