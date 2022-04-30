@@ -7,6 +7,7 @@ import cookies from "universal-cookie";
 // 액션
 
 const LOG_IN = "LOG_IN";
+const ADMINLOG_IN = "ADMINLOG_IN";
 const LOG_OUT = "LOG_OUT";
 const LOAD_TOKEN = "LOAD_TOKEN";
 const WITHDRAWAL = "WITHDRAWAL";
@@ -21,6 +22,7 @@ const initialState = {
 
 // 액션 생성 함수
 const logIn = createAction(LOG_IN, (user) => ({ user }));
+const adminlogIn = createAction(LOG_IN, (user) => ({ user }));
 const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // const withdrawal = createAction(WITHDRAWAL, (user) => ({ user }));
 
@@ -35,6 +37,7 @@ const loginDB = (userId, password) => {
         password: password,
       })
       .then((response) => {
+        console.log(response);
         dispatch(
           logIn({
             is_login: true,
@@ -42,14 +45,44 @@ const loginDB = (userId, password) => {
         );
         console.log("로그인 성공");
         const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-
         localStorage.setItem("userToken", ACCESS_TOKEN);
         localStorage.setItem("userId", userId);
+        // setCookie("userToken", ACCESS_TOKEN);
+        // setCookie("userId", userId);
         history.replace("/AdminTeamList");
       })
       .catch((error) => {
         window.alert("아이디 또는 비밀번호를 확인해주세요.");
         console.log("Login Error", error);
+      });
+  };
+};
+
+const adminloginDB = (email, password) => {
+  return async function (dispatch, getState, { history }) {
+    await api
+      .post("/api/admin/login", {
+        email: email,
+        password: password,
+      })
+      .then((response) => {
+        console.log(response);
+        dispatch(
+          adminlogIn({
+            is_login: true,
+          })
+        );
+        console.log("로그인 성공");
+        const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
+        localStorage.setItem("adminUserToken", ACCESS_TOKEN);
+        localStorage.setItem("adminUserId", email);
+        // setCookie("userToken", ACCESS_TOKEN);
+        // setCookie("userId", userId);
+        // history.replace("/AdminTeamList");
+      })
+      .catch((error) => {
+        // window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        // console.log("Login Error", error);
       });
   };
 };
@@ -60,17 +93,19 @@ const kakaoLoginDB = (code) => {
       method: "GET",
       url: `http://34.228.32.139:8080/api/user/kakao/callback?code=${code}`,
     })
-      .then((res) => {
-        const ACCESS_TOKEN = res.headers.authorization.split(" ")[1];
+      .then((response) => {
+        console.log(response);
 
+        const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
+        console.log(ACCESS_TOKEN);
         localStorage.setItem("kakaoToken", ACCESS_TOKEN);
-
+        // setCookie("kakaoToken", ACCESS_TOKEN);
         history.replace("/AdminTeamList");
       })
       .catch((err) => {
         console.log("소셜로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
-        history.replace("/login");
+        history.replace("/");
       });
   };
 };
@@ -89,7 +124,7 @@ const signupDB = (email, userName, userPw, userPwCheck, phoneNumber) => {
       .then((response) => {
         console.log(response);
         window.alert("회원가입을 축하합니다!");
-        history.push("/login");
+        // history.push("/login");
       })
       .catch((error) => {
         alert("중복된 아이디가 존재합니다.");
@@ -136,6 +171,11 @@ export default handleActions(
         draft.user = action.payload.user;
         draft.is_login = true;
       }),
+    [ADMINLOG_IN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.user = action.payload.user;
+        draft.is_login = true;
+      }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
         deleteCookie("Authorization");
@@ -158,6 +198,7 @@ const actionCreators = {
   loginDB,
   signupDB,
   kakaoLoginDB,
+  adminloginDB,
   // loadTokenFB,
   // withdrawalAC,
 };

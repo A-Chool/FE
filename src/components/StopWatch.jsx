@@ -57,8 +57,7 @@ function StopWatch() {
 }
 
 const StopWatchDiv = styled.div`
-  height: 230px;
-  width: 23vw;
+  height: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
