@@ -29,6 +29,7 @@ const UserCheckInList = (props) => {
   return (
     <UserTag>
       <div>
+      <Log></Log>
       <UserDetail onClick={handleOpen}>{props.e.userName}</UserDetail>
 
       <Modal
@@ -75,6 +76,13 @@ const UserDetail = styled.p`
   align-items : center;
   text-align : center;
   margin : 5px
+`
+
+const Log = styled.div`
+  width : "4px"; 
+  height : '4px'; 
+  backgroundColor : 'red'; 
+  float : 'left';
 `
 
 export default UserCheckInList;

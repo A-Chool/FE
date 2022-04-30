@@ -25,10 +25,19 @@ const TeamTable = styled.div`
   height : 200px;
   width : 230px;
   border : 1px solid black;
-  float : left;
   margin : 10px 10px;
   padding : 10px;
   display: inline-block;
+  overflow : scroll;
+  overflow-x : hidden;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 100%;
+    background: black;
+    border-radius: 50px;
+  }
 `
 
 export default UserTeamList;

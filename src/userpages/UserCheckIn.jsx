@@ -30,6 +30,42 @@ const UserCheckIn = () => {
                       userEmail : "zzangusister",
                       phoneNumber : "010-7777-9777"
                 },
+                {
+                  userId : 2,
+                  userName : "짱구",
+                  userEmail : "zzangubrother",
+                  phoneNumber : "010-1234-5678"
+                },
+                {
+                      userId : 3,
+                      userName : "짱구",
+                      userEmail : "zzangubrother",
+                      phoneNumber : "010-5346-8907"
+                },
+                {
+                      userId : 4,
+                      userName : "짱아",
+                      userEmail : "zzangusister",
+                      phoneNumber : "010-7777-9777"
+                },
+                {
+                  userId : 2,
+                  userName : "짱구",
+                  userEmail : "zzangubrother",
+                  phoneNumber : "010-1234-5678"
+            },
+            {
+                  userId : 3,
+                  userName : "짱구",
+                  userEmail : "zzangubrother",
+                  phoneNumber : "010-5346-8907"
+            },
+            {
+                  userId : 4,
+                  userName : "짱아",
+                  userEmail : "zzangusister",
+                  phoneNumber : "010-7777-9777"
+            },
           ]
       },
       {
