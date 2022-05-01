@@ -2,19 +2,21 @@ import React from "react";
 import { useDispatch } from "react-redux";
 
 import styled from "styled-components";
-import { FcGoogle } from "react-icons/fc";
-import { RiKakaoTalkFill } from "react-icons/ri";
+import { SiNaver } from "react-icons/si";
+import { BsFillChatFill } from "react-icons/bs";
+
 import { FiArrowRight } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import { actionCreators as userActions } from "../redux/modules/user";
+import { KAKAO_AUTH_URL } from "../api/Oauth";
 const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [email, setEmail] = React.useState("");
+  const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
   const login = (event) => {
-    dispatch(userActions.loginDB(email, password));
+    dispatch(userActions.loginDB(userId, password));
     event.stopPropagation();
   };
   const gosignup = () => {
@@ -25,8 +27,9 @@ const Login = () => {
     <React.Fragment>
       <PageMain>
         <InputMain>
-          <MainName>아무튼 출석</MainName>
           <PageInput>
+            <MainName>아무튼 출석</MainName>
+
             <MainContents>아출에 오신것을</MainContents>
             <MainContents>환영합니다</MainContents>
             <SubContents>
@@ -35,10 +38,10 @@ const Login = () => {
 
             <UserInput
               type="text"
-              value={email}
+              value={userId}
               placeholder="이메일 주소"
               onChange={(e) => {
-                setEmail(e.target.value);
+                setUserId(e.target.value);
               }}
             />
             <UserInput
@@ -57,17 +60,17 @@ const Login = () => {
               또는
               <CenterLine />
             </CenterLineBox>
-            <SocialLogin>
-              <FcGoogle />
-              <SocialGoogle>구글로 시작하기</SocialGoogle>
-            </SocialLogin>
-            <SocialLogin>
-              <RiKakaoTalkFill />
+            <SocialLoginNaver>
+              <SiNaver />
+              <SocialGoogle>네이버 시작하기</SocialGoogle>
+            </SocialLoginNaver>
+            <SocialLoginKakao href={KAKAO_AUTH_URL}>
+              <BsFillChatFill />
               <SocialKakao>카카오톡으로 시작하기</SocialKakao>
-            </SocialLogin>
+            </SocialLoginKakao>
             <InfutSingup>
               <SignupContents>아직 계정이 없으신가요?</SignupContents>
-              <SignupBtn>
+              <SignupBtn onClick={gosignup}>
                 회원가입
                 <FiArrowRight />
               </SignupBtn>
@@ -132,9 +135,7 @@ const InputMain = styled.div`
 const MainName = styled.div`
   font-size: 30px;
   font-weight: bold;
-  position: absolute;
-  top: 50px;
-  left: 98px;
+  margin-bottom: 50px;
 `;
 
 const MainContents = styled.div`
@@ -191,7 +192,21 @@ const UserInput = styled.input`
   margin-top: 10px;
 `;
 
-const SocialLogin = styled.div`
+const SocialLoginKakao = styled.a`
+  width: 480px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #fee500;
+  border: 2px solid gray;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  text-decoration: none;
+  color: black;
+`;
+const SocialLoginNaver = styled.button`
   width: 480px;
   height: 40px;
   border-radius: 10px;

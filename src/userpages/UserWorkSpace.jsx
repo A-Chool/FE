@@ -21,7 +21,7 @@ const UserWorkSpace = () => {
         {
           update === false
           ? <button style={{backgroundColor:"white", border:"none" }} onClick={()=>{setupdate(!update)}}>수정</button>
-          :<butoon style={{backgroundColor:"white", border:"none"}} onClick={() => {setupdate(!update)}}>수정완료</butoon>
+          :<button style={{backgroundColor:"white", border:"none"}} onClick={() => {setupdate(!update)}}>수정완료</button>
         }    
       </div>
         {
