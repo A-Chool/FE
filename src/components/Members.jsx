@@ -10,7 +10,13 @@ const Members = (props) => {
 };
 
 const Userdata = styled.div`
-
+  width : 200px;
+  height : 30px;
+  border : 1px solid black;
+  border-radius : 5px;
+  margin-top : 10px;
+  text-align : center;
+  line-height : 30px;
 `
 
 export default Members;

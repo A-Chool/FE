@@ -7,7 +7,9 @@ const AdminSidebar = () => {
     <React.Fragment>
       <Sidebar>
 
-        <AdminLogo>Admin Page</AdminLogo>
+        <AdminLogo>아무튼 출석 백오피스</AdminLogo>
+
+        <hr style={{width : '200px', }}></hr>
 
         <Link to="/AdminUserPage" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
           <Adminmenu>유저 관리</Adminmenu>
@@ -17,13 +19,17 @@ const AdminSidebar = () => {
           <Adminmenu>팀 관리</Adminmenu>
         </Link>
 
+        <Link to="/AdminTeamPage" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
+          <Adminmenu>게시판 관리</Adminmenu>
+        </Link>
+
       </Sidebar>
     </React.Fragment>
   )
 }
 
 const Sidebar = styled.div`
-  width : 15%;
+  width : 210px;
   height : 100vh;
   background-color : gray;
   float : left;

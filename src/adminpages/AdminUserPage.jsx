@@ -46,7 +46,7 @@ const AdminUserPage = () => {
 
 const UserList = styled.div`
   background-color : #F2F2F2;
-  width : 97%;
+  width : 1000px;
   height : 40px;
   margin : 10px auto;
   text-align : center;
