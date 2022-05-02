@@ -45,11 +45,11 @@ const loginDB = (userId, password) => {
         );
         console.log("로그인 성공");
         const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-        localStorage.setItem("userToken", ACCESS_TOKEN);
-        localStorage.setItem("userId", userId);
-        // setCookie("userToken", ACCESS_TOKEN);
-        // setCookie("userId", userId);
-        history.replace("/AdminTeamList");
+        // localStorage.setItem("userToken", ACCESS_TOKEN);
+        // localStorage.setItem("userId", userId);
+        setCookie("userToken", ACCESS_TOKEN);
+        setCookie("userId", userId);
+        history.replace("/AdminUserPage");
       })
       .catch((error) => {
         window.alert("아이디 또는 비밀번호를 확인해주세요.");
@@ -91,7 +91,7 @@ const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "GET",
-      url: `http://34.228.32.139:8080/api/user/kakao/callback?code=${code}`,
+      url: `http://13.124.226.148/api/user/kakao/callback?code=${code}`,
     })
       .then((response) => {
         console.log(response);

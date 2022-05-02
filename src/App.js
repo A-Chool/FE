@@ -5,8 +5,6 @@ import { history } from "./redux/configureStore";
 import { ConnectedRouter } from "connected-react-router";
 import { Route } from "react-router-dom";
 
-import AdminUserList from "./adminpages/AdminUserList";
-import AdminTeamList from "./adminpages/AdminTeamList";
 import AdminUserPage from "./adminpages/AdminUserPage";
 import AdminTeamPage from "./adminpages/AdminTeamPage";
 
