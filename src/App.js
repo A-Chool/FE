@@ -15,6 +15,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AdminLogin from "./pages/AdminLogin";
 import KakaoOauth from "./shared/KakaoOauth";
+import ChatingPage from "./pages/ChatingPage";
 function App() {
   return (
     <React.Fragment>
@@ -23,6 +24,7 @@ function App() {
         <Route path="/adminlogin" exact component={AdminLogin} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
+        <Route path="/chat" exact component={ChatingPage} />
         <Route path="/AdminUserPage" exact component={AdminUserPage}></Route>
         <Route path="/AdminTeamPage" exact component={AdminTeamPage}></Route>
         <Route path="/UserCheckIn" exact component={UserCheckIn}></Route>

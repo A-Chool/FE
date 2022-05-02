@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch } from "react-redux";
+import { getCookie } from "./Cookie";
 
 const KakaoOauth = (props) => {
-  console.log(111);
   const dispatch = useDispatch();
 
   useEffect(() => {

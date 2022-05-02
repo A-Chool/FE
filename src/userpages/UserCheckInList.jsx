@@ -69,7 +69,7 @@ const UserTag = styled.div`
   border-radius : 5px;
   float : left;
   margin : 5px;
-  
+  align-items: center;
 `
 
 const UserDetail = styled.p`
@@ -79,10 +79,13 @@ const UserDetail = styled.p`
 `
 
 const Log = styled.div`
-  width : "4px"; 
-  height : '4px'; 
-  backgroundColor : 'red'; 
-  float : 'left';
+  width : 8px; 
+  height : 8px; 
+  background-color : blue; 
+  float : left;
+  border-radius : 50px;
+  margin-top : 5px;
+  margin-left : 8px;
 `
 
 export default UserCheckInList;

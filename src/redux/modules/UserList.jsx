@@ -25,12 +25,13 @@ const __editUserList = createAction(DELETE_USER_LIST, (user) => ({user}));
 
 export const getUserListFB = () => {
   return function (dispatch, getState, { history }) {
-    // const myToken = getCookie("Authorization",)
+    const myToken = getCookie("Authorization",)
+    // console.log(myToken);
   axios.get('http://13.124.226.148/api/admin/userList'
-  // ,{headers : {"Authorization" : `Bearer ${myToken}`}}
+  ,{headers : {"Authorization" : `Bearer ${myToken}`}}
   )
   .then((res) => {
-    console.log(res)
+    // console.log(res)
     dispatch(__loadUserList(res.data));
   })
   .catch((err)=> {
@@ -45,13 +46,13 @@ export const deleteUserListFB = (userId) => {
       if(!userId) {
         window.alert("유저 아이디가 없습니다!")
       }
-      // const myToken = getCookie("Authorization");
+      const myToken = getCookie("Authorization");
       axios({
         method: "delete",
         url: `http://13.124.226.148/api/admin/${userId}`,     
-        // headers: {
-        //   Authorization: `${myToken}`
-        // },
+        headers: {
+          Authorization: `${myToken}`
+        },
       })
       .then((response) => {
         console.log(response);
@@ -70,16 +71,16 @@ export const deleteUserListFB = (userId) => {
       if(!userId) {
         window.alert("유저 아이디가 없습니다!")
       }
-      // const myToken = getCookie("Authorization");
+      const myToken = getCookie("Authorization");
       axios({
         method: "put",
         url: `http://13.124.226.148/api/admin/${userId}`,
         data: {
           userLevel : userLevel,
         },
-        // headers: {
-        //   Authorization: `Bearer ${myToken}`
-        // },
+        headers: {
+          Authorization: `Bearer ${myToken}`
+        },
       })
       .then((response) => {
         console.log(response);
