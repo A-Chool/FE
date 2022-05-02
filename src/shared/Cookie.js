@@ -1,12 +1,18 @@
 const getCookie = (name) => {
   let value = "; " + document.cookie;
 
-  let parts = value.split(`; ${name}=`);
+  let parts = value.split('; userToken=');
+  
+  // console.log(name)
+  // console.log(`; ${name}=`)
+  // console.log(parts)
 
   if (parts.length === 2) {
 		return parts.pop().split(";").shift();
 	}
+  // console.log(parts.pop().split(";").shift())
 }
+
 
 const setCookie = (Authorization, value, exp = 5) => {
   let date = new Date();

@@ -66,15 +66,13 @@ const Signup = () => {
       userActions.signupDB(email, userName, userPw, userPwCheck, phoneNumber)
     );
   };
-  const gologin = () => {
-    history.push("/");
-  };
 
   return (
     <PageMain>
       <InputMain>
-        <MainName>아무튼 출석</MainName>
         <PageInput>
+          <MainName>아무튼 출석</MainName>
+
           <MainContents>회원가입정보를</MainContents>
           <MainContents>입력해주세요.</MainContents>
           <SubContents>
@@ -179,13 +177,10 @@ const InputMain = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const MainName = styled.div`
   font-size: 30px;
   font-weight: bold;
-  position: absolute;
-  top: 50px;
-  left: 98px;
+  margin-bottom: 50px;
 `;
 
 const MainContents = styled.div`
