@@ -7,6 +7,7 @@ import { connectRouter } from "connected-react-router";
 import User from "./modules/user";
 import UserList from "./modules/UserList";
 import TeamList from "./modules/TeamList";
+// import chat from "./modules/chat";
 
 
 // history를 페이지에서 편하게 사용할 수 있도록 준비
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   UserList : UserList,
   TeamList : TeamList,
   router: connectRouter(history),
+  
 });
 
 const middlewares = [thunk.withExtraArgument({history:history})];
