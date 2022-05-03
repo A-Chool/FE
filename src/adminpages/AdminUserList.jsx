@@ -5,9 +5,15 @@ import Box from '@mui/material/Box';
 
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { useDispatch } from "react-redux";
+
+import { deleteUserListFB } from "../redux/modules/UserList";
+import { editUserListFB } from "../redux/modules/UserList";
 
 
 const AdminUserList = (props) => {
+
+  const dispatch = useDispatch();
   
   const style = {
     position: 'absolute',
@@ -29,7 +35,7 @@ const AdminUserList = (props) => {
 
   const handlesetLevel = (e) => {
     setLevel(e.target.value)
-}
+  }
 
   return (
     <React.Fragment>
@@ -39,7 +45,7 @@ const AdminUserList = (props) => {
             <Userdata style={{width : "20%"}}>{props.e.phoneNumber}</Userdata>
             <Userdata style={{width : "15%"}}>{props.e.createdAt}</Userdata>
             <Userdata id="level" style={{width : "15%"}}>
-              {props.e.userLevel === 10 ? "User" : "Admin"}
+              {props.e.userLevel >= 5 ? "Admin" : "User"}
               </Userdata>
             <div>
               <Userdata style={{width : "10%"}} onClick={handleOpen}>권한설정</Userdata>
@@ -55,8 +61,10 @@ const AdminUserList = (props) => {
                   </Typography>
                   <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                     <input defaultValue={props.e.userLevel} onChange={handlesetLevel}></input>
-                    <button onClick={() => {}}>설정확인</button>
-                    <button onClick={() => {}}>delete</button>
+                    <button onClick={() => {dispatch(editUserListFB(props.e.userId, Number(Level)))
+                    console.log(Number(Level))
+                    }}>설정확인</button>
+                    <button onClick={() => {dispatch(deleteUserListFB(props.e.userId))}}>delete</button>
                   </Typography>
                 </Box>
               </Modal>
@@ -68,7 +76,7 @@ const AdminUserList = (props) => {
 
 const UserList = styled.div`
   background-color : #F2F2F2;
-  width : 97%;
+  width : 1000px;
   height : 40px;
   margin : 10px auto;
   text-align : center;
