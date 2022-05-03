@@ -19,7 +19,7 @@ const initialState = {
 // 액션 생성 함수
 const __loadUserList = createAction(LOAD_USER_LIST, (user_List) => ({user_List}));
 const __deleteUserList = createAction(DELETE_USER_LIST, (user) => ({user}));
-const __editUserList = createAction(DELETE_USER_LIST, (user) => ({user}));
+const __editUserList = createAction(EDIT_USER_LIST, (user) => ({user}));
 
 // 미들웨어
 
