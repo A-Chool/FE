@@ -16,6 +16,7 @@ import Signup from "./pages/Signup";
 import AdminLogin from "./pages/AdminLogin";
 import KakaoOauth from "./shared/KakaoOauth";
 import ChatingPage from "./pages/ChatingPage";
+// import ChatRoom from "./pages/ChatRoom";
 function App() {
   return (
     <React.Fragment>
