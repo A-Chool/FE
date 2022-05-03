@@ -19,11 +19,10 @@ const ChatingPage = (props) => {
   const [list, setList] = useState([{ nick: "임시 사용자", text: "test" }]);
   const [text, setText] = useState('');
   const [test, setTest] = useState('');
-  console.log(test);
-  // useEffect(()=>{
-  //   connect();
-  //   return ()=>{};
-  // }, []);
+  useEffect(()=>{
+    
+    return ()=>{connect();};
+  }, []);
 
   const connect= () => {
     ws.subscribe(
@@ -46,17 +45,17 @@ const ChatingPage = (props) => {
     console.log(111);
   };
 
-  const sendMessage = (chatMessage) => {
+  const sendMessage = (test) => {
     ws.send("/pub/chat/message", 
       {}, 
       JSON.stringify({
         type:'TALK', 
         roomId:"e7c86968-51f0-4206-8130-543e5fc1bc9b", 
         sender:456, 
-        message:chatMessage
+        message:test
       })
     );
-    setChatMessage("");
+    setTest("");
   };
 
   const recvMessage = (message) =>{
@@ -77,11 +76,10 @@ const ChatingPage = (props) => {
     // console.log(msg);
     // setChatMessage(msg); // e.target.value 바뀔때마다 콘솔에 찍음
     
-    setTest(e.target.value);
-    
+    setTest(e.target.value);    
   }
   
-  setTimeout(connect, 1000);
+  // setTimeout(connect, 1000);
   return (
     <React.Fragment>
       <ChatDisplay>
@@ -106,12 +104,12 @@ const ChatingPage = (props) => {
           <ChatInput
             type="text"
             placeholder="채팅을 입력해주세요"
-            value={chatMessage}
-            onChange={setTest}
+            value={test}
+            onChange={onChange}
           />
           <ChatBtn
             onClick={() => {
-              sendMessage(chatMessage);
+              sendMessage(test);
             }}
           />
         </ChatInputMenu>
