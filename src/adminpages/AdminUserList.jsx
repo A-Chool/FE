@@ -15,6 +15,7 @@ const AdminUserList = (props) => {
 
   const dispatch = useDispatch();
   
+  // Modal Style
   const style = {
     position: 'absolute',
     top: '50%',
@@ -27,12 +28,15 @@ const AdminUserList = (props) => {
     p: 4,
   };
   
+  // Modal 온 오프 액션을 위한 스테이트
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // 유저 권한 설정을 위한 스테이트
   const [Level, setLevel] = React.useState();
 
+  // 유저 권한 설정을 위한 Input값 받아오기
   const handlesetLevel = (e) => {
     setLevel(e.target.value)
   }
@@ -44,31 +48,25 @@ const AdminUserList = (props) => {
             <Userdata style={{width : "28%"}}>{props.e.userEmail}</Userdata>
             <Userdata style={{width : "20%"}}>{props.e.phoneNumber}</Userdata>
             <Userdata style={{width : "15%"}}>{props.e.createdAt}</Userdata>
-            <Userdata id="level" style={{width : "15%"}}>
-              {props.e.userLevel >= 5 ? "Admin" : "User"}
-              </Userdata>
+            <Userdata id="level" style={{width : "15%"}}>{props.e.userLevel >= 5 ? "Admin" : "User"}</Userdata>
+
             <div>
               <Userdata style={{width : "10%"}} onClick={handleOpen}>권한설정</Userdata>
               <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-                >
+              open={open} onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description">
                 <Box sx={style}>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">
-                    권한 설정하기
-                  </Typography>
+                  <Typography id="modal-modal-title" variant="h6" component="h2">권한 설정하기</Typography>
                   <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                     <input defaultValue={props.e.userLevel} onChange={handlesetLevel}></input>
-                    <button onClick={() => {dispatch(editUserListFB(props.e.userId, Number(Level)))
-                    console.log(Number(Level))
-                    }}>설정확인</button>
+                    <button onClick={() => {dispatch(editUserListFB(props.e.userId, Number(Level)))}}>설정확인</button>
                     <button onClick={() => {dispatch(deleteUserListFB(props.e.userId))}}>delete</button>
                   </Typography>
                 </Box>
               </Modal>
             </div>
+
           </UserList>
     </React.Fragment>
   )

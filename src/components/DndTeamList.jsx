@@ -6,14 +6,20 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteMemberListFB } from '../redux/modules/TeamList';
+import { getMemberListFB } from '../redux/modules/MemberList';
 
 const DndTeamList = (props) => {
 
   const dispatch = useDispatch();
 
+  // 모달 스타일
   const style = {
     position: 'absolute',
     top: '50%',
@@ -26,17 +32,27 @@ const DndTeamList = (props) => {
     p: 4,
   };
 
+  // Modal 온/오프 스테이트
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  // 해당 팀의 팀원들 정보
   const members = props.e.memberList
+
+  // 아직 사용안한 스테이트 값들
+  const [member, setMember] = React.useState('');
+
+  const handleChange = (event) => {
+    setMember(event.target.value);
+    dispatch(getMemberListFB(event.target.value));
+  };
 
   return (
     <>
       <AddTeam>
         <div>
-        {props.e.teamName}
+          {props.e.teamName}
         </div>
 
         {
@@ -60,7 +76,6 @@ const DndTeamList = (props) => {
               <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 유저명
               </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                 {
                   members.map((e, idx)=>{
                     return(
@@ -71,7 +86,7 @@ const DndTeamList = (props) => {
                           justifyContent: "space-between",
                           alignItems: "center",
                         }}>
-                          <Members key={idx} e={e}></Members>
+                          <Members e={e}></Members>
                             <button
                             onClick={() => {dispatch(deleteMemberListFB(e.memberId))}}
                             >제거</button>
@@ -80,12 +95,9 @@ const DndTeamList = (props) => {
                     )
                   })
                 }
-                <div>
-
-                </div>
-              </Typography>
             </Box>
           </Modal>
+
       </AddTeam>
     </>
   );
