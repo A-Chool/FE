@@ -7,6 +7,7 @@ import { connectRouter } from "connected-react-router";
 import User from "./modules/user";
 import UserList from "./modules/UserList";
 import TeamList from "./modules/TeamList";
+import MemberList from "./modules/MemberList";
 // import chat from "./modules/chat";
 
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   user: User,
   UserList : UserList,
   TeamList : TeamList,
+  MemberList : MemberList,
   router: connectRouter(history),
   
 });

@@ -18,14 +18,13 @@ const ChatingPage = (props) => {
   const [chatMessage, setChatMessage] = useState("");
   const [list, setList] = useState([{ nick: "임시 사용자", text: "test" }]);
   const [text, setText] = useState('');
-  const [test, setTest] = useState('');
-  console.log(test);
+  console.log(chatMessage);
   // useEffect(()=>{
   //   connect();
   //   return ()=>{};
   // }, []);
 
-  const connect= () => {
+  const connect = () => {
     ws.subscribe(
       "/sub/chat/room/e7c86968-51f0-4206-8130-543e5fc1bc9b", 
       recvMessage
@@ -38,25 +37,29 @@ const ChatingPage = (props) => {
         sender:"123",
         message:"이몸등장"
       })
-    );
+    )
   }
+
+  React.useEffect(() => {
+    return ()=>{connect()};
+  },[]);
   // 채팅방 입장시 사용하는 코드들
   
   const ExitChat = () => {
     console.log(111);
   };
 
-  const sendMessage = (chatMessage) => {
+  const sendMessage = (message) => {
     ws.send("/pub/chat/message", 
       {}, 
       JSON.stringify({
         type:'TALK', 
         roomId:"e7c86968-51f0-4206-8130-543e5fc1bc9b", 
         sender:456, 
-        message:chatMessage
+        message:message
       })
     );
-    setChatMessage("");
+    // setChatMessage("");
   };
 
   const recvMessage = (message) =>{
@@ -68,7 +71,7 @@ const ChatingPage = (props) => {
       { nick: paylodaData.sender, text: paylodaData.message },
     ]);
   }
-  const onChange = (e) => {
+  const chathandler = (e) => {
     // e.target에는 이벤트가 발생한 input DOM에 대한 정보를 가지고 있다.
     // console.log(e.target);
     // 이벤트가 발생한 DOM의 값 가져오기
@@ -76,9 +79,7 @@ const ChatingPage = (props) => {
     // let msg = e.target.value;
     // console.log(msg);
     // setChatMessage(msg); // e.target.value 바뀔때마다 콘솔에 찍음
-    
-    setTest(e.target.value);
-    
+    setChatMessage(e.target.value);
   }
   
   setTimeout(connect, 1000);
@@ -107,7 +108,7 @@ const ChatingPage = (props) => {
             type="text"
             placeholder="채팅을 입력해주세요"
             value={chatMessage}
-            onChange={setTest}
+            onChange={chathandler}
           />
           <ChatBtn
             onClick={() => {
