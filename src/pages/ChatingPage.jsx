@@ -3,12 +3,16 @@ import styled from "styled-components";
 // 소켓 통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
+import {getUserId} from "../shared/Cookie";
 import axios from "axios";
 import SelectInput from "@mui/material/Select/SelectInput";
 
 //현재 백엔드분들이 만드신 서버내의 roomId 주소
 let stompClient;
+
 const ChatingPage = (props) => {
+  const userId = getUserId();
+  // console.log(userId);
   //  const devTarget = "http://localhost:8080/ws-stomp";
   const devTarget = "http://3.39.0.208:8080/ws-stomp";
   const sock = new SockJS(devTarget);
@@ -19,26 +23,32 @@ const ChatingPage = (props) => {
   const [list, setList] = useState([{ nick: "임시 사용자", text: "test" }]);
   const [text, setText] = useState('');
   const [test, setTest] = useState('');
-  useEffect(()=>{
-    
-    return ()=>{connect();};
+  const [roomId, setRoomId] = useState('e7c86968-51f0-4206-8130-543e5fc1bc9b');
+  useEffect(()=>{   
+    connect(roomId);
+    return ()=>{};
   }, []);
-
-  const connect= () => {
-    ws.subscribe(
-      "/sub/chat/room/e7c86968-51f0-4206-8130-543e5fc1bc9b", 
-      recvMessage
-      );
-    ws.send("/pub/chat/message", 
-      {}, 
-      JSON.stringify({
-        type:'ENTER', 
-        roomId:"e7c86968-51f0-4206-8130-543e5fc1bc9b", 
-        sender:"123",
-        message:"이몸등장"
-      })
-    );
-  }
+  const connect= (roomId) => {
+    ws.connect({}, function(frame) {
+      ws.subscribe(
+        "/sub/chat/room/"+roomId, 
+        (message)=>{
+          console.log(message);
+          var recv = JSON.parse(message.body);
+          console.log(recv);
+          recvMessage(recv);
+      });
+      ws.send("/pub/chat/message", 
+        {}, 
+        JSON.stringify({
+          type:'ENTER', 
+          roomId: roomId, 
+          sender: userId, 
+          message:test
+        })
+      )
+    })
+  };
   // 채팅방 입장시 사용하는 코드들
   
   const ExitChat = () => {
@@ -51,7 +61,7 @@ const ChatingPage = (props) => {
       JSON.stringify({
         type:'TALK', 
         roomId:"e7c86968-51f0-4206-8130-543e5fc1bc9b", 
-        sender:456, 
+        sender: userId, 
         message:test
       })
     );
@@ -60,26 +70,16 @@ const ChatingPage = (props) => {
 
   const recvMessage = (message) =>{
     console.log(message);
-    var paylodaData = JSON.parse(message.body);
-    console.log(paylodaData);
+    console.log(message.message);
     setList((list) => [
       ...list,
-      { nick: paylodaData.sender, text: paylodaData.message },
+      { nick: message.sender, text: message.message },
     ]);
   }
   const onChange = (e) => {
-    // e.target에는 이벤트가 발생한 input DOM에 대한 정보를 가지고 있다.
-    // console.log(e.target);
-    // 이벤트가 발생한 DOM의 값 가져오기
-    // console.log(e.target.value);
-    // let msg = e.target.value;
-    // console.log(msg);
-    // setChatMessage(msg); // e.target.value 바뀔때마다 콘솔에 찍음
-    
     setTest(e.target.value);    
   }
   
-  // setTimeout(connect, 1000);
   return (
     <React.Fragment>
       <ChatDisplay>
@@ -156,6 +156,7 @@ const ChatContents = styled.div`
   align-items: left;
   width: 95%;
   height: 85vh;
+  font-size: 15px;
   overflow: auto;
 `;
 const ChatOnce = styled.div`
@@ -167,12 +168,10 @@ const ChatOnce = styled.div`
 
 const ChatUser = styled.div`
   margin-left: 10px;
-  font-size: 15px;
 `;
 const ChatCon = styled.div`
   color: black;
   margin-left: 10px;
-  font-size: 10px;
 `;
 
 const ChatInputMenu = styled.div`
