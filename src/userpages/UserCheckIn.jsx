@@ -131,35 +131,37 @@ const UserCheckIn = () => {
 
   return (
     <React.Fragment>
-      <UserSidebar />
-      <div style={{width: "85%", height : "100vh", float : "left"}}>
-        <div style={{float : "left", width : "50%", backgroundColor : "red"}}>안녕?</div>
+      <div style={{width : "100%", height : '1080px'}}>
+        <UserSidebar />
+        <div style={{width: "81.3%", height : "1080px", float : "left", backgroundColor : "#F3F6F9"}}>
+          <div style={{float : "left", width : "50%", backgroundColor : "red"}}>안녕?</div>
 
-        <StopWatch></StopWatch>
+          <StopWatch></StopWatch>
 
-        <CheckInList>
-          {
-            team.map((e, idx)=>{
-              return(
-                <UserTeamList key={idx} e={e}></UserTeamList>
-              )
-            })
-          }
-          {
-            team.map((e, idx)=>{
-              return(
-                <UserTeamList key={idx} e={e}></UserTeamList>
-              )
-            })
-          }
-          {
-            team.map((e, idx)=>{
-              return(
-                <UserTeamList key={idx} e={e}></UserTeamList>
-              )
-            })
-          }
-        </CheckInList>
+          <CheckInList>
+            {
+              team.map((e, idx)=>{
+                return(
+                  <UserTeamList key={idx} e={e}></UserTeamList>
+                )
+              })
+            }
+            {
+              team.map((e, idx)=>{
+                return(
+                  <UserTeamList key={idx} e={e}></UserTeamList>
+                )
+              })
+            }
+            {
+              team.map((e, idx)=>{
+                return(
+                  <UserTeamList key={idx} e={e}></UserTeamList>
+                )
+              })
+            }
+          </CheckInList>
+        </div>
       </div>
     </React.Fragment>
   );

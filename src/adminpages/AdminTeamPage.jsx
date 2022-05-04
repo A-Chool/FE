@@ -7,6 +7,8 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTeamListFB } from '../redux/modules/TeamList';
 import { addTeamListFB } from '../redux/modules/TeamList';
+import { getWeekListFB } from '../redux/modules/TeamList';
+import { deleteTeamListFB } from '../redux/modules/TeamList';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -23,26 +25,31 @@ const AdminTeamPage = () => {
   
   const dispatch = useDispatch();
 
-  const week = "1주차"
-
   React.useEffect(() => {
-    dispatch(getTeamListFB(week));
+    dispatch(getWeekListFB());
   },[]);
 
-  
+  const weekList = useSelector((state) => state.TeamList.week);
+
+  // console.log(weekList)
+
+  // React.useEffect(() => {
+  //   dispatch(getTeamListFB(clickWeek));
+  // },[]);
+
   const teamList = useSelector((state) => state.TeamList.teams);
   
-  // console.log(teamList);
   const teams = [];
 
+  
   for (const i in teamList) {
-    teams.push({'teamName' : [i] , 'memberList' : teamList[i]});
+    const teamDate = [i.split(':')]
+    teams.push({'teamName' : teamDate[0][0], 'teamId' : teamDate[0][1] , 'memberList' : teamList[i]});
   }
 
-    // console.log(teams.map((e, idx) => e))
+  // console.log(...teams[0].teamName)
+  // console.log(teams)
 
-    
-    
   const style = {
     position: 'absolute',
     top: '50%',
@@ -55,12 +62,11 @@ const AdminTeamPage = () => {
     p: 4,
   };
 
-
-
-  const [age, setAge] = React.useState('');
+  const [week, setClickWeek] = React.useState('');
 
   const handleChange = (event) => {
-    setAge(event.target.value);
+    setClickWeek(event.target.value);
+    dispatch(getTeamListFB(event.target.value));
   };
 
   const [open, setOpen] = React.useState(false);
@@ -93,14 +99,18 @@ const AdminTeamPage = () => {
                 <Select
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
-                  value={age}
-                  label="Age"
+                  value={week}
+                  label="age"
                   onChange={handleChange}
                 >
-                  <MenuItem value={'1주차'}>1주차</MenuItem>
-                  <MenuItem value={'2주차'}>2주차</MenuItem>
-                  <MenuItem value={'3주차'}>3주차</MenuItem>
-                  <button> 수정 </button>
+                    {
+                      weekList && weekList.map((e, idx)=>{
+                        return(
+                          <MenuItem key={idx} value={e}>{e}</MenuItem>
+                        )
+                      })
+                    }
+                  <button onClick={() => {console.log()}}> 수정 </button>
                 </Select>
               </FormControl>
             </Box>
@@ -121,9 +131,9 @@ const AdminTeamPage = () => {
                     {
                       teams.map((e, idx)=>{
                         return(
-                          <div>
+                          <div key={idx}>
                             {e.teamName}
-                            <button onClick={() => {}}>삭제</button>
+                            <button onClick={() => {dispatch(deleteTeamListFB(e.teamId))}}>삭제</button>
                           </div>
                         )
                       })
@@ -140,8 +150,7 @@ const AdminTeamPage = () => {
             teams.map((e, idx)=>{
               return(
                 <>
-                
-                <DndTeamList key={idx} e={e}></DndTeamList>
+                  <DndTeamList key={idx} e={e}></DndTeamList>
                 </>
               )
             })

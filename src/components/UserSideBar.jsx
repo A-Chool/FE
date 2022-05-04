@@ -23,9 +23,9 @@ const UserSidebar = () => {
 }
 
 const Sidebar = styled.div`
-  width : 15%;
-  height : 100vh;
-  background-color : gray;
+  width : 18.7%;
+  height : 1080px;
+  background-color : white;
   float : left;
 `
 const UserLogo = styled.h2`
