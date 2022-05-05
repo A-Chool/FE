@@ -65,11 +65,11 @@ export const addMemberListFB = (teamId, userId) => {
 
 // 리듀서
 export default handleActions(
-{
-[LOAD_MEMBER_LIST]: (state, action) =>
-produce(state, (draft) => {
-draft.memberList = action.payload.memberList;  
-}),
-},
-initialState
+  {
+    [LOAD_MEMBER_LIST]: (state, action) =>
+      produce(state, (draft) => {
+      draft.memberList = action.payload.memberList;  
+    }),
+  },
+  initialState
 );
