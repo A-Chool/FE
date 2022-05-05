@@ -79,8 +79,8 @@ const DndTeamList = (props) => {
                 {
                   members.map((e, idx)=>{
                     return(
-                      <>
-                        <div key={idx} style={{
+                      <div key={idx} >
+                        <div style={{
                           display: "flex",
                           flexDirection: "row",
                           justifyContent: "space-between",
@@ -91,7 +91,7 @@ const DndTeamList = (props) => {
                             onClick={() => {dispatch(deleteMemberListFB(e.memberId))}}
                             >제거</button>
                         </div>
-                      </>
+                      </div>
                     )
                   })
                 }
