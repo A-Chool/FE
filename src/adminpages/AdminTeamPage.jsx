@@ -9,6 +9,7 @@ import { getTeamListFB } from '../redux/modules/TeamList';
 import { addTeamListFB } from '../redux/modules/TeamList';
 import { getWeekListFB } from '../redux/modules/TeamList';
 import { deleteTeamListFB } from '../redux/modules/TeamList';
+import { getMemberListFB } from '../redux/modules/MemberList';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -30,7 +31,7 @@ const AdminTeamPage = () => {
     dispatch(getWeekListFB());
   },[]);
 
-  // 주차 리스트에서 필요한 정보 꺼내기
+  // 주차 리스트 정보 꺼내기
   const weekList = useSelector((state) => state.TeamList.week);
 
   // 해당 주차의 팀 리스트 불러오기
@@ -38,17 +39,17 @@ const AdminTeamPage = () => {
     dispatch(getTeamListFB());
   },[]);
 
-  // 팀 리스트에서 필요한 정보 꺼내기
+  // 팀 리스트 정보 꺼내기
   const teamList = useSelector((state) => state.TeamList.teams);
-  
+
   // 팀 리스트에서 가공한 데이터를 정리해서 푸쉬할 빈 배열
-  const teams = [];
+  // const teams = [];
 
   // 팀 리스트에서 정보를 가공하는 로직
-  for (const i in teamList) {
-    const teamDate = [i.split(':')]
-    teams.push({'teamName' : teamDate[0][0], 'teamId' : teamDate[0][1] , 'memberList' : teamList[i]});
-  }
+  // for (const i in teamList) {
+  //   const teamDate = [i.split(':')]
+  //   teams.push({'teamName' : teamDate[0][0], 'teamId' : teamDate[0][1] , 'memberList' : teamList[i]});
+  // }
 
   // Modal style
   const style = {
@@ -75,6 +76,7 @@ const AdminTeamPage = () => {
   const handleChange = (event) => {
     setClickWeek(event.target.value);
     dispatch(getTeamListFB(event.target.value));
+    dispatch(getMemberListFB(event.target.value));
   };
 
   // 팀 추가에서 주차를 입력 Input 변화를 담을 스테이트
@@ -139,7 +141,7 @@ const AdminTeamPage = () => {
                 팀 추가/삭제
                 </Typography>
                 {
-                  teams.map((e, idx)=>{
+                  teamList.map((e, idx)=>{
                   return(
                     <div key={idx}>
                       {e.teamName}
@@ -157,7 +159,7 @@ const AdminTeamPage = () => {
       </div>
 
         {
-          teams.map((e, idx)=>{
+          teamList.map((e, idx)=>{
             return(
             <DndTeamList key={idx} e={e} week={week} />
             )
@@ -165,7 +167,7 @@ const AdminTeamPage = () => {
         }
     </div>
     
-    <AdminMemberList week={week} teamId={teams} />
+    <AdminMemberList week={week} teamList={teamList} />
 
     </React.Fragment>
   );

@@ -20,7 +20,7 @@ const initialState = {
 // 액션 생성 함수
 const __loadWeekList = createAction( LOAD_WEEK_LIST, (week) => ({week}) );
 const __loadTeamList = createAction( LOAD_TEAM_LIST, (teams) => ({teams}) );
-const __addTeamList = createAction( ADD_TEAM_LIST, (week, team_list) => ({week, team_list}) );
+const __addTeamList = createAction( ADD_TEAM_LIST, (week, teams) => ({week, teams}) );
 const __deleteTeamList = createAction( DELETE_TEAM_LIST, (teamId) => ({teamId}) );
 const __deleteMemberList = createAction( DELETE_MEMBER_LIST, (memberId) => ({memberId}) ) 
 
@@ -143,44 +143,21 @@ export default handleActions(
       produce(state, (draft) => {
       draft.week = action.payload.week;      
     }),
-    // [ADD_TEAM_LIST]: (state, action) =>
+    [ADD_TEAM_LIST]: (state, action) =>
+    produce(state, (draft) => {
+      draft.teams.push({teamId : 0, teamName : action.payload.week, week : action.payload.teams, memberList : []})
+    }),
+    [DELETE_TEAM_LIST]: (state, action) =>
+      produce(state, (draft) => {
+      draft.teams = state.teams.filter((p) =>  p.teamId !== action.payload.teamId);
+    }),
+    // [DELETE_MEMBER_LIST]: (state, action) =>
     //   produce(state, (draft) => {
-    //   draft.week = action.payload.week;
-    //   // draft.todos.content.unshift(action.payload.post_list);      
-    // }),
-    // [DELETE_TEAM_LIST]: (state, action) =>
-    //   produce(state, (draft) => {
-
-    //   const teamList = state.teams;
-    //   console.log(teamList)
-    //   const teams = [];
-    //   for (const i in teamList) {
-    //     const teamData = [i.split(':')]
-    //     teams.push({'teamName' : teamData[0][0], 'teamId' : teamData[0][1] , 'memberList' : teamList[i]});
-    //   }
-    //   console.log(teams)
-    //   let a = teams.map((e, idx) => { return e.teamId })
-    //   console.log(a)
-    //   console.log(action.payload.temaId)
-
-    //   console.log(a.filter((p) =>  p !== action.payload.teamId))
-
-    //   const test = a.filter((p) =>  p !== action.payload.teamId)
-      
-      // // draft.teams = state.teams.filter((p) =>  p.teamId !== action.payload.teamId);
-      // draft.teams = state.teams.map((e) => {
-      //   const teamList = state.teams;
-      //   const teams = [];
-      //   for (const i in teamList) {
-      //     const teamData = [i.split(':')]
-      //     teams.push({'teamName' : teamData[0][0], 'teamId' : teamData[0][1] , 'memberList' : teamList[i]});
-      //   }
-      //   teams.map((data) => { return data.teamId })
-      //   if (e.teamId === action.payload.teamId){
-      //     return {...e, teamId : action.payload.teamId}
-      //   }
-      //   return e
-      //   })
+    //   console.log(...state.teams)
+    //   console.log(action)
+    //   console.log(draft)
+    //   // console.log(state)
+    //   // draft.teams = state.teams.filter((p) =>  p.memberId !== action.payload.memberId);
     // }),
   },
   initialState
