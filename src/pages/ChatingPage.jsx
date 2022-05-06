@@ -21,20 +21,20 @@ const ChatingPage = (props) => {
   
   const [chatMessage, setChatMessage] = useState("");
   const [list, setList] = useState([{ nick: "임시 사용자", text: "test" }]);
-  const [text, setText] = useState('');
   const [test, setTest] = useState('');
-  const [roomId, setRoomId] = useState('e7c86968-51f0-4206-8130-543e5fc1bc9b');
+  const [roomId, setRoomId] = useState('05829781-974c-444c-a45f-36a04d4925d0');
   useEffect(()=>{   
     connect(roomId);
     return ()=>{};
   }, []);
   const connect= (roomId) => {
+    console.log(roomId)
     ws.connect({}, function(frame) {
       ws.subscribe(
         "/sub/chat/room/"+roomId, 
-        (message)=>{
+        async (message)=>{
           console.log(message);
-          var recv = JSON.parse(message.body);
+          var recv = await JSON.parse(message.body);
           console.log(recv);
           recvMessage(recv);
       });
@@ -44,7 +44,8 @@ const ChatingPage = (props) => {
           type:'ENTER', 
           roomId: roomId, 
           sender: userId, 
-          message:test
+          message: "구독!",
+          createdAt :''
         })
       )
     })
@@ -60,9 +61,10 @@ const ChatingPage = (props) => {
       {}, 
       JSON.stringify({
         type:'TALK', 
-        roomId:"e7c86968-51f0-4206-8130-543e5fc1bc9b", 
+        roomId: roomId, 
         sender: userId, 
-        message:test
+        message:test,
+        createdAt :''
       })
     );
     setTest("");
