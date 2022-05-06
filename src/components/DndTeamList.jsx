@@ -12,8 +12,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMemberListFB } from '../redux/modules/TeamList';
-import { getMemberListFB } from '../redux/modules/MemberList';
+import { deleteMemberListFB } from '../redux/modules/MemberList';
+import { loadMemberListFB } from '../redux/modules/MemberList';
 
 const DndTeamList = (props) => {
 
@@ -41,12 +41,12 @@ const DndTeamList = (props) => {
   const members = props.e.memberList
 
   // 아직 사용안한 스테이트 값들
-  const [member, setMember] = React.useState('');
+  // const [member, setMember] = React.useState('');
 
-  const handleChange = (event) => {
-    setMember(event.target.value);
-    dispatch(getMemberListFB(event.target.value));
-  };
+  // const handleChange = (event) => {
+  //   setMember(event.target.value);
+  //   dispatch(loadMemberListFB(event.target.value));
+  // };
 
   return (
     <>
@@ -62,7 +62,7 @@ const DndTeamList = (props) => {
             )
           })
         }
-        <AddMember onClick={handleOpen}>+ 팀원 추가</AddMember>
+        <AddMember onClick={handleOpen}>팀원 제거</AddMember>
           <Modal
             open={open}
             onClose={handleClose}
@@ -78,6 +78,7 @@ const DndTeamList = (props) => {
               </Typography>
                 {
                   members.map((e, idx)=>{
+                    const user_id = e.user.userId
                     return(
                       <div key={idx} >
                         <div style={{
@@ -87,9 +88,7 @@ const DndTeamList = (props) => {
                           alignItems: "center",
                         }}>
                           <Members e={e}></Members>
-                            <button
-                            onClick={() => {dispatch(deleteMemberListFB(e.memberId))}}
-                            >제거</button>
+                            <button onClick={() => {dispatch(deleteMemberListFB(e.memberId, user_id))}}>제거</button>
                         </div>
                       </div>
                     )

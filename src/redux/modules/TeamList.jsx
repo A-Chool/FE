@@ -2,14 +2,13 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import {getCookie} from "../../shared/Cookie";
-import { createRef } from "react";
 
 // 액션
 const LOAD_WEEK_LIST = 'LOAD_WEEK_LIST';
 const LOAD_TEAM_LIST = 'LOAD_TEAM_LIST';
 const ADD_TEAM_LIST ='ADD_TEAM_LIST';
 const DELETE_TEAM_LIST = 'DELETE_TEAM_LIST';
-const DELETE_MEMBER_LIST = 'DELETE_MEMBER_LIST';
+
 
 
 // 초기값
@@ -22,7 +21,7 @@ const __loadWeekList = createAction( LOAD_WEEK_LIST, (week) => ({week}) );
 const __loadTeamList = createAction( LOAD_TEAM_LIST, (teams) => ({teams}) );
 const __addTeamList = createAction( ADD_TEAM_LIST, (week, teams) => ({week, teams}) );
 const __deleteTeamList = createAction( DELETE_TEAM_LIST, (teamId) => ({teamId}) );
-const __deleteMemberList = createAction( DELETE_MEMBER_LIST, (memberId) => ({memberId}) ) 
+
 
 
 // 미들웨어
@@ -106,27 +105,7 @@ export const deleteTeamListFB = (teamId) => {
   }
 }
 
-// 팀원 삭제
 
-export const deleteMemberListFB = (memberId) => {
-  return function (dispatch, getState, {history}) {
-    if(!memberId) {window.alert("유저 아이디가 없습니다!")}
-    const myToken = getCookie("Authorization");
-    axios({
-      method: "delete",
-      url: `http://13.124.226.148/api/admin/teams/members/${memberId}`,     
-      headers: {
-      Authorization: `Bearer ${myToken}`
-      },
-    })
-    .then((response) => {
-      dispatch(__deleteMemberList(memberId));
-    })
-    .catch((err) => {
-      console.log("서버에러: ", err)
-    })
-  }
-}
 
 
 
@@ -135,13 +114,13 @@ export const deleteMemberListFB = (memberId) => {
 
 export default handleActions(
   {
-    [LOAD_TEAM_LIST]: (state, action) =>
-      produce(state, (draft) => {
-      draft.teams = action.payload.teams;      
-    }),
     [LOAD_WEEK_LIST]: (state, action) =>
       produce(state, (draft) => {
       draft.week = action.payload.week;      
+    }),
+    [LOAD_TEAM_LIST]: (state, action) =>
+      produce(state, (draft) => {
+      draft.teams = action.payload.teams;      
     }),
     [ADD_TEAM_LIST]: (state, action) =>
     produce(state, (draft) => {
@@ -151,14 +130,6 @@ export default handleActions(
       produce(state, (draft) => {
       draft.teams = state.teams.filter((p) =>  p.teamId !== action.payload.teamId);
     }),
-    // [DELETE_MEMBER_LIST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //   console.log(...state.teams)
-    //   console.log(action)
-    //   console.log(draft)
-    //   // console.log(state)
-    //   // draft.teams = state.teams.filter((p) =>  p.memberId !== action.payload.memberId);
-    // }),
   },
   initialState
 );

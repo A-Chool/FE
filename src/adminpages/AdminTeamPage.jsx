@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styled from "styled-components";
 
 
 import AdminSidebar from "./AdminSideBar";
@@ -9,7 +10,7 @@ import { getTeamListFB } from '../redux/modules/TeamList';
 import { addTeamListFB } from '../redux/modules/TeamList';
 import { getWeekListFB } from '../redux/modules/TeamList';
 import { deleteTeamListFB } from '../redux/modules/TeamList';
-import { getMemberListFB } from '../redux/modules/MemberList';
+import { loadMemberListFB } from '../redux/modules/MemberList';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -76,8 +77,11 @@ const AdminTeamPage = () => {
   const handleChange = (event) => {
     setClickWeek(event.target.value);
     dispatch(getTeamListFB(event.target.value));
-    dispatch(getMemberListFB(event.target.value));
+    dispatch(loadMemberListFB(event.target.value));
   };
+
+  // 팀이 없는 맴버 꺼내오기
+  const memberList = useSelector((state) => state.MemberList.memberList);
 
   // 팀 추가에서 주차를 입력 Input 변화를 담을 스테이트
   const [is_week, setWeek] = React.useState();
@@ -94,7 +98,7 @@ const AdminTeamPage = () => {
   const handlesetTeamName = (e) => {
     setTeamName(e.target.value)
   }
-    
+
   return (
 
     <React.Fragment>
@@ -125,7 +129,6 @@ const AdminTeamPage = () => {
               )
               })
             }
-              <button onClick={() => {console.log()}}> 수정 </button>
             </Select>
           </FormControl>
         </Box>
@@ -166,11 +169,27 @@ const AdminTeamPage = () => {
           })
         }
     </div>
-    
-    <AdminMemberList week={week} teamList={teamList} />
+
+    {/* <AdminMemberList week={week} teamList={teamList} /> */}
+    <MemberDiv>
+      {
+        memberList.map((e, idx)=>{
+          return(
+          <AdminMemberList key={idx} e={e} teamList={teamList} week={week}/>
+          )
+        })
+      }
+    </MemberDiv>
 
     </React.Fragment>
   );
 };
+
+const MemberDiv = styled.div`
+  width : 800px;
+  height : 200px;
+  background-color : gray;
+  float : right;
+`
 
 export default AdminTeamPage;
