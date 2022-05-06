@@ -9,9 +9,12 @@ import { useDispatch } from "react-redux";
 
 import { deleteUserListFB } from "../redux/modules/UserList";
 import { editUserListFB } from "../redux/modules/UserList";
+import { height } from "@mui/system";
 
 
 const AdminUserList = (props) => {
+
+  console.log(props)
 
   const dispatch = useDispatch();
   
@@ -44,14 +47,17 @@ const AdminUserList = (props) => {
   return (
     <React.Fragment>
           <UserList>
-            <Userdata style={{width : "10%" , borderLeft: "0px solid gray"}}>{props.e.userName}</Userdata>
-            <Userdata style={{width : "28%"}}>{props.e.userEmail}</Userdata>
-            <Userdata style={{width : "20%"}}>{props.e.phoneNumber}</Userdata>
-            <Userdata style={{width : "15%"}}>{props.e.createdAt}</Userdata>
-            <Userdata id="level" style={{width : "15%"}}>{props.e.userLevel >= 5 ? "Admin" : "User"}</Userdata>
+            <Userdata style={{width : "6%"}}>{props.idx + 1}</Userdata>
+            <Userdata style={{width : "11%",   fontWeight: '700'}}>{props.e.userName}</Userdata>
+            <Userdata style={{width : "25%"}}>{props.e.userEmail}</Userdata>
+            <Userdata style={{width : "18%"}}>{props.e.phoneNumber}</Userdata>
+            <Userdata style={{width : "18%"}}>{props.e.createdAt}</Userdata>
+            <Userdata id="level" style={{width : "11%"}} onClick={handleOpen}>{props.e.userLevel >= 5 ? "Admin" : "User"}</Userdata>
+            <DeleteSvg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => {dispatch(deleteUserListFB(props.e.userId))}}>
+              <path d="M31.875 8.25H25.3125L24.7656 7.26562C24.5469 6.82812 24.1094 6.5 23.6172 6.5H17.3281C16.8359 6.5 16.3984 6.82812 16.1797 7.26562L15.6875 8.25H9.125C8.63281 8.25 8.25 8.6875 8.25 9.125V10.875C8.25 11.3672 8.63281 11.75 9.125 11.75H31.875C32.3125 11.75 32.75 11.3672 32.75 10.875V9.125C32.75 8.6875 32.3125 8.25 31.875 8.25ZM11.1484 32.0391C11.2031 33.4609 12.3516 34.5 13.7734 34.5H27.1719C28.5938 34.5 29.7422 33.4609 29.7969 32.0391L31 13.5H10L11.1484 32.0391Z" fill="#8F9CAF"/>
+            </DeleteSvg>
 
             <div>
-              <Userdata style={{width : "10%"}} onClick={handleOpen}>권한설정</Userdata>
               <Modal
               open={open} onClose={handleClose}
               aria-labelledby="modal-modal-title"
@@ -61,7 +67,6 @@ const AdminUserList = (props) => {
                   <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                     <input defaultValue={props.e.userLevel} onChange={handlesetLevel}></input>
                     <button onClick={() => {dispatch(editUserListFB(props.e.userId, Number(Level)))}}>설정확인</button>
-                    <button onClick={() => {dispatch(deleteUserListFB(props.e.userId))}}>delete</button>
                   </Typography>
                 </Box>
               </Modal>
@@ -73,18 +78,27 @@ const AdminUserList = (props) => {
 }
 
 const UserList = styled.div`
-  background-color : #F2F2F2;
-  width : 1000px;
+  background-color : white;
+  width : auto;
   height : 40px;
-  margin : 10px auto;
   text-align : center;
+  border-bottom : 1px solid #E0E0E0;
 `
 
 const Userdata = styled.p`
   float : left;
   margin : 10px auto;
-  border-left: 1px solid black;
+  font-size: 14px;
 `
+
+const DeleteSvg = styled.svg`
+  @media screen and (max-height: 1000px) {
+    height : 30px;
+    width : 30px;
+    margin : 5px auto;
+  }
+`
+
 
 export default AdminUserList
 
