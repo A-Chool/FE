@@ -14,8 +14,6 @@ import { height } from "@mui/system";
 
 const AdminUserList = (props) => {
 
-  console.log(props)
-
   const dispatch = useDispatch();
   
   // Modal Style

@@ -2,6 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import { addMemberList } from '../../redux/modules/MemberList';
 import { getMemberList } from '../../redux/modules/MemberList';
+import { getTeamList } from '../../redux/modules/TeamList';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -61,10 +62,8 @@ const AdminMemberList = (props) => {
               <div key={idx}>
                 {data.teamName}
                 <button onClick={() => {
-                  // dispatch(getMemberList(weeks))
                   dispatch(addMemberList(data.teamId, user_id));
                   setOpen(false);
-                  // dispatch(getMemberList(weeks))
                   }}>추가</button>
               </div>
             )

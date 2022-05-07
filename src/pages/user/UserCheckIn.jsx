@@ -1,5 +1,6 @@
 import React ,{ useState } from 'react';
 import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
 
 import UserSidebar from '../../components/UserSideBar';
 import StopWatch from '../../components/StopWatch';
@@ -8,7 +9,21 @@ import UserTeamList from './UserTeamList';
 import mascot from '../../img/mascot.svg';
 import studyData from '../../img/studydata.svg';
 
+import { loadCheckList } from '../../redux/modules/CheckIn';
+
 const UserCheckIn = () => {
+
+  const dispatch = useDispatch();
+
+  // UserList 조회를 위한 useEffect
+  React.useEffect(() => {
+    dispatch(loadCheckList("1주차"));
+  },[]);
+
+  const teamList = useSelector((state) => state);
+
+  console.log(teamList);
+
 
   const [team, setTeam] = React.useState(
     [
