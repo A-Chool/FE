@@ -3,14 +3,14 @@ import styled from "styled-components";
 
 
 import AdminSidebar from "./AdminSideBar";
-import DndTeamList from '../components/DndTeamList';
+import DndTeamList from '../../components/DndTeamList';
 import AdminMemberList from './AdminMemberList';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTeamListFB } from '../redux/modules/TeamList';
-import { addTeamListFB } from '../redux/modules/TeamList';
-import { getWeekListFB } from '../redux/modules/TeamList';
-import { deleteTeamListFB } from '../redux/modules/TeamList';
-import { loadMemberListFB } from '../redux/modules/MemberList';
+import { getTeamList } from '../../redux/modules/TeamList';
+import { addTeamList } from '../../redux/modules/TeamList';
+import { getWeekList } from '../../redux/modules/TeamList';
+import { deleteTeamList } from '../../redux/modules/TeamList';
+import { loadMemberList } from '../../redux/modules/MemberList';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -29,7 +29,7 @@ const AdminTeamPage = () => {
 
   // 주차 리스트 불러오기
   React.useEffect(() => {
-    dispatch(getWeekListFB());
+    dispatch(getWeekList());
   },[]);
 
   // 주차 리스트 정보 꺼내기
@@ -37,7 +37,7 @@ const AdminTeamPage = () => {
 
   // 해당 주차의 팀 리스트 불러오기
   React.useEffect(() => {
-    dispatch(getTeamListFB());
+    dispatch(getTeamList());
   },[]);
 
   // 팀 리스트 정보 꺼내기
@@ -76,8 +76,8 @@ const AdminTeamPage = () => {
   // 드랍박스에서 주차를 클릭했을때 변화를 받아서 요청을 보내는 디스패치
   const handleChange = (event) => {
     setClickWeek(event.target.value);
-    dispatch(getTeamListFB(event.target.value));
-    dispatch(loadMemberListFB(event.target.value));
+    dispatch(getTeamList(event.target.value));
+    dispatch(loadMemberList(event.target.value));
   };
 
   // 팀이 없는 맴버 꺼내오기
@@ -148,14 +148,14 @@ const AdminTeamPage = () => {
                   return(
                     <div key={idx}>
                       {e.teamName}
-                      <button onClick={() => {dispatch(deleteTeamListFB(e.teamId))}}>삭제</button>
+                      <button onClick={() => {dispatch(deleteTeamList(e.teamId))}}>삭제</button>
                     </div>
                   )
                   })
                 }
                 <input onChange={handlesetWeek} placeholder='주차'></input>
                 <input onChange={handlesetTeamName} placeholder='팀명'></input>
-                <button onClick={() => {dispatch(addTeamListFB(is_teamName ,is_week))}}>+</button>
+                <button onClick={() => {dispatch(addTeamList(is_teamName ,is_week))}}>+</button>
               </Box>
             </Modal>
         </div>

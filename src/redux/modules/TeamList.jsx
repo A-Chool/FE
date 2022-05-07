@@ -28,7 +28,7 @@ const __deleteTeamList = createAction( DELETE_TEAM_LIST, (teamId) => ({teamId}) 
 
 
 // 주차 리스트 조회
-export const getWeekListFB = () => {
+export const getWeekList = () => {
 return function (dispatch, getState, { history }) {
   const myToken = getCookie("Authorization")
   axios.get('http://13.124.226.148/api/admin/teams/week'
@@ -44,7 +44,7 @@ return function (dispatch, getState, { history }) {
 } 
 
 // 팀 리스트 조회
-export const getTeamListFB = (week) => {
+export const getTeamList = (week) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
     axios.get(`http://13.124.226.148/api/admin/teams/${week}`
@@ -60,7 +60,7 @@ export const getTeamListFB = (week) => {
 }
 
 // 팀 추가
-export const addTeamListFB = (teamName, week) => {
+export const addTeamList = (teamName, week) => {
   return function (dispatch, getState, {history}) {
     if(!teamName) {window.alert("팀 이름이 없습니다!")}
     const myToken = getCookie("Authorization");
@@ -85,7 +85,7 @@ export const addTeamListFB = (teamName, week) => {
 }
 
 // 팀 삭제
-export const deleteTeamListFB = (teamId) => {
+export const deleteTeamList = (teamId) => {
   return function (dispatch, getState, {history}) {
     if(!teamId) {window.alert("팀 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");

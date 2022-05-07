@@ -12,8 +12,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMemberListFB } from '../redux/modules/MemberList';
-import { loadMemberListFB } from '../redux/modules/MemberList';
+import { deleteMemberList } from '../redux/modules/MemberList';
+import { loadMemberList } from '../redux/modules/MemberList';
 
 const DndTeamList = (props) => {
 
@@ -45,7 +45,7 @@ const DndTeamList = (props) => {
 
   // const handleChange = (event) => {
   //   setMember(event.target.value);
-  //   dispatch(loadMemberListFB(event.target.value));
+  //   dispatch(loadMemberList(event.target.value));
   // };
 
   return (
@@ -88,7 +88,7 @@ const DndTeamList = (props) => {
                           alignItems: "center",
                         }}>
                           <Members e={e}></Members>
-                            <button onClick={() => {dispatch(deleteMemberListFB(e.memberId, user_id))}}>제거</button>
+                            <button onClick={() => {dispatch(deleteMemberList(e.memberId, user_id))}}>제거</button>
                         </div>
                       </div>
                     )
