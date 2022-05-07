@@ -15,18 +15,21 @@
 
 .btn {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  width: 8vw;
-  height: 5vh;
-  border-radius: 14px;
-  margin: 0px 6px;
+  width: 98px;
+  height: 40px;
+  margin: 30px 6px;
   display: flex;
-  border: 2px solid #e42a2a;
+  border: 2px solid #ff5f00;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: #292929;
+  color: white;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 16px;
 }
 
 .btn-one {
-  background-color: #e42a2a;
+  background-color: #ff5f00;
 }

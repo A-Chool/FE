@@ -91,7 +91,7 @@ const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "GET",
-      url: `http://13.124.226.148/api/user/kakao/callback?code=${code}`,
+      url: `http://3.39.0.208/api/user/kakao/callback?code=${code}`,
     })
       .then((response) => {
         console.log(response);
