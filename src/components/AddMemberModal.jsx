@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AddTeamModal = () => {
+const AddMemberModal = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const AddTeamModal = () => {
   );
 };
 
-export default AddTeamModal;
+export default AddMemberModal;
