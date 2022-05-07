@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom"
-import '../componentsCss/Font.css'
+import '../../componentsCss/Font.css'
 
 const AdminSidebar = () => {
   return (

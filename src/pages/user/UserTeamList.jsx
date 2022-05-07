@@ -9,7 +9,7 @@ const UserTeamList = (props) => {
 
   return (
     <TeamTable>
-      <h2>{props.e.teamName}</h2>
+      <TeamNameTable>{props.e.teamName}</TeamNameTable>
       {
         userCheckInList.map((e, idx)=>{
           return(
@@ -22,11 +22,12 @@ const UserTeamList = (props) => {
 };
 
 const TeamTable = styled.div`
-  height : 200px;
-  width : 230px;
-  border : 1px solid black;
+  height : 204px;
+  width : 259px;
+  background: #FFFFFF;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
   margin : 10px 10px;
-  padding : 10px;
   display: inline-block;
   overflow : scroll;
   overflow-x : hidden;
@@ -38,6 +39,19 @@ const TeamTable = styled.div`
     background: black;
     border-radius: 50px;
   }
+`
+
+const TeamNameTable = styled.div`
+  position: static;
+  width: 259px;
+  height: 40px;
+  background: #1F3A5E;
+  border-radius: 8px 8px 0px 0px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 40px;
+  color: #FFFFFF;
+  margin-bottom : 10px
 `
 
 export default UserTeamList;

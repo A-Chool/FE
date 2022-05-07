@@ -199,7 +199,7 @@ const actionCreators = {
   signupDB,
   kakaoLoginDB,
   adminloginDB,
-  // loadTokenFB,
+  // loadToken,
   // withdrawalAC,
 };
 

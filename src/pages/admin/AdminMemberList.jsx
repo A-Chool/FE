@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import { addMemberListFB } from '../redux/modules/MemberList';
-import { getMemberListFB } from '../redux/modules/MemberList';
+import { addMemberList } from '../../redux/modules/MemberList';
+import { getMemberList } from '../../redux/modules/MemberList';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -61,16 +61,16 @@ const AdminMemberList = (props) => {
               <div key={idx}>
                 {data.teamName}
                 <button onClick={() => {
-                  // dispatch(getMemberListFB(weeks))
-                  dispatch(addMemberListFB(data.teamId, user_id));
+                  // dispatch(getMemberList(weeks))
+                  dispatch(addMemberList(data.teamId, user_id));
                   setOpen(false);
-                  // dispatch(getMemberListFB(weeks))
+                  // dispatch(getMemberList(weeks))
                   }}>추가</button>
               </div>
             )
             })
           }
-          {/* <button onClick={() => {dispatch(addTeamListFB(is_teamName ,is_week))}}>+</button> */}
+          {/* <button onClick={() => {dispatch(addTeamList(is_teamName ,is_week))}}>+</button> */}
         </Box>
       </Modal>
     </>
@@ -108,16 +108,16 @@ const AdminMemberList = (props) => {
   //                   <div key={idx}>
   //                     {data.teamName}
   //                     <button onClick={() => {
-  //                       // dispatch(getMemberListFB(weeks))
-  //                       dispatch(addMemberListFB(data.teamId, thisMember));
-  //                       // dispatch(getMemberListFB(weeks))
+  //                       // dispatch(getMemberList(weeks))
+  //                       dispatch(addMemberList(data.teamId, thisMember));
+  //                       // dispatch(getMemberList(weeks))
   //                       setOpen(false);
   //                       }}>추가</button>
   //                   </div>
   //                 )
   //                 })
   //               }
-  //               {/* <button onClick={() => {dispatch(addTeamListFB(is_teamName ,is_week))}}>+</button> */}
+  //               {/* <button onClick={() => {dispatch(addTeamList(is_teamName ,is_week))}}>+</button> */}
   //             </Box>
   //           </Modal>
   //           </div>
@@ -128,7 +128,7 @@ const AdminMemberList = (props) => {
   // );
 };
 
-// dispatch(addMemberListFB( e.teamId , e.userId ))
+// dispatch(addMemberList( e.teamId , e.userId ))
 
 const MemberDiv = styled.div`
   width : 800px;

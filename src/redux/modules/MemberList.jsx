@@ -28,7 +28,7 @@ const __deleteMemberList = createAction( DELETE_MEMBER_LIST, (memberId, userId) 
 
 
 // member 조회 미들웨어
-export const loadMemberListFB = (week) => {
+export const loadMemberList = (week) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
     axios.get(`http://13.124.226.148/api/admin/teams/noMember/${week}`
@@ -44,7 +44,7 @@ export const loadMemberListFB = (week) => {
 }
 
 // member 추가 미들웨어
-export const addMemberListFB = (teamId, userId) => {
+export const addMemberList = (teamId, userId) => {
   return function (dispatch, getState, {history}) {
     if(!userId) {window.alert("유저 이름이 없습니다!")}
     const myToken = getCookie("Authorization");
@@ -68,7 +68,7 @@ export const addMemberListFB = (teamId, userId) => {
 
 // 팀원 삭제
 
-export const deleteMemberListFB = (memberId, userId) => {
+export const deleteMemberList = (memberId, userId) => {
   return function (dispatch, getState, {history}) {
     if(!memberId) {window.alert("유저 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");
