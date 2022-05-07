@@ -1,19 +1,38 @@
 import React from "react";
-import "../componentsCss/Timer.css";
+import styled from 'styled-components';
 
-  
-export default function Timer(props) {
+const Timer = (props) => {
   return (
-    <div className="timer">
-      <span className="digits hours">
-      {("0" + Math.floor((props.time / 3600000) % 60)).slice(-2)}:
-      </span>
-      <span className="digits">
+    <TimerBox>
+      <Times>
+        {("0" + Math.floor((props.time / 3600000) % 60)).slice(-2)}:
+      </Times>
+      <Times>
         {("0" + Math.floor((props.time / 60000) % 60)).slice(-2)}:
-      </span>
-      <span className="digits">
+      </Times>
+      <Times>
         {("0" + Math.floor((props.time / 1000) % 60)).slice(-2)}
-      </span>
-    </div>
+      </Times>
+    </TimerBox>
   );
-}
+};
+
+export default Timer;
+
+
+const TimerBox = styled.div`
+  margin: 3rem 0 0 0;
+  width: 100%;
+  display: flex;
+  height: 12%;
+  justify-content: center;
+  align-items: center;
+`
+
+const Times = styled.span`
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  font-size: 80px;
+  color: #000000;
+`
+

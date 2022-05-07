@@ -3,14 +3,15 @@ import styled from "styled-components";
 import Timer from "./Timer";
 
 import { userCheckIn } from "../redux/modules/CheckIn";
+import { userCheckOut } from "../redux/modules/CheckIn";
 import { loadCheckIn } from "../redux/modules/CheckIn";
 
 import '../componentsCss/ControlButton.css'
 import { useDispatch, useSelector } from "react-redux";
 
   
-function StopWatch() {
-  
+const StopWatch = () => {
+
   // const timestamp = + new Date();
   
   // console.log(timestamp.toLocaleString())
@@ -44,37 +45,32 @@ function StopWatch() {
     };
   }, [isActive, isPaused]);
   
-  // 시간 흐르게 하기
-  const handleStart = () => {
-    setIsActive(true);
-    setIsPaused(false);
-    setIsPaused(!isPaused);
-  };
-  
+
   return (
     <StopWatchDiv>
       <Timer time={time} />
-      <div
-        active={isActive}
-        isPaused={isPaused}
-        handleStart={handleStart}
-      >
-            <div className="btn btn-one btn-start"
-                onClick={() => {
-                  dispatch(userCheckIn());
-                  setIsActive(true);
-                  setIsPaused(false);
-                  setIsPaused(!isPaused);
-                }}>
-              {isPaused ? "start" : "stop"}
-            </div>
-    {/* <div className="Control-Buttons">
-      <div>{props.active ? ActiveButtons : StartButton}</div>
-    </div> */}
+      <div>
+        { isPaused === true 
+        ?
+        <div className="btn btn-one btn-start"
+        onClick={() => {
+          dispatch(userCheckIn());
+          setIsActive(true);
+          setIsPaused(!isPaused);
+        }}>start</div>
+        :
+        <div className="btn btn-one btn-start"
+        onClick={() => {
+          dispatch(userCheckOut());
+          setIsPaused(false);
+          setIsPaused(!isPaused);
+        }}>stop</div>
+        }
+        
       </div>
     </StopWatchDiv>
   );
-}
+};
 
 const StopWatchDiv = styled.div`
   height: 25%;
@@ -83,5 +79,5 @@ const StopWatchDiv = styled.div`
   align-items: center;
   justify-content: space-between;
 `
-  
+
 export default StopWatch;
