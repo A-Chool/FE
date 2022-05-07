@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import AdminSidebar from "./AdminSideBar";
 import {getUserList} from "../../redux/modules/UserList"
 import AdminUserList from "./AdminUserList";
-import '../../componentsCss/Admin.css'
 
 const AdminUserPage = () => {
 
