@@ -15,137 +15,12 @@ const UserCheckIn = () => {
 
   const dispatch = useDispatch();
 
-  // UserList 조회를 위한 useEffect
+  // checkInList 조회를 위한 useEffect
   React.useEffect(() => {
     dispatch(loadCheckList("1주차"));
   },[]);
 
-  const teamList = useSelector((state) => state);
-
-  console.log(teamList);
-
-
-  const [team, setTeam] = React.useState(
-    [
-      {
-          teamName : "장미반",
-          memberList : [
-                {
-                      userId : 2,
-                      userName : "신짱구",
-                      userEmail : "zzangubrother",
-                      phoneNumber : "010-1234-5678"
-                },
-                {
-                      userId : 3,
-                      userName : "짱구",
-                      userEmail : "zzangubrother",
-                      phoneNumber : "010-5346-8907"
-                },
-                {
-                      userId : 4,
-                      userName : "신짱아",
-                      userEmail : "zzangusister",
-                      phoneNumber : "010-7777-9777"
-                },
-                {
-                  userId : 2,
-                  userName : "짱구",
-                  userEmail : "zzangubrother",
-                  phoneNumber : "010-1234-5678"
-                },
-                {
-                      userId : 3,
-                      userName : "신짱구",
-                      userEmail : "zzangubrother",
-                      phoneNumber : "010-5346-8907"
-                },
-                {
-                      userId : 4,
-                      userName : "신짱아",
-                      userEmail : "zzangusister",
-                      phoneNumber : "010-7777-9777"
-                },
-                {
-                  userId : 2,
-                  userName : "짱구",
-                  userEmail : "zzangubrother",
-                  phoneNumber : "010-1234-5678"
-            },
-            {
-                  userId : 3,
-                  userName : "신짱구",
-                  userEmail : "zzangubrother",
-                  phoneNumber : "010-5346-8907"
-            },
-            {
-                  userId : 4,
-                  userName : "짱아",
-                  userEmail : "zzangusister",
-                  phoneNumber : "010-7777-9777"
-            },
-          ]
-      },
-      {
-        teamName : "튤립반",
-        memberList : [
-              {
-                    userId : 2,
-                    userName : "신짱구",
-                    userEmail : "zzangubrother"
-              },
-              {
-                    userId : 3,
-                    userName : "짱구",
-                    userEmail : "zzangubrother"
-              },
-              {
-                    userId : 4,
-                    userName : "신짱아",
-                    userEmail : "zzangusister"
-              },
-        ]
-    },
-    {
-      teamName : "새싹반",
-      memberList : [
-            {
-                  userId : 2,
-                  userName : "신짱구",
-                  userEmail : "zzangubrother"
-            },
-            {
-                  userId : 3,
-                  userName : "짱구",
-                  userEmail : "zzangubrother"
-            },
-            {
-                  userId : 4,
-                  userName : "신짱아",
-                  userEmail : "zzangusister"
-            },
-      ]
-  },{
-    teamName : "잡초반",
-    memberList : [
-          {
-                userId : 2,
-                userName : "신짱구",
-                userEmail : "zzangubrother"
-          },
-          {
-                userId : 3,
-                userName : "짱구",
-                userEmail : "zzangubrother"
-          },
-          {
-                userId : 4,
-                userName : "신짱아",
-                userEmail : "zzangusister"
-          },
-    ]
-}
-    ])
+  const teamList = useSelector((state) => state.CheckIn.checkInList);
 
   return (
     <React.Fragment>
@@ -176,21 +51,7 @@ const UserCheckIn = () => {
 
                 <CheckInList>
                   {
-                    team.map((e, idx)=>{
-                      return(
-                        <UserTeamList key={idx} e={e}></UserTeamList>
-                      )
-                    })
-                  }
-                  {
-                    team.map((e, idx)=>{
-                      return(
-                        <UserTeamList key={idx} e={e}></UserTeamList>
-                      )
-                    })
-                  }
-                  {
-                    team.map((e, idx)=>{
+                    teamList.map((e, idx)=>{
                       return(
                         <UserTeamList key={idx} e={e}></UserTeamList>
                       )
@@ -261,7 +122,8 @@ const CheckInList = styled.div`
     background: transition;
   }
   @media screen and (max-height: 1000px) {
-    height : 500px;
+    margin-top : 30px;
+    height : 400px;
   }
   @media screen and (max-height: 650px) {
     height : 200px;

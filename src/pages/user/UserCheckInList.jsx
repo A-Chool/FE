@@ -29,7 +29,7 @@ const UserCheckInList = (props) => {
   return (
     <UserTag>
       <div>
-      <Log></Log>
+      <Log style={{backgroundColor : props.e.online === false ? '#C4C4C4' : 'blue'}}></Log>
       <UserDetail onClick={handleOpen}>{props.e.userName}</UserDetail>
 
       <Modal
@@ -53,6 +53,11 @@ const UserCheckInList = (props) => {
             </Typography>
             <Typography id="transition-modal-description" sx={{ mt: 2 }}>
               {props.e.phoneNumber}
+            </Typography>
+            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
+              {props.e.online === false 
+              ? "오프라인 입니다"
+              : "온라인 입니다" }
             </Typography>
           </Box>
         </Fade>
@@ -81,7 +86,6 @@ const UserDetail = styled.p`
 const Log = styled.div`
   width : 8px; 
   height : 8px; 
-  background-color : #C4C4C4; 
   float : left;
   border-radius : 50px;
   margin-top : 5px;
