@@ -37,7 +37,7 @@ const __editUserList = createAction(EDIT_USER_LIST, (userId, userLevel) => ({use
 
 
 // User 조회 미들웨어
-export const getUserListFB = () => {
+export const getUserList = () => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization",)
     axios.get('http://13.124.226.148/api/admin/userList'
@@ -53,7 +53,7 @@ export const getUserListFB = () => {
 }
 
 //User 삭제 미들웨어
-export const deleteUserListFB = (userId) => {
+export const deleteUserList = (userId) => {
   return function (dispatch, getState, {history}) {
     if(!userId) {window.alert("유저 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");
@@ -72,7 +72,7 @@ export const deleteUserListFB = (userId) => {
 }
 
 //User 권한 수정 미들웨어
-export const editUserListFB = (userId, userLevel) => {
+export const editUserList = (userId, userLevel) => {
   return function (dispatch, getState, {history}) {
     if(!userId) {window.alert("유저 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");

@@ -6,11 +6,11 @@ import styled from "styled-components";
 import { ConnectedRouter } from "connected-react-router";
 import { Route } from "react-router-dom";
 
-import AdminUserPage from "./adminpages/AdminUserPage";
-import AdminTeamPage from "./adminpages/AdminTeamPage";
+import UserTeamBoard from "./pages/user/UserTeamBoard";
+import UserCheckIn from "./pages/user/UserCheckIn";
 
-import UserCheckIn from "./userpages/UserCheckIn";
-import UserTeamBoard from "./userpages/UserTeamBoard";
+import AdminTeamPage from './pages/admin/AdminTeamPage';
+import AdminUserPage from './pages/admin/AdminUserPage';
 
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";

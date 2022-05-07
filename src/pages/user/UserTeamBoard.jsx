@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 
-import UserSidebar from '../components/UserSideBar';
+import UserSidebar from '../../components/UserSideBar';
 import UserGroundRole from './UserGroundRole';
 import UserWorkSpace from './UserWorkSpace';
 

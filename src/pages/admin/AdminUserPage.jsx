@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import AdminSidebar from "./AdminSideBar";
-import {getUserListFB} from "../redux/modules/UserList"
+import {getUserList} from "../../redux/modules/UserList"
 import AdminUserList from "./AdminUserList";
-import '../componentsCss/Admin.css'
+import '../../componentsCss/Admin.css'
 
 const AdminUserPage = () => {
 
@@ -13,7 +13,7 @@ const AdminUserPage = () => {
 
   // UserList 조회를 위한 useEffect
   React.useEffect(() => {
-    dispatch(getUserListFB());
+    dispatch(getUserList());
   },[]);
 
   // 받아온 값에서 필요한 값 꺼내오기

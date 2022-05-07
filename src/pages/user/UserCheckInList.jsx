@@ -63,29 +63,29 @@ const UserCheckInList = (props) => {
 };
 
 const UserTag = styled.div`
-  width : 100px;
-  height : 30px;
-  border : 1px solid black;
-  border-radius : 5px;
+  width : 95px;
+  height : 32px;
   float : left;
-  margin : 5px;
+  margin : 8px 16px;
+  font-size : 16px;
+  font-weight : 700;
   align-items: center;
 `
 
 const UserDetail = styled.p`
   align-items : center;
   text-align : center;
-  margin : 5px
+  margin : 5px;
 `
 
 const Log = styled.div`
   width : 8px; 
   height : 8px; 
-  background-color : blue; 
+  background-color : #C4C4C4; 
   float : left;
   border-radius : 50px;
   margin-top : 5px;
-  margin-left : 8px;
+  margin-left : 20px;
 `
 
 export default UserCheckInList;
