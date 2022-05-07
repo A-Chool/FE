@@ -31,7 +31,7 @@ const __deleteMemberList = createAction( DELETE_MEMBER_LIST, (memberId, userId) 
 export const loadMemberList = (week) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`http://13.124.226.148/api/admin/teams/noMember/${week}`
+    axios.get(`http://3.39.0.208/api/admin/teams/noMember/${week}`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -50,7 +50,7 @@ export const addMemberList = (teamId, userId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `http://13.124.226.148/api/admin/teams/members`,
+      url: `http://3.39.0.208/api/admin/teams/members`,
       data: {
       teamId : teamId,
       userId : userId
@@ -74,7 +74,7 @@ export const deleteMemberList = (memberId, userId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `http://13.124.226.148/api/admin/teams/members/${memberId}`,
+      url: `http://3.39.0.208/api/admin/teams/members/${memberId}`,
       // data : {userId : userId},     
       headers: {
       Authorization: `Bearer ${myToken}`

@@ -8,6 +8,7 @@ import User from "./modules/user";
 import UserList from "./modules/UserList";
 import TeamList from "./modules/TeamList";
 import MemberList from "./modules/MemberList";
+import CheckIn from "./modules/CheckIn";
 // import chat from "./modules/chat";
 
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
   UserList : UserList,
   TeamList : TeamList,
   MemberList : MemberList,
+  CheckIn : CheckIn,
   router: connectRouter(history),
   
 });
