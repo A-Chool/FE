@@ -35,9 +35,7 @@ const ChatingPage = (props) => {
     
     // 소켓 연결
     const connect = (roomId) => {
-        console.log("connent function")
         ws.connect({}, function (frame) {
-            console.log("ws.connect")
             ws.subscribe("/sub/chat/room/" + roomId, (message) => {
                 var recv = JSON.parse(message.body);
                 //채팅 내역 불러오기
@@ -79,12 +77,11 @@ const ChatingPage = (props) => {
 
     // 메세지 받기
     const recvMessage = (message) => {
-        console.log("recvMessage", message);
-        console.log(message.message);
         setList((list) => [
             ...list, {
                 nick: message.sender,
-                text: message.message
+                text: message.message,
+                time : message.createdAt
             }
         ]);
     }
@@ -98,12 +95,15 @@ const ChatingPage = (props) => {
                 }
             })
             .then((res) => {
+              console.log(res);
+              console.log(res.data);
                 let mappedArrayObj = res
                     .data
                     .map(obj => {
                         let newObj = {};
                         newObj['nick'] = obj.sender;
                         newObj['text'] = obj.message;
+                        newObj['time'] = obj.createdAt;
                         return newObj;
                     });
                 setList((list) => mappedArrayObj);
@@ -128,17 +128,16 @@ const ChatingPage = (props) => {
                 <ChatContents>
                     {
                         list.map((item, index) => {
+                          var myMessage = 'left';
+                          if(item.nick === userId) myMessage = "right";
                             return (
                                 <ChatOnce key={index}>
-                                    <ChatUser>
-                                        <b
-                                            style={{
-                                                float: "left",
-                                                color: "#000000"
-                                            }}>{item.nick}</b>
+                                    <ChatUser style={{float:myMessage}}>
+                                        <b>{item.nick}</b>
                                         {/* <span style={{ color: "#fff" }}>시간</span> */}
-                                    </ChatUser>
-                                    <ChatCon>{item.text}</ChatCon>
+                                    </ChatUser><br/>
+                                    <ChatCon style={{float:myMessage}}>{item.text}</ChatCon>
+                                    <ChatTime style={{float:myMessage}}>{item.time}</ChatTime>
                                 </ChatOnce>
                             );
                         })
@@ -178,7 +177,6 @@ const ChatRoom = styled.div `
   width: 100%;
   height: 10vh;
 `;
-
 const ChatRoomId = styled.div `
   margin-left: 10px;
   font-size: 25px;
@@ -201,12 +199,8 @@ const ChatContents = styled.div `
   overflow: auto;
 `;
 const ChatOnce = styled.div `
-  &:hover {
-    background: #313438;
-  }
-  float: left;
+  float: {myMessage};
 `;
-
 const ChatUser = styled.div `
   margin-left: 10px;
 `;
@@ -214,7 +208,10 @@ const ChatCon = styled.div `
   color: black;
   margin-left: 10px;
 `;
-
+const ChatTime = styled.div `
+  color: black;
+  margin-left: 10px;
+`;
 const ChatInputMenu = styled.div `
   display: flex;
   justify-content: space-between;
