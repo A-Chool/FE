@@ -1,10 +1,10 @@
-import React, {useEffect, useState, useCallback, useRef} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 // 소켓 통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import {getUserId} from "../shared/Cookie";
-import {getCookie} from "../shared/Cookie";
+import { getUserId } from "../shared/Cookie";
+import { getCookie } from "../shared/Cookie";
 import axios from "axios";
 import SelectInput from "@mui/material/Select/SelectInput";
 
@@ -12,164 +12,156 @@ import SelectInput from "@mui/material/Select/SelectInput";
 let stompClient;
 
 const ChatingPage = (props) => {
-    const userId = getUserId();
+  const userId = getUserId();
 
-    // 소켓 연결에 필요한 변수
-    // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
-    const devTarget = "http://3.39.0.208:8080/ws-stomp";
-    const sock = new SockJS(devTarget);
-    const ws = Stomp.over(sock);
+  const [loaded, setLoaded] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const [enterMsg, setEnterMsg] = useState(null);
+  const [content, setContent] = useState("");
+  const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
+  const myToken = getCookie("Authorization");
 
-    let reconnect = 0;
+  const latestChatWrapRef = useRef();
 
-    const [chatMessage, setChatMessage] = useState("");
-    const [list, setList] = useState([]);
-    const [test, setTest] = useState('');
-    const [roomId, setRoomId] = useState('faaa902e-f2d4-4221-a0ca-e413025f8834');
-    const myToken = getCookie("Authorization")
+  // 소켓 연결에 필요한 변수
+  // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
+  const devTarget = "http://3.39.0.208:8080/ws-stomp";
+  let sock = new SockJS(devTarget);
+  let ws = Stomp.over(sock);
 
-    useEffect(() => {
-        connect(roomId);
-        return() => {};
-    }, []);
-    
-    // 소켓 연결
-    const connect = (roomId) => {
-        ws.connect({}, function (frame) {
-            ws.subscribe("/sub/chat/room/" + roomId, (message) => {
-                var recv = JSON.parse(message.body);
-                //채팅 내역 불러오기
-                getMessageList();
-                //소켓 연결 후 받은 채팅 출력
-                recvMessage(recv);
-            });
-            ws.send(
-                "/pub/chat/message",
-                {},
-                JSON.stringify({type: 'ENTER', roomId: roomId, sender: userId, message: "구독!", createdAt: ''})
-            )
-        }, function (error) {
-            if (reconnect++ < 5) {
-                setTimeout(function () {
-                    console.log("connection reconnect");
-                    sock = new SockJS(devTarget);
-                    ws = Stomp.over(sock);
-                    connect();
-                }, 10 * 1000);
-            }
-        })
-    };
-    // 채팅방 입장시 사용하는 코드들
+  let reconnect = 0;
 
-    const ExitChat = () => {
-        console.log(111);
-    };
+  // 소켓 연결
+  const connect = (roomId) => {
+    ws.connect(
+      { Authorization: `Bearer ${myToken}` },
+      (frame) => {
+        ws.subscribe("/sub/chat/room/" + roomId, (message) => {
+          const recv = JSON.parse(message.body);
 
-    // 메세지 보내기
-    const sendMessage = (test) => {
-        ws.send(
-            "/pub/chat/message",
-            {},
-            JSON.stringify({type: 'TALK', roomId: roomId, sender: userId, message: test, createdAt: ''})
-        );
-        setTest("");
-    };
+          //채팅 내역 불러오기
+          getMessageList();
 
-    // 메세지 받기
-    const recvMessage = (message) => {
-        setList((list) => [
-            ...list, {
-                nick: message.sender,
-                text: message.message,
-                time : message.createdAt
-            }
-        ]);
-    }
-
-    // 저장된 메시지 출력
-    const getMessageList = () => {
-        axios
-            .get(`http://3.39.0.208:8080/chat/message/${roomId}`, {
-                headers: {
-                    "Authorization": `Bearer ${myToken}`
-                }
-            })
-            .then((res) => {
-              console.log(res);
-              console.log(res.data);
-                let mappedArrayObj = res
-                    .data
-                    .map(obj => {
-                        let newObj = {};
-                        newObj['nick'] = obj.sender;
-                        newObj['text'] = obj.message;
-                        newObj['time'] = obj.createdAt;
-                        return newObj;
-                    });
-                setList((list) => mappedArrayObj);
-                // dispatch(__loadTeamList(res.data));
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+          if (recv.type === "ENTER") {
+            setLoaded(true);
+            setEnterMsg(recv);
+          } else if (recv.type === "TALK") {
+            //소켓 연결 후 받은 채팅 출력
+            recvMessage(recv);
+          }
+        });
+        ws.send("/pub/chat/message", {}, JSON.stringify({ type: "ENTER", roomId: roomId, sender: userId, message: "구독!", createdAt: "" }));
+      },
+      (error) => {
+        if (reconnect++ < 5) {
+          setTimeout(function () {
+            console.log("connection reconnect");
+            sock = new SockJS(devTarget);
+            ws = Stomp.over(sock);
+            connect();
+          }, 10 * 1000);
         }
-
-    const onChange = (e) => {
-        setTest(e.target.value);
-    }
-
-    return (
-        <React.Fragment>
-            <ChatDisplay>
-                <ChatRoom>
-                    <ChatRoomId>1</ChatRoomId>
-                    <ChatRoomBtn onClick={ExitChat}>X</ChatRoomBtn>
-                </ChatRoom>
-                <ChatContents>
-                    {
-                        list.map((item, index) => {
-                          var myMessage = 'left';
-                          if(item.nick === userId) myMessage = "right";
-                            return (
-                                <ChatOnce key={index}>
-                                    <ChatUser style={{float:myMessage}}>
-                                        <b>{item.nick}</b>
-                                        {/* <span style={{ color: "#fff" }}>시간</span> */}
-                                    </ChatUser><br/>
-                                    <ChatCon style={{float:myMessage}}>{item.text}</ChatCon>
-                                    <ChatTime style={{float:myMessage}}>{item.time}</ChatTime>
-                                </ChatOnce>
-                            );
-                        })
-                    }
-                </ChatContents>
-                <ChatInputMenu>
-                    <ChatInput
-                        type="text"
-                        placeholder="채팅을 입력해주세요"
-                        value={test}
-                        onChange={onChange}/>
-                    <ChatBtn
-                        onClick={() => {
-                            sendMessage(test);
-                        }}/>
-                </ChatInputMenu>
-            </ChatDisplay>
-        </React.Fragment>
+      }
     );
-}
+  };
+  // 채팅방 입장시 사용하는 코드들
 
-const ChatDisplay = styled.div `
+  const ExitChat = () => {
+    console.log("exit");
+  };
+
+  // 메세지 보내기
+  const sendMessage = () => {
+    ws.send("/pub/chat/message", {}, JSON.stringify({ type: "TALK", roomId: roomId, sender: userId, message: content, createdAt: "" }));
+    setContent("");
+  };
+
+  // 메세지 받기
+  const recvMessage = (message) => {
+    setMessages([...messages, message]);
+  };
+
+  // 저장된 메시지 출력
+  const getMessageList = () => {
+    axios
+      .get(`http://3.39.0.208:8080/chat/message/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${myToken}`,
+        },
+      })
+      .then((res) => {
+        setMessages(res.data);
+        // dispatch(__loadTeamList(res.data));
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleChange = (e) => {
+    setContent(e.target.value);
+  };
+
+  const handleKeyUp = (e) => {
+    // 엔터 키코드 13
+    if (e.keyCode === 13) {
+      sendMessage();
+    }
+  };
+
+  useEffect(() => {
+    connect(roomId);
+    return () => {};
+  }, [roomId]);
+
+  useEffect(() => {
+    console.log(enterMsg?.message || "");
+  }, [enterMsg]);
+
+  useEffect(() => {
+    if (messages.length > 0) latestChatWrapRef.current.scrollIntoView({ block: "end" });
+  }, [messages]);
+
+  if (!userId) return <>로그인이 필요합니다.</>;
+
+  return (
+    <ChatDisplay>
+      <ChatRoom>
+        <ChatRoomId>채팅방 이름</ChatRoomId>
+        <ChatRoomBtn onClick={ExitChat}>채팅 닫기</ChatRoomBtn>
+      </ChatRoom>
+      <ChatContents>
+        {loaded ? (
+          messages.map((item, index) => {
+            return (
+              <ChatWrap key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
+                <ChatUser>{item.sender}</ChatUser>
+                <ChatMsg>{item.message}</ChatMsg>
+              </ChatWrap>
+            );
+          })
+        ) : (
+          <div>로딩중</div>
+        )}
+      </ChatContents>
+      <ChatInputMenu>
+        <ChatInput type="text" placeholder="채팅을 입력해주세요" value={content} onChange={handleChange} onKeyUp={handleKeyUp} />
+        <ChatBtn disabled={!content} onClick={sendMessage}>
+          전송
+        </ChatBtn>
+      </ChatInputMenu>
+    </ChatDisplay>
+  );
+};
+
+const ChatDisplay = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 40%;
   height: 100vh;
-  background-color: gray;
   position: fixed;
   left: 0px;
 `;
-const ChatRoom = styled.div `
+const ChatRoom = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -177,59 +169,54 @@ const ChatRoom = styled.div `
   width: 100%;
   height: 10vh;
 `;
-const ChatRoomId = styled.div `
+const ChatRoomId = styled.div`
   margin-left: 10px;
   font-size: 25px;
   font-weight: bold;
 `;
-const ChatRoomBtn = styled.button `
+const ChatRoomBtn = styled.button`
   width: 5vh;
   height: 5vh;
-  background-color: gray;
-  border: 2px solid black;
-  border-radius: 25px;
 `;
-const ChatContents = styled.div `
-  display: flex;
-  flex-direction: column;
-  align-items: left;
-  width: 95%;
-  height: 85vh;
+const ChatContents = styled.div`
+  width: 100%;
+  height: 100%;
   font-size: 15px;
   overflow: auto;
 `;
-const ChatOnce = styled.div `
-  float: {myMessage};
+const ChatWrap = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: ${(props) => props.align};
+  margin: 1rem 0;
 `;
-const ChatUser = styled.div `
+const ChatUser = styled.div`
   margin-left: 10px;
+  font-weight: 700;
 `;
-const ChatCon = styled.div `
+const ChatMsg = styled.div`
   color: black;
   margin-left: 10px;
 `;
-const ChatTime = styled.div `
-  color: black;
-  margin-left: 10px;
-`;
-const ChatInputMenu = styled.div `
+const ChatInputMenu = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 5vh;
   background-color: #ebe6e6;
 `;
-const ChatInput = styled.input `
-  width: 95%;
-  font-size:20px;
-  margin: 10px 10px;
+const ChatInput = styled.input`
+  width: 100%;
+  height: 100%;
+  outline: none;
+  background-color: transparent;
+  border: 0;
 `;
-const ChatBtn = styled.button `
-  width: 20px;
-  height: 20px;
-  border-radius: 10px;
-  margin-right: 5px;
+const ChatBtn = styled.button`
+  padding: 1rem;
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  width: max-content;
+  outline: none;
 `;
 
 export default ChatingPage;
