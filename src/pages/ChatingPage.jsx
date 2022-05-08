@@ -15,7 +15,8 @@ const ChatingPage = (props) => {
     const userId = getUserId();
 
     // 소켓 연결에 필요한 변수
-    // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
+    // console.log(userId); 
+    // const devTarget = "http://localhost:8080/ws-stomp";
     const devTarget = "http://3.39.0.208:8080/ws-stomp";
     const sock = new SockJS(devTarget);
     const ws = Stomp.over(sock);
@@ -24,10 +25,9 @@ const ChatingPage = (props) => {
 
     const [chatMessage, setChatMessage] = useState("");
     const [list, setList] = useState([]);
-    const [test, setTest] = useState('');
     const [roomId, setRoomId] = useState('faaa902e-f2d4-4221-a0ca-e413025f8834');
     const myToken = getCookie("Authorization")
-
+    console.log(myToken);
     useEffect(() => {
         connect(roomId);
         return() => {};
@@ -35,18 +35,31 @@ const ChatingPage = (props) => {
     
     // 소켓 연결
     const connect = (roomId) => {
-        ws.connect({}, function (frame) {
+        ws.connect({}
+            , function (frame) {
             ws.subscribe("/sub/chat/room/" + roomId, (message) => {
                 var recv = JSON.parse(message.body);
                 //채팅 내역 불러오기
                 getMessageList();
                 //소켓 연결 후 받은 채팅 출력
                 recvMessage(recv);
+            },
+            {
+                "Authorization": `Bearer ${myToken}`
             });
             ws.send(
                 "/pub/chat/message",
-                {},
-                JSON.stringify({type: 'ENTER', roomId: roomId, sender: userId, message: "구독!", createdAt: ''})
+                {
+                    "Authorization": `Bearer ${myToken}`
+                },
+                JSON.stringify({
+                    type: 'ENTER', 
+                    roomId: roomId, 
+                    sender: userId, 
+                    nickname : '',
+                    message: "구독!", 
+                    createdAt: ''
+                })
             )
         }, function (error) {
             if (reconnect++ < 5) {
@@ -66,22 +79,31 @@ const ChatingPage = (props) => {
     };
 
     // 메세지 보내기
-    const sendMessage = (test) => {
+    const sendMessage = (chatMessage) => {
         ws.send(
             "/pub/chat/message",
-            {},
-            JSON.stringify({type: 'TALK', roomId: roomId, sender: userId, message: test, createdAt: ''})
+            {
+                "Authorization": `Bearer ${myToken}`
+            },
+            JSON.stringify({
+                type: 'TALK', 
+                roomId: roomId, 
+                sender: userId,
+                nickname : '',
+                message: chatMessage, 
+                createdAt: ''})
         );
-        setTest("");
+        setChatMessage("");
     };
 
     // 메세지 받기
-    const recvMessage = (message) => {
+    const recvMessage = (res) => {
         setList((list) => [
             ...list, {
-                nick: message.sender,
-                text: message.message,
-                time : message.createdAt
+                nick: res.nickname,
+                userId : res.sender,
+                text: res.message,
+                time : res.createdAt
             }
         ]);
     }
@@ -101,7 +123,8 @@ const ChatingPage = (props) => {
                     .data
                     .map(obj => {
                         let newObj = {};
-                        newObj['nick'] = obj.sender;
+                        newObj['nick'] = obj.nickname;
+                        newObj['sender'] = obj.sender;
                         newObj['text'] = obj.message;
                         newObj['time'] = obj.createdAt;
                         return newObj;
@@ -115,7 +138,7 @@ const ChatingPage = (props) => {
         }
 
     const onChange = (e) => {
-        setTest(e.target.value);
+        setChatMessage(e.target.value);
     }
 
     return (
@@ -129,7 +152,7 @@ const ChatingPage = (props) => {
                     {
                         list.map((item, index) => {
                           var myMessage = 'left';
-                          if(item.nick === userId) myMessage = "right";
+                          if(item.sender === userId) myMessage = "right";
                             return (
                                 <ChatOnce key={index}>
                                     <ChatUser style={{float:myMessage}}>
@@ -147,11 +170,11 @@ const ChatingPage = (props) => {
                     <ChatInput
                         type="text"
                         placeholder="채팅을 입력해주세요"
-                        value={test}
+                        value={chatMessage}
                         onChange={onChange}/>
                     <ChatBtn
                         onClick={() => {
-                            sendMessage(test);
+                            sendMessage(chatMessage);
                         }}/>
                 </ChatInputMenu>
             </ChatDisplay>
