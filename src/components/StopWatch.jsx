@@ -1,17 +1,34 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Timer from "./Timer";
-import ControlButtons from "./ControlButtons";
+
+import { userCheckIn } from "../redux/modules/CheckIn";
+import { userCheckOut } from "../redux/modules/CheckIn";
+import { loadCheckIn } from "../redux/modules/CheckIn";
+
+import '../componentsCss/ControlButton.css'
+import { useDispatch, useSelector } from "react-redux";
+
   
-function StopWatch() {
+const StopWatch = () => {
+
+  // const timestamp = + new Date();
   
-  const timestamp = + new Date();
-  
-  console.log(timestamp.toLocaleString())
+  // console.log(timestamp.toLocaleString())
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(loadCheckIn());
+  },[]);
+
+  const checkInLog = useSelector((state) => state);
+
+  // console.log(checkInLog)
   
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
-  const [time, setTime] = useState(86400000);
+  const [time, setTime] = useState(0);
   
   React.useEffect(() => {
     let interval = null;
@@ -28,33 +45,32 @@ function StopWatch() {
     };
   }, [isActive, isPaused]);
   
-  const handleStart = () => {
-    setIsActive(true);
-    setIsPaused(false);
-  };
-  
-  const handlePauseResume = () => {
-    setIsPaused(!isPaused);
-  };
-  
-  const handleReset = () => {
-    setIsActive(false);
-    setTime(0);
-  };
-  
+
   return (
     <StopWatchDiv>
       <Timer time={time} />
-      <ControlButtons
-        active={isActive}
-        isPaused={isPaused}
-        handleStart={handleStart}
-        handlePauseResume={handlePauseResume}
-        handleReset={handleReset}
-      />
+      <div>
+        { isPaused === true 
+        ?
+        <div className="btn btn-one btn-start"
+        onClick={() => {
+          dispatch(userCheckIn());
+          setIsActive(true);
+          setIsPaused(!isPaused);
+        }}>start</div>
+        :
+        <div className="btn btn-one btn-start"
+        onClick={() => {
+          dispatch(userCheckOut());
+          setIsPaused(false);
+          setIsPaused(!isPaused);
+        }}>stop</div>
+        }
+        
+      </div>
     </StopWatchDiv>
   );
-}
+};
 
 const StopWatchDiv = styled.div`
   height: 25%;
@@ -63,5 +79,5 @@ const StopWatchDiv = styled.div`
   align-items: center;
   justify-content: space-between;
 `
-  
+
 export default StopWatch;

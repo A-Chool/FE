@@ -40,7 +40,7 @@ const __editUserList = createAction(EDIT_USER_LIST, (userId, userLevel) => ({use
 export const getUserList = () => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization",)
-    axios.get('http://13.124.226.148/api/admin/userList'
+    axios.get('http://3.39.0.208/api/admin/userList'
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -59,7 +59,7 @@ export const deleteUserList = (userId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `http://13.124.226.148/api/admin/${userId}`,     
+      url: `http://3.39.0.208/api/admin/${userId}`,     
       headers: {Authorization: `Bearer ${myToken}`},
     })
     .then((response) => {
@@ -78,7 +78,7 @@ export const editUserList = (userId, userLevel) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `http://13.124.226.148/api/admin/${userId}`,
+      url: `http://3.39.0.208/api/admin/${userId}`,
       data: {userLevel : userLevel},
       headers: {Authorization: `Bearer ${myToken}`},
     })
