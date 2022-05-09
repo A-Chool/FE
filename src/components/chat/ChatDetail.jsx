@@ -3,22 +3,22 @@ import styled from "styled-components";
 // 소켓 통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import { getUserId } from "../shared/Cookie";
-import { getCookie } from "../shared/Cookie";
+import { getUserId, getCookie } from "../../shared/Cookie";
 import axios from "axios";
-import SelectInput from "@mui/material/Select/SelectInput";
+import { toggleChatBox, loadChatList, setRoom } from "../../redux/modules/chat";
+import { useDispatch, useSelector } from "react-redux";
 
-//현재 백엔드분들이 만드신 서버내의 roomId 주소
-let stompClient;
+const ChatDetail = (props) => {
+  const room = useSelector((state) => state.chat.room);
 
-const ChatingPage = (props) => {
   const userId = getUserId();
 
   const [loaded, setLoaded] = useState(false);
   const [messages, setMessages] = useState([]);
   const [enterMsg, setEnterMsg] = useState(null);
   const [content, setContent] = useState("");
-  const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
+  const [roomId, setRoomId] = useState(null);
+  //   const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
   const myToken = getCookie("Authorization");
 
   const latestChatWrapRef = useRef();
@@ -41,7 +41,6 @@ const ChatingPage = (props) => {
           const recv = JSON.parse(message.body);
 
           //채팅 내역 불러오기
-          getMessageList();
           console.log(recv);
           // if (recv.type === "ENTER") {
           setLoaded(true);
@@ -115,8 +114,16 @@ const ChatingPage = (props) => {
   };
 
   useEffect(() => {
+    if (room?.roomId) setRoomId(room.roomId);
+  }, [room]);
+
+  useEffect(() => {
     connect(roomId);
-    return () => {};
+    getMessageList();
+    return () => {
+      setRoomId(null);
+      setLoaded(false);
+    };
   }, [roomId]);
 
   useEffect(() => {
@@ -124,69 +131,63 @@ const ChatingPage = (props) => {
   }, [enterMsg]);
 
   useEffect(() => {
-    if (messages.length > 0) latestChatWrapRef.current.scrollIntoView({ block: "end" });
+    // if (messages.length > 0) latestChatWrapRef.current.scrollIntoView({ block: "end" });
   }, [messages]);
 
   if (!userId) return <>로그인이 필요합니다.</>;
-
+  if (!room?.roomId) return <>연결된 방이 존재하지 않습니다.</>;
   return (
     <ChatDisplay>
       <ChatRoom>
-        <ChatRoomId>채팅방 이름</ChatRoomId>
-        <ChatRoomBtn onClick={ExitChat}>채팅 닫기</ChatRoomBtn>
+        <h3>{room.name}</h3>
       </ChatRoom>
       <ChatContents>
-        {/* {loaded ? ( */}
-        {messages.map((item, index) => {
-          return (
-            <ChatWrap key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
-              <ChatUser>{item.sender}</ChatUser>
-              <ChatMsg>{item.message}</ChatMsg>
-            </ChatWrap>
-          );
-        })}
+        {loaded ? (
+          messages?.length > 0 &&
+          messages.map((item, index) => {
+            return (
+              <div key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
+                <ChatUser>{item.sender}</ChatUser>
+                <ChatMsg>{item.message}</ChatMsg>
+              </div>
+            );
+          })
+        ) : (
+          <div style={{ textAlign: "center" }}>로딩중</div>
+        )}
       </ChatContents>
-      <ChatInputMenu>
+      {/* <ChatInputMenu>
         <ChatInput type="text" placeholder="채팅을 입력해주세요" value={content} onChange={handleChange} onKeyUp={handleKeyUp} />
         <ChatBtn disabled={!content} onClick={sendMessage}>
           전송
         </ChatBtn>
-      </ChatInputMenu>
+      </ChatInputMenu> */}
     </ChatDisplay>
   );
 };
 
 const ChatDisplay = styled.div`
+  flex: 1 1 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 40%;
-  height: 100vh;
-  position: fixed;
-  left: 0px;
 `;
 const ChatRoom = styled.div`
+  flex: 0;
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 10vh;
 `;
-const ChatRoomId = styled.div`
-  margin-left: 10px;
-  font-size: 25px;
-  font-weight: bold;
-`;
+
 const ChatRoomBtn = styled.button`
   width: 5vh;
   height: 5vh;
 `;
 const ChatContents = styled.div`
+  /* flex: 1 1 100%; */
   width: 100%;
-  height: 100%;
-  font-size: 15px;
-  overflow: auto;
+  height: 85vh;
+  overflow: scroll;
 `;
 const ChatWrap = styled.div`
   display: flex;
@@ -223,4 +224,4 @@ const ChatBtn = styled.button`
   outline: none;
 `;
 
-export default ChatingPage;
+export default ChatDetail;
