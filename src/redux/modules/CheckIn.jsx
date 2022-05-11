@@ -74,15 +74,6 @@ export const userCheckIn = (week) => {
     .then((res) => {
       console.log(res)
       dispatch(__userCheckIn(res.data))
-      axios.get(`http://3.39.0.208/api/checkInList/${week}`
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      )
-      .then((res) => {
-        dispatch(__loadCheckInList(res.data));
-      })
-      .catch((err)=> {
-        console.log(err);
-      })
     })
     .catch((err) => {
       console.log(err)
@@ -105,15 +96,6 @@ export const userCheckOut = (week) => {
     })
     .then((res) => {
       dispatch(__userCheckOut(res.data))
-      axios.get(`http://3.39.0.208/api/checkInList/${week}`
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      )
-      .then((res) => {
-        dispatch(__loadCheckInList(res.data));
-      })
-      .catch((err)=> {
-        console.log(err);
-      })
     })
     .catch((err) => {
       console.log(err)

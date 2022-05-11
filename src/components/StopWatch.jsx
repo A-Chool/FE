@@ -12,26 +12,17 @@ import { loadCheckList } from "../redux/modules/CheckIn";
   
 const StopWatch = (props) => {
 
-  const dispatch = useDispatch();
-  
+  const dispatch = useDispatch();  
+
   const [isActive, setIsActive] = useState(false);
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
-  
-
-  React.useEffect(() => {
-    dispatch(loadCheckList("1주차"));
-  },[]);
 
   const logList = useSelector((state) => state.CheckIn.checkIn);
 
   const logs = logList?.todayLog
   const logsa = logs?.[logs?.length-1].checkOut
-  console.log(logsa)
-
-  console.log(isActive)
-  console.log(isPaused)
-
+  
   React.useEffect(() => {
     let interval = null;
     
@@ -51,12 +42,15 @@ const StopWatch = (props) => {
     if (logsa === null){
       setIsActive(true);
       setIsPaused(!isPaused);
-    } 
-    else {
-      setIsActive(isActive);
-      setIsPaused(isPaused);
+    } else {
+      setIsActive(false);
+      setIsPaused(true);
     }
-  }, []);
+  }, [logsa]);
+
+  React.useEffect(() => {
+    dispatch(loadCheckList("1주차"));
+  },[]);
   
   return (
     <StopWatchDiv>
@@ -66,14 +60,14 @@ const StopWatch = (props) => {
         ?
         <div className="btn btn-one btn-start"
         onClick={() => {
-          dispatch(userCheckIn("1주차"));
+          dispatch(userCheckIn());
           setIsActive(true);
           setIsPaused(!isPaused);
         }}>start</div>
         :
         <div className="btn btn-one btn-start"
         onClick={() => {
-          dispatch(userCheckOut("1주차"));
+          dispatch(userCheckOut());
           setIsPaused(false);
           setIsPaused(!isPaused);
         }}>stop</div>
