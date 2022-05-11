@@ -9,23 +9,24 @@ import UserList from "./modules/UserList";
 import TeamList from "./modules/TeamList";
 import MemberList from "./modules/MemberList";
 import CheckIn from "./modules/CheckIn";
-// import chat from "./modules/chat";
-
+import TeamBoard from "./modules/TeamBoard";
+import chat from "./modules/chat";
 
 // history를 페이지에서 편하게 사용할 수 있도록 준비
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
   user: User,
-  UserList : UserList,
-  TeamList : TeamList,
-  MemberList : MemberList,
-  CheckIn : CheckIn,
+  UserList: UserList,
+  TeamList: TeamList,
+  MemberList: MemberList,
+  CheckIn: CheckIn,
+  TeamBoard: TeamBoard,
+  chat: chat,
   router: connectRouter(history),
-  
 });
 
-const middlewares = [thunk.withExtraArgument({history:history})];
+const middlewares = [thunk.withExtraArgument({ history: history })];
 
 // 지금이 어느 환경인 지 알려주는 것
 const env = process.env.NODE_ENV;
@@ -37,13 +38,9 @@ if (env === "development") {
 }
 
 // 리덕스 데브툴 설정하기
-const composeEnhancers =
-  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({
-      })
-    : compose;
+const composeEnhancers = typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
 
-// 미들웨어 묶기    
+// 미들웨어 묶기
 const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 
 // 스토어 만들기

@@ -40,11 +40,11 @@ const AdminSidebar = () => {
         <hr style={{width : '204px', border : "0.5px solid #BCC4CF"}}></hr>
 
         <div style={{width : '172px', height : '92px', margin : '32px 0 0 32px'}}>
-          <Link to="/AdminUserPage" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
+          <Link to="/admin/user" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
             <Adminmenu>유저관리</Adminmenu>
           </Link>
 
-          <Link to="/AdminTeamPage" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
+          <Link to="/admin/team" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
             <Adminmenu>팀관리</Adminmenu>
           </Link>
         </div>

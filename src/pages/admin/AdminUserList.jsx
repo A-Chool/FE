@@ -22,11 +22,12 @@ const AdminUserList = (props) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '13%',
+    width: '130px',
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: '2px solid #1F3A5E',
     boxShadow: 24,
     p: 4,
+    textAlign : 'center',
   };
   
   // Modal 온 오프 액션을 위한 스테이트
@@ -61,11 +62,11 @@ const AdminUserList = (props) => {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description">
                 <Box sx={style}>
-                  <Typography id="modal-modal-title" variant="h6" component="h2">권한 설정하기</Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    <input defaultValue={props.e.userLevel} onChange={handlesetLevel}></input>
-                    <button onClick={() => {dispatch(editUserList(props.e.userId, Number(Level)))}}>설정확인</button>
-                  </Typography>
+                    <ModalTitle>권한 설정하기</ModalTitle>
+                  
+                    <SetLevelInput defaultValue={props.e.userLevel} onChange={handlesetLevel}></SetLevelInput>
+                    <SetLevelBtn onClick={() => {dispatch(editUserList(props.e.userId, Number(Level)))}}>설정확인</SetLevelBtn>
+
                 </Box>
               </Modal>
             </div>
@@ -95,6 +96,28 @@ const DeleteSvg = styled.svg`
     width : 30px;
     margin : 5px auto;
   }
+`
+
+const ModalTitle = styled.p`
+  font-weight : 700;
+`
+
+const SetLevelInput = styled.input`
+  border : 2px solid #1F3A5E;
+  height : 30px;
+  width : 30px;
+  text-align : center;
+  margin-right : 10px; 
+`
+
+const SetLevelBtn = styled.button`
+  height : 40px;
+  width : 80px;
+  background: #1F3A5E;
+  border : none;
+  border-radius: 50px;
+  color : white;
+  font-weight : 700;
 `
 
 

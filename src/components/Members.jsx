@@ -7,20 +7,22 @@ const Members = (props) => {
   // DndTeamList 에서 props 로 데이터 받아옴
 
   return (
-    <Userdata>
-      {props.e.user.userName}
-    </Userdata>
+    <Userdata>{props.e.user.userName}</Userdata>
   );
 };
 
 const Userdata = styled.div`
-  width : 200px;
-  height : 30px;
-  border : 1px solid black;
-  border-radius : 5px;
-  margin-top : 10px;
-  text-align : center;
-  line-height : 30px;
+width: 120px;
+min-width : 120px;
+height: 40px;
+border: 1px solid rgba(31, 58, 94, 0.5);
+border-radius: 8px;
+font-weight: 700;
+font-size: 14px;
+line-height: 40px;
+text-align : center;
+margin : 0px 8px;
+display : inline-block;
 `
 
 export default Members;

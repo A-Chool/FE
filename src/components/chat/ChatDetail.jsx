@@ -3,22 +3,22 @@ import styled from "styled-components";
 // 소켓 통신
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
-import { getUserId } from "../shared/Cookie";
-import { getCookie } from "../shared/Cookie";
+import { getUserId, getCookie } from "../../shared/Cookie";
 import axios from "axios";
-import SelectInput from "@mui/material/Select/SelectInput";
+import { toggleChatBox, loadChatList, setRoom } from "../../redux/modules/chat";
+import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 
-//현재 백엔드분들이 만드신 서버내의 roomId 주소
-let stompClient;
+const ChatDetail = (props) => {
+  const room = useSelector((state) => state.chat.room);
 
-const ChatingPage = (props) => {
   const userId = getUserId();
 
   const [loaded, setLoaded] = useState(false);
   const [messages, setMessages] = useState([]);
   const [enterMsg, setEnterMsg] = useState(null);
   const [content, setContent] = useState("");
-  const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
+  //   const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
   const myToken = getCookie("Authorization");
 
   const latestChatWrapRef = useRef();
@@ -32,16 +32,15 @@ const ChatingPage = (props) => {
   let reconnect = 0;
 
   // 소켓 연결
-  const connect = (roomId) => {
+  const connect = () => {
     ws.connect(
       // {},
       { Authorization: `Bearer ${myToken}` },
       (frame) => {
-        ws.subscribe("/sub/chat/room/" + roomId, (message) => {
+        ws.subscribe("/sub/chat/room/" + room?.roomId, (message) => {
           const recv = JSON.parse(message.body);
 
           //채팅 내역 불러오기
-          getMessageList();
           console.log(recv);
           // if (recv.type === "ENTER") {
           setLoaded(true);
@@ -50,13 +49,14 @@ const ChatingPage = (props) => {
           //소켓 연결 후 받은 채팅 출력
           recvMessage(recv);
           // }
+          getMessageList();
         });
         ws.send(
           "/pub/chat/message",
           {
             Authorization: `Bearer ${myToken}`,
           },
-          JSON.stringify({ type: "ENTER", roomId: roomId, sender: userId, message: "구독!", createdAt: "" })
+          JSON.stringify({ type: "ENTER", roomId: room?.roomId, sender: userId, message: "구독!", createdAt: "" })
         );
       },
       (error) => {
@@ -72,14 +72,14 @@ const ChatingPage = (props) => {
     );
   };
   // 채팅방 입장시 사용하는 코드들
-
+  console.log(messages);
   const ExitChat = () => {
     console.log("exit");
   };
 
   // 메세지 보내기
   const sendMessage = () => {
-    ws.send("/pub/chat/message", { Authorization: `Bearer ${myToken}` }, JSON.stringify({ type: "TALK", roomId: roomId, sender: userId, message: content, createdAt: "" }));
+    ws.send("/pub/chat/message", { Authorization: `Bearer ${myToken}` }, JSON.stringify({ type: "TALK", roomId: room?.roomId, sender: userId, message: content, createdAt: "" }));
     setContent("");
   };
 
@@ -91,7 +91,7 @@ const ChatingPage = (props) => {
   // 저장된 메시지 출력
   const getMessageList = () => {
     axios
-      .get(`http://3.39.0.208:8080/chat/message/${roomId}`, {
+      .get(`http://3.39.0.208:8080/chat/message/${room?.roomId}`, {
         headers: {
           Authorization: `Bearer ${myToken}`,
         },
@@ -114,113 +114,132 @@ const ChatingPage = (props) => {
     }
   };
 
+  // useEffect(() => {
+  //   if (room?.roomId) setRoomId(room.roomId);
+  // }, [room]);
+
   useEffect(() => {
-    connect(roomId);
-    return () => {};
-  }, [roomId]);
+    connect();
+    return () => {
+      setLoaded(false);
+    };
+  }, [room?.roomId]);
 
   useEffect(() => {
     console.log(enterMsg?.message || "");
   }, [enterMsg]);
 
   useEffect(() => {
-    if (messages.length > 0) latestChatWrapRef.current.scrollIntoView({ block: "end" });
+    // if (messages.length > 0) latestChatWrapRef.current.scrollIntoView({ block: "end" });
   }, [messages]);
 
   if (!userId) return <>로그인이 필요합니다.</>;
+  if (!room?.roomId) return <>연결된 방이 존재하지 않습니다.</>;
 
   return (
     <ChatDisplay>
-      <ChatRoom>
-        <ChatRoomId>채팅방 이름</ChatRoomId>
-        <ChatRoomBtn onClick={ExitChat}>채팅 닫기</ChatRoomBtn>
-      </ChatRoom>
       <ChatContents>
-        {/* {loaded ? ( */}
-        {messages.map((item, index) => {
-          return (
-            <ChatWrap key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
-              <ChatUser>{item.sender}</ChatUser>
-              <ChatMsg>{item.message}</ChatMsg>
-            </ChatWrap>
-          );
-        })}
+        {loaded ? (
+          messages?.length > 0 &&
+          messages.map((item, index) => {
+            return (
+              <ChatWrap key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
+                <ChatUser>{item.sender}</ChatUser>
+                <ChatMsg self={item.sender === userId}>{item.message}</ChatMsg>
+                <Time dateTime={dayjs(item.createdAt).format("")}>{dayjs(item.createdAt).format("hh:mm a")}</Time>
+              </ChatWrap>
+            );
+          })
+        ) : (
+          <div style={{ textAlign: "center" }}>로딩중</div>
+        )}
       </ChatContents>
-      <ChatInputMenu>
+      <ChatInputArea>
         <ChatInput type="text" placeholder="채팅을 입력해주세요" value={content} onChange={handleChange} onKeyUp={handleKeyUp} />
         <ChatBtn disabled={!content} onClick={sendMessage}>
           전송
         </ChatBtn>
-      </ChatInputMenu>
+      </ChatInputArea>
     </ChatDisplay>
   );
 };
 
 const ChatDisplay = styled.div`
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  width: 40%;
-  height: 100vh;
-  position: fixed;
-  left: 0px;
-`;
-const ChatRoom = styled.div`
-  display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 10vh;
 `;
-const ChatRoomId = styled.div`
-  margin-left: 10px;
-  font-size: 25px;
-  font-weight: bold;
-`;
-const ChatRoomBtn = styled.button`
-  width: 5vh;
-  height: 5vh;
-`;
+
 const ChatContents = styled.div`
+  /* flex: 1 1 100%; */
   width: 100%;
-  height: 100%;
-  font-size: 15px;
-  overflow: auto;
+  overflow: scroll;
+  padding: 1rem;
+  box-sizing: border-box;
 `;
+
 const ChatWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => props.align};
-  margin: 1rem 0;
+  padding: 1rem 0;
+  box-sizing: border-box;
 `;
+
 const ChatUser = styled.div`
-  margin-left: 10px;
   font-weight: 700;
+  font-size: 0.8em;
 `;
 const ChatMsg = styled.div`
-  color: black;
-  margin-left: 10px;
+  padding: 0.8rem 1rem 0.8rem 0.8rem;
+  border-radius: ${(props) => (props.self ? " 2rem 0.5rem 2rem 2rem" : "0.5rem 2rem 2rem 2rem")};
+  background-color: ${(props) => (props.self ? "#ff5e00" : "#fff")};
+  border: ${(props) => (props.self ? "0" : "1px solid #ddd")};
+  color: ${(props) => (props.self ? "#fff" : "inherit")};
+  font-weight: 500;
+  margin: 0.25rem 0;
+  box-sizing: border-box;
 `;
-const ChatInputMenu = styled.div`
+
+const ChatInputArea = styled.div`
+  position: sticky;
+  bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  background-color: #ebe6e6;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  box-sizing: border-box;
+  z-index: 999;
+  background-color: #fff;
+  border-radius: 999rem;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
 `;
+
 const ChatInput = styled.input`
   width: 100%;
-  height: 100%;
   outline: none;
   background-color: transparent;
   border: 0;
-`;
-const ChatBtn = styled.button`
-  padding: 1rem;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-  width: max-content;
-  outline: none;
+  margin: 0.5rem;
 `;
 
-export default ChatingPage;
+const ChatBtn = styled.button`
+  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  width: max-content;
+  white-space: nowrap;
+  outline: none;
+  background-color: transparent;
+  border-radius: 999rem;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+`;
+
+const Time = styled.time`
+  font-size: 0.8em;
+  font-weight: 400;
+  color: #585858;
+`;
+
+export default ChatDetail;

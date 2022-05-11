@@ -10,16 +10,19 @@ const LOAD_CHECKIN = 'LOAD_CHECKIN';
 const USER_CHECKIN = 'USER_CHECKIN';
 const USER_CHECKOUT = 'USER_CHECKOUT';
 
+
 // 초기값
 const initialState ={
   checkInList : []
 }
+
 
 // 액션 생성 함수
 const __loadCheckInList = createAction(LOAD_CHECKIN_LIST, (checkInList) => ({checkInList}));
 const __loadCheckIn = createAction(LOAD_CHECKIN, (checkIn) => ({checkIn}));
 const __userCheckIn = createAction(USER_CHECKIN, (checkIn) => ({checkIn}));
 const __userCheckOut = createAction(USER_CHECKOUT, (checkOut) => ({checkOut}))
+
 
 // 미들웨어
 
@@ -39,6 +42,7 @@ export const loadCheckList = (week) => {
   }
 }
 
+// 체크인을 눌러놨다면 다시 접속했을때 기록을 띄워주는 미들웨어
 export const loadCheckIn = () => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
@@ -54,13 +58,21 @@ export const loadCheckIn = () => {
   }
 }
 
-export const userCheckIn = () => {
+// 체크인을 눌렀을 때 요청을 보내주는 미들웨어 
+export const userCheckIn = (week) => {
   return function (dispatch, getState, { history }){
     const myToken = getCookie("Authorization");
-    axios.post('http://3.39.0.208/api/checkIn',
-    {headers : {"Authorization" : `Bearer ${myToken}`}}
-    )
+    axios({
+      method: "post",
+      url: `http://3.39.0.208/api/checkIn`,
+      data: {
+      },
+      headers: {
+      Authorization: `Bearer ${myToken}`
+      },
+    })
     .then((res) => {
+      console.log(res)
       dispatch(__userCheckIn(res.data))
     })
     .catch((err) => {
@@ -69,12 +81,19 @@ export const userCheckIn = () => {
   }
 }
 
-export const userCheckOut = () => {
+// 체크아웃을 눌렀을 때 요청을 보내주는 미들웨어 
+export const userCheckOut = (week) => {
   return function (dispatch, getState, { history }){
     const myToken = getCookie("Authorization");
-    axios.post('http://3.39.0.208/api/checkOut',
-    {headers : {"Authorization" : `Bearer ${myToken}`}}
-    )
+    axios({
+      method: "post",
+      url: `http://3.39.0.208/api/checkOut`,
+      data: {
+      },
+      headers: {
+      Authorization: `Bearer ${myToken}`
+      },
+    })
     .then((res) => {
       dispatch(__userCheckOut(res.data))
     })
@@ -83,6 +102,7 @@ export const userCheckOut = () => {
     })
   }
 }
+
 
 // 리듀서
 export default handleActions(
@@ -95,14 +115,14 @@ export default handleActions(
     produce(state, (draft) => {
     draft.checkIn = action.payload.checkIn;  
     }),
-    [USER_CHECKIN]: (state, action) =>
-      produce(state, (draft) => {
-      draft.checkIn = action.payload.checkIn;  
-    }),
-    [USER_CHECKOUT]: (state, action) =>
-    produce(state, (draft) => {
-    draft.checkOut = action.payload.checkOut;  
-    }),
+    // [USER_CHECKIN]: (state, action) =>
+    //   produce(state, (draft) => {
+    //   draft.checkIn = action.payload.checkIn;  
+    // }),
+    // [USER_CHECKOUT]: (state, action) =>
+    // produce(state, (draft) => {
+    // draft.checkOut = action.payload.checkOut;  
+    // }),
   },
   initialState
 );

@@ -41,7 +41,7 @@ return function (dispatch, getState, { history }) {
       console.log(err);
     })
   }
-} 
+}
 
 // 팀 리스트 조회
 export const getTeamList = (week) => {
@@ -76,7 +76,6 @@ export const addTeamList = (teamName, week) => {
       },
     })
     .then((response) => {
-      console.log(response)
       dispatch(__addTeamList(teamName, week));
     })
     .catch((err) => {
