@@ -15,6 +15,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteMemberList } from '../redux/modules/MemberList';
 import { loadMemberList } from '../redux/modules/MemberList';
 
+import deleteUser from '../img/deleteUser.svg'
+import deleteuser from '../img/_btn_팀원삭제.svg'
+
 const DndTeamList = (props) => {
 
   const dispatch = useDispatch();
@@ -49,12 +52,14 @@ const DndTeamList = (props) => {
   // };
 
   return (
-    <>
-      <AddTeam>
-        <div>
-          {props.e.teamName}
-        </div>
+    <TemaList>
+      <TeamName>
+        {props.e.teamName}
+      </TeamName>
 
+      <MemberList>
+        <DeleteMember src={deleteuser} onClick={handleOpen}></DeleteMember>
+        
         {
           members.map((e, idx)=>{
             return(
@@ -62,73 +67,90 @@ const DndTeamList = (props) => {
             )
           })
         }
-        <AddMember onClick={handleOpen}>팀원 제거</AddMember>
-          <Modal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="modal-modal-title"
-            aria-describedby="modal-modal-description"
-          >
-            <Box sx={style}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                {props.e.teamName}
-              </Typography>
-              <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                유저명
-              </Typography>
-                {
-                  members.map((e, idx)=>{
-                    const user_id = e.user.userId
-                    return(
-                      <div key={idx} >
-                        <div style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}>
-                          <Members e={e}></Members>
-                            <button onClick={() => {dispatch(deleteMemberList(e.memberId, user_id))}}>제거</button>
-                        </div>
-                      </div>
-                    )
-                  })
-                }
-            </Box>
-          </Modal>
+      </MemberList>
+        
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description">
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+          {props.e.teamName}
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+          유저명
+          </Typography>
+          {
+            members.map((e, idx)=>{
+            const user_id = e.user.userId
+              return(
+                <div key={idx} >
+                  <div style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  }}>
+                  <Members e={e}></Members>
+                    <button onClick={() => {dispatch(deleteMemberList(e.memberId, user_id))}}>제거</button>
+                  </div>
+                </div>
+              )
+            })
+          }
+        </Box>
+      </Modal>
 
-      </AddTeam>
-    </>
+    </TemaList>
   );
 };
 
-const AddTeam = styled.div`
-width : 200px;
-height : 30px;
-border : 1px solid black;
-border-radius : 5px;
-margin-top : 10px;
-text-align : center;
-line-height : 30px;
-float : left;
-margin : 10px 10px;
-background-color : gray;
+const TemaList = styled.div`
+  background-color : white;
+  width : 1108px;
+  height: 72px;
+  margin : 0 32px 16px;
+  border-radius : 8px;
+  display : flex;
 `
 
-const AddMember = styled.button`
-width : 200px;
-height : 30px;
-border : 1px solid black;
-border-radius : 5px;
-margin-top : 10px;
-text-align : center;
-line-height : 30px;
-float : left;
-margin : 10px 0px;
-background-color : white;
-  &:hover {
-    background-color : gray;
-  }
+const TeamName = styled.div`
+  float : left;
+  width: 117px;
+  min-width : 117px;
+  height: 72px;
+  text-align : center;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 72px;
+  background: rgba(59, 135, 155, 0.3);
+  border-radius : 8px 0 0 8px;
+`
+
+const MemberList = styled.div`
+display : flex;
+border-radius : 0 8px 8px 0;
+padding : 16px 8px;
+overflow : hidden;
+overflow-x : scroll;
+&::-webkit-scrollbar {
+  height : 4px;
+}
+&::-webkit-scrollbar-thumb {
+  width : 100px;
+  background: #C4C4C4;
+  border-radius: 4px;
+}
+&::-webkit-scrollbar-track {
+  background: transition;
+}
+`
+
+const DeleteMember = styled.img`
+  height : 42px;
+  margin : 0px 8px;
+  float : left;
 `
 
 export default DndTeamList;

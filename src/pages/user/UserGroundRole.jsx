@@ -1,9 +1,32 @@
 import React from 'react';
 import styled from "styled-components";
+import { useDispatch } from 'react-redux';
 
-const UserGroundRole = () => {
+import { editGroundRule } from '../../redux/modules/TeamBoard';
+
+const UserGroundRole = (props) => {
+
+  const dispatch = useDispatch();
 
   const [update, setupdate] = React.useState(false);
+
+  const [rule, setRule] = React.useState();
+
+  const handleChange = (event) => {
+    setRule(event.target.value);
+  };
+
+  const groundRule = props.TeamBoard.groundRule
+  const weekTeamId = props.TeamBoard.teamId
+
+  const split = groundRule?.split("\n").map((line) => {
+    return (
+      <span>
+        {line}
+        <br />
+      </span>
+    );
+  })
 
   return (
     <>
@@ -20,14 +43,24 @@ const UserGroundRole = () => {
         </div>
         {
           update === false
-          ? <button style={{backgroundColor:"white", border:"none" }} onClick={()=>{setupdate(!update)}}>수정</button>
-          :<button style={{backgroundColor:"white", border:"none"}} onClick={() => {setupdate(!update)}}>수정완료</button>
+          ? <button 
+            style={{backgroundColor:"white", border:"none" }} 
+            onClick={()=>{
+            setupdate(!update)}
+            
+            }>수정</button>
+          :<button 
+            style={{backgroundColor:"white", border:"none"}} 
+            onClick={() => {
+            setupdate(!update)
+            dispatch(editGroundRule(weekTeamId, rule));
+          }}>수정완료</button>
         }    
       </div>
         {
           update === false
-          ? <Box>dfdfdfdfdfdf</Box>
-          :<UpdateBox></UpdateBox>
+          ? <Box>{split}</Box>
+          :<UpdateBox defaultValue={groundRule} onChange={handleChange}></UpdateBox>
         }    
 
     </>

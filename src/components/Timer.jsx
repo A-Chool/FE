@@ -1,17 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from 'styled-components';
 
+import { useDispatch, useSelector } from "react-redux";
+
+import { loadCheckIn } from "../redux/modules/CheckIn";
+
 const Timer = (props) => {
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(loadCheckIn())
+  },[]);
+
+    
+  const checkInLog = useSelector((state) => state.CheckIn.checkIn);
+  
+  const CheckInTime = checkInLog?.daySumTime
+  
+  const setCheckInTime = CheckInTime?.split(":")
+  
+  const hour = setCheckInTime?.[0]*3600000
+  const minute = setCheckInTime?.[1]*60000
+  const second = setCheckInTime?.[2]*1000
+  
+  const totalTime = hour + minute + second
+
+  const allTime = totalTime + props.time
+
   return (
     <TimerBox>
       <Times>
-        {("0" + Math.floor((props.time / 3600000) % 60)).slice(-2)}:
+        {("0" + Math.floor((allTime / 3600000) % 60)).slice(-2)}:
       </Times>
       <Times>
-        {("0" + Math.floor((props.time / 60000) % 60)).slice(-2)}:
+        {("0" + Math.floor((allTime / 60000) % 60)).slice(-2)}:
       </Times>
       <Times>
-        {("0" + Math.floor((props.time / 1000) % 60)).slice(-2)}
+        {("0" + Math.floor((allTime / 1000) % 60)).slice(-2)}
       </Times>
     </TimerBox>
   );

@@ -7,9 +7,15 @@ import onlineUser from "../assets/img/onlineUser.svg";
 import chatIcon from "../assets/img/chatIcon.svg";
 import { toggleChatBox } from "../redux/modules/chat";
 
-const UserSidebar = () => {
+const UserSidebar = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const arr = []
+
+  const boolen = props.teamList.map((e) => e.memberList.filter((w) => w.online === true))
+
+  console.log(boolen.map((a) => a.length))
 
   return (
     <Sidebar>
@@ -71,11 +77,11 @@ const UserSidebar = () => {
       <hr style={{ width: "204px", border: "0.5px solid #BCC4CF" }}></hr>
 
       <div style={{ width: "172px", height: "92px", margin: "32px 0 0 32px" }}>
-        <Link to="/UserCheckin" style={{ textDecoration: "none", color: "black", fontSize: "20px", fontWeight: "700" }}>
+        <Link to="check-in" style={{ textDecoration: "none", color: "black", fontSize: "20px", fontWeight: "700" }}>
           <Adminmenu>체크인</Adminmenu>
         </Link>
 
-        <Link to="/UserTeamBoard" style={{ textDecoration: "none", color: "black", fontSize: "20px", fontWeight: "700" }}>
+        <Link to="team-board" style={{ textDecoration: "none", color: "black", fontSize: "20px", fontWeight: "700" }}>
           <Adminmenu>팀보드</Adminmenu>
         </Link>
       </div>

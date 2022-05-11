@@ -1,9 +1,33 @@
 import React from 'react';
 import styled from "styled-components";
 
-const UserWorkSpace = () => {
+import { useDispatch } from 'react-redux';
+
+import { editWorkSpace } from '../../redux/modules/TeamBoard';
+
+const UserWorkSpace = (props) => {
+
+  const dispatch = useDispatch();
 
   const [update, setupdate] = React.useState(false);
+
+  const [work, setWork] = React.useState();
+
+  const handleChange = (event) => {
+    setWork(event.target.value);
+  };
+
+  const workSpace = props.TeamBoard.workSpace
+  const weekTeamId = props.TeamBoard.teamId
+
+  const split = workSpace?.split("\n").map((line) => {
+    return (
+      <span>
+        {line}
+        <br />
+      </span>
+    );
+  })
 
   return (
     <>
@@ -16,18 +40,28 @@ const UserWorkSpace = () => {
         alignItems: "center",
       }}>
         <div style={{float : "left"}}>
-          WorkSpace
+          워크 스페이스 
         </div>
         {
           update === false
-          ? <button style={{backgroundColor:"white", border:"none" }} onClick={()=>{setupdate(!update)}}>수정</button>
-          :<button style={{backgroundColor:"white", border:"none"}} onClick={() => {setupdate(!update)}}>수정완료</button>
+          ? <button 
+            style={{backgroundColor:"white", border:"none" }} 
+            onClick={()=>{
+            setupdate(!update)}
+            
+            }>수정</button>
+          :<button 
+            style={{backgroundColor:"white", border:"none"}} 
+            onClick={() => {
+            setupdate(!update)
+            dispatch(editWorkSpace(weekTeamId, work));
+          }}>수정완료</button>
         }    
       </div>
         {
           update === false
-          ? <Box></Box>
-          :<UpdateBox></UpdateBox>
+          ? <Box>{split}</Box>
+          :<UpdateBox defaultValue={workSpace} onChange={handleChange}></UpdateBox>
         }    
 
     </>

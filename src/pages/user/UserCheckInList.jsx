@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { borderRadius } from '@mui/system';
 
 const style = {
   position: 'absolute',
@@ -27,11 +28,12 @@ const UserCheckInList = (props) => {
   const handleClose = () => setOpen(false);
 
   return (
-    <UserTag>
-      <div>
-      <Log style={{backgroundColor : props.e.online === false ? '#C4C4C4' : 'blue'}}></Log>
+    <UserTag style={{
+      backgroundColor : props.e.online === false ? 'rgba(224, 224, 224, 0.5)' : props.e.lateCheck === false ? 'white' : 'rgba(242, 3, 3, 0.1)' ,
+      border : props.e.online === false ? '1.5px solid #C4C4C4' : props.e.lateCheck === false ? '1.5px solid #3B879B' : '1.5px solid #F20303' ,
+      borderRadius : '24px'
+      }}>
       <UserDetail onClick={handleOpen}>{props.e.userName}</UserDetail>
-
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
@@ -62,34 +64,21 @@ const UserCheckInList = (props) => {
           </Box>
         </Fade>
       </Modal>
-    </div>
     </UserTag>
   );
 };
 
 const UserTag = styled.div`
-  width : 95px;
-  height : 32px;
+  width : 120px;
+  height : 36px;
   float : left;
-  margin : 8px 16px;
-  font-size : 16px;
-  font-weight : 700;
-  align-items: center;
+  margin : 3.25px;
 `
 
 const UserDetail = styled.p`
-  align-items : center;
-  text-align : center;
-  margin : 5px;
-`
-
-const Log = styled.div`
-  width : 8px; 
-  height : 8px; 
-  float : left;
-  border-radius : 50px;
-  margin-top : 5px;
-  margin-left : 20px;
+  line-height : 9px;
+  font-weight : 700;
+  font-size : 14px;
 `
 
 export default UserCheckInList;

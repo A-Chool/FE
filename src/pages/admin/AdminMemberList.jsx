@@ -47,7 +47,7 @@ const AdminMemberList = (props) => {
 
   return (
     <>
-      <MemberName onClick={handleOpen}>{props.e.userName}</MemberName>
+      <Userdata onClick={handleOpen}>{props.e.userName}</Userdata>
       <Modal
       open={open} onClose={handleClose}
       aria-labelledby="modal-modal-title"
@@ -136,16 +136,18 @@ const MemberDiv = styled.div`
   float : right;
 `
 
-const MemberName = styled.div`
-  width : 100px;
-  height : 20px;
-  background-color : white;
-  border : 1px solid black;
-  float : left;
-  text-align : center;
-  @media screen and (max-width: 500px) {
-    background-color : red;
-  }
+const Userdata = styled.div`
+width: 110px;
+min-width : 115px;
+height: 40px;
+border: 1px solid rgba(31, 58, 94, 0.5);
+border-radius: 8px;
+font-weight: 700;
+font-size: 14px;
+line-height: 40px;
+text-align : center;
+margin : 8px 8px;
+display : inline-block;
 `
 
 export default AdminMemberList;
