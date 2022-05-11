@@ -1,5 +1,5 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { history } from "./redux/configureStore";
 import styled from "styled-components";
 
@@ -18,10 +18,18 @@ import AdminLogin from "./pages/AdminLogin";
 import KakaoOauth from "./shared/KakaoOauth";
 import ChatingPage from "./pages/ChatingPage";
 // import ChatRoom from "./pages/ChatRoom";
+import * as dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
 
 import ChatContainer from "./components/chat/ChatContainer";
 
 function App() {
+  useEffect(() => {
+    dayjs.extend(relativeTime);
+    dayjs.locale("ko");
+  }, []);
+
   return (
     <ContentWrap>
       <ChatContainer />

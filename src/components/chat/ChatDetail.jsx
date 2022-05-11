@@ -7,6 +7,7 @@ import { getUserId, getCookie } from "../../shared/Cookie";
 import axios from "axios";
 import { toggleChatBox, loadChatList, setRoom } from "../../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 
 const ChatDetail = (props) => {
   const room = useSelector((state) => state.chat.room);
@@ -17,7 +18,6 @@ const ChatDetail = (props) => {
   const [messages, setMessages] = useState([]);
   const [enterMsg, setEnterMsg] = useState(null);
   const [content, setContent] = useState("");
-  const [roomId, setRoomId] = useState(null);
   //   const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
   const myToken = getCookie("Authorization");
 
@@ -32,12 +32,12 @@ const ChatDetail = (props) => {
   let reconnect = 0;
 
   // 소켓 연결
-  const connect = (roomId) => {
+  const connect = () => {
     ws.connect(
       // {},
       { Authorization: `Bearer ${myToken}` },
       (frame) => {
-        ws.subscribe("/sub/chat/room/" + roomId, (message) => {
+        ws.subscribe("/sub/chat/room/" + room?.roomId, (message) => {
           const recv = JSON.parse(message.body);
 
           //채팅 내역 불러오기
@@ -49,13 +49,14 @@ const ChatDetail = (props) => {
           //소켓 연결 후 받은 채팅 출력
           recvMessage(recv);
           // }
+          getMessageList();
         });
         ws.send(
           "/pub/chat/message",
           {
             Authorization: `Bearer ${myToken}`,
           },
-          JSON.stringify({ type: "ENTER", roomId: roomId, sender: userId, message: "구독!", createdAt: "" })
+          JSON.stringify({ type: "ENTER", roomId: room?.roomId, sender: userId, message: "구독!", createdAt: "" })
         );
       },
       (error) => {
@@ -71,14 +72,14 @@ const ChatDetail = (props) => {
     );
   };
   // 채팅방 입장시 사용하는 코드들
-
+  console.log(messages);
   const ExitChat = () => {
     console.log("exit");
   };
 
   // 메세지 보내기
   const sendMessage = () => {
-    ws.send("/pub/chat/message", { Authorization: `Bearer ${myToken}` }, JSON.stringify({ type: "TALK", roomId: roomId, sender: userId, message: content, createdAt: "" }));
+    ws.send("/pub/chat/message", { Authorization: `Bearer ${myToken}` }, JSON.stringify({ type: "TALK", roomId: room?.roomId, sender: userId, message: content, createdAt: "" }));
     setContent("");
   };
 
@@ -90,7 +91,7 @@ const ChatDetail = (props) => {
   // 저장된 메시지 출력
   const getMessageList = () => {
     axios
-      .get(`http://3.39.0.208:8080/chat/message/${roomId}`, {
+      .get(`http://3.39.0.208:8080/chat/message/${room?.roomId}`, {
         headers: {
           Authorization: `Bearer ${myToken}`,
         },
@@ -113,18 +114,16 @@ const ChatDetail = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (room?.roomId) setRoomId(room.roomId);
-  }, [room]);
+  // useEffect(() => {
+  //   if (room?.roomId) setRoomId(room.roomId);
+  // }, [room]);
 
   useEffect(() => {
-    connect(roomId);
-    getMessageList();
+    connect();
     return () => {
-      setRoomId(null);
       setLoaded(false);
     };
-  }, [roomId]);
+  }, [room?.roomId]);
 
   useEffect(() => {
     console.log(enterMsg?.message || "");
@@ -139,90 +138,108 @@ const ChatDetail = (props) => {
 
   return (
     <ChatDisplay>
-      <ChatRoom>
-        <h3>{room.name}</h3>
-      </ChatRoom>
       <ChatContents>
         {loaded ? (
           messages?.length > 0 &&
           messages.map((item, index) => {
             return (
-              <div key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
+              <ChatWrap key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
                 <ChatUser>{item.sender}</ChatUser>
-                <ChatMsg>{item.message}</ChatMsg>
-              </div>
+                <ChatMsg self={item.sender === userId}>{item.message}</ChatMsg>
+                <Time dateTime={dayjs(item.createdAt).format("")}>{dayjs(item.createdAt).format("hh:mm a")}</Time>
+              </ChatWrap>
             );
           })
         ) : (
           <div style={{ textAlign: "center" }}>로딩중</div>
         )}
       </ChatContents>
-      {/* <ChatInputMenu>
+      <ChatInputArea>
         <ChatInput type="text" placeholder="채팅을 입력해주세요" value={content} onChange={handleChange} onKeyUp={handleKeyUp} />
         <ChatBtn disabled={!content} onClick={sendMessage}>
           전송
         </ChatBtn>
-      </ChatInputMenu> */}
+      </ChatInputArea>
     </ChatDisplay>
   );
 };
 
 const ChatDisplay = styled.div`
-  flex: 1 1 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-`;
-const ChatRoom = styled.div`
-  flex: 0;
-  display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
 `;
 
-const ChatRoomBtn = styled.button`
-  width: 5vh;
-  height: 5vh;
-`;
 const ChatContents = styled.div`
   /* flex: 1 1 100%; */
   width: 100%;
-  height: 85vh;
   overflow: scroll;
+  padding: 1rem;
+  box-sizing: border-box;
 `;
+
 const ChatWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => props.align};
-  margin: 1rem 0;
+  padding: 1rem 0;
+  box-sizing: border-box;
 `;
+
 const ChatUser = styled.div`
-  margin-left: 10px;
   font-weight: 700;
+  font-size: 0.8em;
 `;
 const ChatMsg = styled.div`
-  color: black;
-  margin-left: 10px;
+  padding: 0.8rem 1rem 0.8rem 0.8rem;
+  border-radius: ${(props) => (props.self ? " 2rem 0.5rem 2rem 2rem" : "0.5rem 2rem 2rem 2rem")};
+  background-color: ${(props) => (props.self ? "#ff5e00" : "#fff")};
+  border: ${(props) => (props.self ? "0" : "1px solid #ddd")};
+  color: ${(props) => (props.self ? "#fff" : "inherit")};
+  font-weight: 500;
+  margin: 0.25rem 0;
+  box-sizing: border-box;
 `;
-const ChatInputMenu = styled.div`
+
+const ChatInputArea = styled.div`
+  position: sticky;
+  bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
-  background-color: #ebe6e6;
+  margin: 0.5rem 0.5rem 0 0.5rem;
+  box-sizing: border-box;
+  z-index: 999;
+  background-color: #fff;
+  border-radius: 999rem;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
 `;
+
 const ChatInput = styled.input`
   width: 100%;
-  height: 100%;
   outline: none;
   background-color: transparent;
   border: 0;
+  margin: 0.5rem;
 `;
+
 const ChatBtn = styled.button`
-  padding: 1rem;
   cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   width: max-content;
+  white-space: nowrap;
   outline: none;
+  background-color: transparent;
+  border-radius: 999rem;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+`;
+
+const Time = styled.time`
+  font-size: 0.8em;
+  font-weight: 400;
+  color: #585858;
 `;
 
 export default ChatDetail;
