@@ -1,24 +1,23 @@
-import React ,{ useState } from 'react';
+import React, { useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
-import UserSidebar from '../../components/UserSideBar';
-import StopWatch from '../../components/StopWatch';
-import UserTeamList from './UserTeamList';
+import UserSidebar from "../../components/UserSideBar";
+import StopWatch from "../../components/StopWatch";
+import UserTeamList from "./UserTeamList";
 
-import mascot from '../../img/mascot.svg';
-import studyData from '../../img/studydata.svg';
+import mascot from "../../assets/img/mascot.svg";
+import studyData from "../../assets/img/studydata.svg";
 
-import { loadCheckList } from '../../redux/modules/CheckIn';
+import { loadCheckList } from "../../redux/modules/CheckIn";
 
 const UserCheckIn = () => {
-
   const dispatch = useDispatch();
 
   // checkInList 조회를 위한 useEffect
   React.useEffect(() => {
     dispatch(loadCheckList("1주차"));
-  },[]);
+  }, []);
 
   const teamList = useSelector((state) => state.CheckIn.checkInList);
 
@@ -26,16 +25,16 @@ const UserCheckIn = () => {
 
   return (
     <React.Fragment>
-      <div style={{display : 'flex'}}>
+      <div style={{ display: "flex" }}>
         <BackgroundDiv>
-          <UserSidebar />
+          <UserSidebar teamList={teamList}/>
             <UpDataBox>
               <UpDataLeftBox>
                 <img src={mascot} style={{height : 'auto' ,margin : '30px 39px', float : 'left'}}></img>
                 <StudyData>
                   <div style={{height : '70%'}}>
                     <p style={{fontSize : '14px', fontWeight : '400'}}>
-                      홍길동님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>000</span> 시간 <br />학습하셨어요!
+                      홍길동님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>{logList?.totalSumTime}</span> 시간 <br />학습하셨어요!
                     </p>
                   </div>
                   <div style={{marginLeft : '55%'}}>
@@ -75,45 +74,45 @@ const BackgroundDiv = styled.div`
 `
 
 const UpDataBox = styled.div`
-  height : 23%;
-  margin-top : 4%;
-  display : flex;
+  height: 23%;
+  margin-top: 4%;
+  display: flex;
   // background-color : gray;
-`
+`;
 
 const UpDataLeftBox = styled.div`
-  width : 50%;
-  height : 100%;
-  float : left;
-  display : flex;
+  width: 50%;
+  height: 100%;
+  float: left;
+  display: flex;
   align-items: center;
-`
+`;
 
 const UpDataRightBox = styled.div`
-  width : 50%;
-  height : 100%;
-  float : left;
+  width: 50%;
+  height: 100%;
+  float: left;
   // display : flex;
   // align-items: center;
-`
+`;
 
 const StudyData = styled.div`
-  height : 140px;
-  width : 400px;
-  float : left;
+  height: 140px;
+  width: 400px;
+  float: left;
   box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
-  background-color : white;
-  border-radius : 40px;
-  padding : 20px;
-`
+  background-color: white;
+  border-radius: 40px;
+  padding: 20px;
+`;
 
 const CheckInList = styled.div`
   width : auto;
   height : 450px;
   margin-top : 40px;
   text-align: center;
-  overflow : scroll;
-  overflow-x : hidden;
+  overflow: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
     width: 7px;
   }
@@ -132,6 +131,6 @@ const CheckInList = styled.div`
   @media screen and (min-width: 2560px) {
     height: 750px;
   }
-`
+`;
 
 export default UserCheckIn;

@@ -49,7 +49,7 @@ const loginDB = (userId, password) => {
         // localStorage.setItem("userId", userId);
         setCookie("userToken", ACCESS_TOKEN);
         setCookie("userId", userId);
-        history.replace("/AdminUserPage");
+        history.replace("/check-in");
       })
       .catch((error) => {
         window.alert("아이디 또는 비밀번호를 확인해주세요.");
