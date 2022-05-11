@@ -16,6 +16,7 @@ import { deleteMemberList } from '../redux/modules/MemberList';
 import { loadMemberList } from '../redux/modules/MemberList';
 
 import deleteUser from '../img/deleteUser.svg'
+import deleteuser from '../img/_btn_팀원삭제.svg'
 
 const DndTeamList = (props) => {
 
@@ -57,7 +58,7 @@ const DndTeamList = (props) => {
       </TeamName>
 
       <MemberList>
-        <DeleteMember src={deleteUser} onClick={handleOpen}></DeleteMember>
+        <DeleteMember src={deleteuser} onClick={handleOpen}></DeleteMember>
         
         {
           members.map((e, idx)=>{
@@ -117,6 +118,7 @@ const TemaList = styled.div`
 const TeamName = styled.div`
   float : left;
   width: 117px;
+  min-width : 117px;
   height: 72px;
   text-align : center;
   font-weight: 700;
@@ -146,6 +148,7 @@ overflow-x : scroll;
 `
 
 const DeleteMember = styled.img`
+  height : 42px;
   margin : 0px 8px;
   float : left;
 `

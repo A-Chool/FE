@@ -72,7 +72,7 @@ const UserTag = styled.div`
   height : 32px;
   float : left;
   margin : 8px 16px;
-  font-size : 16px;
+  font-size : 14px;
   font-weight : 700;
   align-items: center;
 `

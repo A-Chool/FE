@@ -59,14 +59,30 @@ export const loadCheckIn = () => {
 }
 
 // 체크인을 눌렀을 때 요청을 보내주는 미들웨어 
-export const userCheckIn = () => {
+export const userCheckIn = (week) => {
   return function (dispatch, getState, { history }){
     const myToken = getCookie("Authorization");
-    axios.post('http://3.39.0.208/api/checkIn',
-    {headers : {"Authorization" : `Bearer ${myToken}`}}
-    )
+    axios({
+      method: "post",
+      url: `http://3.39.0.208/api/checkIn`,
+      data: {
+      },
+      headers: {
+      Authorization: `Bearer ${myToken}`
+      },
+    })
     .then((res) => {
+      console.log(res)
       dispatch(__userCheckIn(res.data))
+      axios.get(`http://3.39.0.208/api/checkInList/${week}`
+      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
+      )
+      .then((res) => {
+        dispatch(__loadCheckInList(res.data));
+      })
+      .catch((err)=> {
+        console.log(err);
+      })
     })
     .catch((err) => {
       console.log(err)
@@ -75,14 +91,29 @@ export const userCheckIn = () => {
 }
 
 // 체크아웃을 눌렀을 때 요청을 보내주는 미들웨어 
-export const userCheckOut = () => {
+export const userCheckOut = (week) => {
   return function (dispatch, getState, { history }){
     const myToken = getCookie("Authorization");
-    axios.post('http://3.39.0.208/api/checkOut',
-    {headers : {"Authorization" : `Bearer ${myToken}`}}
-    )
+    axios({
+      method: "post",
+      url: `http://3.39.0.208/api/checkOut`,
+      data: {
+      },
+      headers: {
+      Authorization: `Bearer ${myToken}`
+      },
+    })
     .then((res) => {
       dispatch(__userCheckOut(res.data))
+      axios.get(`http://3.39.0.208/api/checkInList/${week}`
+      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
+      )
+      .then((res) => {
+        dispatch(__loadCheckInList(res.data));
+      })
+      .catch((err)=> {
+        console.log(err);
+      })
     })
     .catch((err) => {
       console.log(err)
@@ -98,10 +129,10 @@ export default handleActions(
       produce(state, (draft) => {
       draft.checkInList = action.payload.checkInList;  
     }),
-    // [LOAD_CHECKIN]: (state, action) =>
-    // produce(state, (draft) => {
-    // draft.checkIn = action.payload.checkIn;  
-    // }),
+    [LOAD_CHECKIN]: (state, action) =>
+    produce(state, (draft) => {
+    draft.checkIn = action.payload.checkIn;  
+    }),
     // [USER_CHECKIN]: (state, action) =>
     //   produce(state, (draft) => {
     //   draft.checkIn = action.payload.checkIn;  

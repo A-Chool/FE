@@ -22,7 +22,7 @@ const UserTeamList = (props) => {
 };
 
 const TeamTable = styled.div`
-  height : 204px;
+  height : 198px;
   width : 259px;
   background: #FFFFFF;
   border: 1px solid #E0E0E0;
@@ -39,6 +39,10 @@ const TeamTable = styled.div`
     background: black;
     border-radius: 50px;
   }
+  @media screen and (min-width: 2560px) {
+    width : 384px;
+    height : 325px;
+  }
 `
 
 const TeamNameTable = styled.div`
@@ -51,7 +55,13 @@ const TeamNameTable = styled.div`
   font-size: 16px;
   line-height: 40px;
   color: #FFFFFF;
-  margin-bottom : 10px
+  margin-bottom : 10px;
+  @media screen and (min-width: 2560px) {
+    width : 384px;
+    height: 60px;
+    font-size: 22px;
+    line-height: 60px;
+  }
 `
 
 export default UserTeamList;

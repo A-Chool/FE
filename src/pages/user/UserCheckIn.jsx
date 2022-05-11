@@ -22,6 +22,8 @@ const UserCheckIn = () => {
 
   const teamList = useSelector((state) => state.CheckIn.checkInList);
 
+  const logList = useSelector((state) => state.CheckIn.checkIn);
+
   return (
     <React.Fragment>
       <div style={{display : 'flex'}}>
@@ -32,18 +34,18 @@ const UserCheckIn = () => {
                 <img src={mascot} style={{height : 'auto' ,margin : '30px 39px', float : 'left'}}></img>
                 <StudyData>
                   <div style={{height : '70%'}}>
-                    <p style={{fontSize : '26px', fontWeight : '400'}}>
+                    <p style={{fontSize : '14px', fontWeight : '400'}}>
                       홍길동님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>000</span> 시간 <br />학습하셨어요!
                     </p>
                   </div>
                   <div style={{marginLeft : '55%'}}>
-                    <img src={studyData} style={{}}></img>
+                    <img src={studyData}></img>
                   </div>
                 </StudyData>
               </UpDataLeftBox>
               
               <UpDataRightBox>
-                <StopWatch>
+                <StopWatch logList={logList}>
                 </StopWatch>  
               </UpDataRightBox>
 
@@ -66,6 +68,7 @@ const UserCheckIn = () => {
 
 const BackgroundDiv = styled.div`
   height : 100vh;
+  min-width : 1440px;
   float : left;
   background-color : #F4F6F9;
   flex-grow : 1;
@@ -106,7 +109,8 @@ const StudyData = styled.div`
 
 const CheckInList = styled.div`
   width : auto;
-  height : 800px;
+  height : 450px;
+  margin-top : 40px;
   text-align: center;
   overflow : scroll;
   overflow-x : hidden;
@@ -121,12 +125,12 @@ const CheckInList = styled.div`
   &::-webkit-scrollbar-track {
     background: transition;
   }
-  @media screen and (max-height: 1000px) {
-    margin-top : 30px;
-    height : 400px;
+  @media screen and (min-width: 1920px) {
+    margin-top : 80px;
+    height : 450px;
   }
-  @media screen and (max-height: 650px) {
-    height : 200px;
+  @media screen and (min-width: 2560px) {
+    height: 750px;
   }
 `
 

@@ -98,7 +98,7 @@ const AdminTeamPage = () => {
     setTeamName(e.target.value)
   }
 
-  const [test, setTest] = React.useState(false);
+  const [test, setTest] = React.useState(true);
 
   return (
 
@@ -188,6 +188,13 @@ const AdminTeamPage = () => {
               <AddMember>
                 <OpenBtn src={addMember} onClick={() => {setTest(!test)}}/>
               </AddMember>
+              {
+                memberList.map((e, idx)=>{
+                  return(
+                  <AdminMemberList key={idx} e={e} teamList={teamList} week={week}/>
+                  )
+                })
+              }
             </MemberDivOff>
           }
           {/* <MemberDiv>
@@ -324,11 +331,7 @@ const MemberDivOff = styled.div`
   bottom : 46px;
   right : -684px;
   border-radius: 24px 0px 0px 24px;
-  opacity : 0.6;
   transition : 300ms ease-in-out;
-  &:hover {
-    opacity : 1;
-  }
   -webkit-animation: slide-in-right 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   animation: slide-in-right 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   @-webkit-keyframes slide-in-right {
