@@ -12,7 +12,7 @@ const ChatItem = (props) => {
   return (
     <ChatItemWrap onClick={() => dispatch(setRoom(props.room))}>
       <div>{props.room?.name}</div>
-      <div>{props.room?.lastMessage}</div>
+      {/* <div>{props.room?.lastMessage}</div> */}
     </ChatItemWrap>
   );
 };
