@@ -136,6 +136,7 @@ const ChatDetail = (props) => {
 
   if (!userId) return <>로그인이 필요합니다.</>;
   if (!room?.roomId) return <>연결된 방이 존재하지 않습니다.</>;
+
   return (
     <ChatDisplay>
       <ChatRoom>

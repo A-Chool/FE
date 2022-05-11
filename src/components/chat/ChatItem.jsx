@@ -7,7 +7,14 @@ import { useDispatch } from "react-redux";
 const ChatItem = (props) => {
   const dispatch = useDispatch();
 
-  return <ChatItemWrap onClick={() => dispatch(setRoom(props.room))}>{props.room?.name}</ChatItemWrap>;
+  console.log(props);
+
+  return (
+    <ChatItemWrap onClick={() => dispatch(setRoom(props.room))}>
+      <div>{props.room?.name}</div>
+      <div>{props.room?.lastMessage}</div>
+    </ChatItemWrap>
+  );
 };
 
 const ChatItemWrap = styled.div`
