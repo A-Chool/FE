@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 
 import AdminSidebar from "./AdminSideBar";
-import {getUserList} from "../../redux/modules/UserList"
+import {getUserList} from "../../redux/modules/userList"
 import AdminUserList from "./AdminUserList";
 
 const AdminUserPage = () => {
@@ -16,7 +16,7 @@ const AdminUserPage = () => {
   },[]);
 
   // 받아온 값에서 필요한 값 꺼내오기
-  const userList = useSelector((state) => state.UserList.user_List);
+  const userList = useSelector((state) => state.userList.user_List);
 
   return (
     <React.Fragment>

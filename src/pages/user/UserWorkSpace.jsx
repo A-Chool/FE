@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import { useDispatch } from 'react-redux';
 
-import { editWorkSpace } from '../../redux/modules/TeamBoard';
+import { editWorkSpace } from '../../redux/modules/teamBoard';
 
 const UserWorkSpace = (props) => {
 

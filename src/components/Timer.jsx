@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { useDispatch, useSelector } from "react-redux";
 
-import { loadCheckIn } from "../redux/modules/CheckIn";
+import { loadCheckIn } from "../redux/modules/checkIn";
 
 const Timer = (props) => {
 
@@ -14,7 +14,7 @@ const Timer = (props) => {
   },[]);
 
     
-  const checkInLog = useSelector((state) => state.CheckIn.checkIn);
+  const checkInLog = useSelector((state) => state.checkIn.checkIn);
   
   const CheckInTime = checkInLog?.daySumTime
   

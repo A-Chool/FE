@@ -12,11 +12,11 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMemberList } from '../redux/modules/MemberList';
-import { loadMemberList } from '../redux/modules/MemberList';
+import { deleteMemberList } from '../redux/modules/memberList';
+import { loadMemberList } from '../redux/modules/memberList';
 
-import deleteUser from '../img/deleteUser.svg'
-import deleteuser from '../img/_btn_팀원삭제.svg'
+import deleteUser from './../assets/img/deleteUser.svg'
+import deleteuser from './../assets/img/deleteUser.svg'
 
 const DndTeamList = (props) => {
 

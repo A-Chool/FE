@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Timer from "./Timer";
 
-import { userCheckIn } from "../redux/modules/CheckIn";
-import { userCheckOut } from "../redux/modules/CheckIn";
+import { userCheckIn } from "../redux/modules/checkIn";
+import { userCheckOut } from "../redux/modules/checkIn";
 
 import '../componentsCss/ControlButton.css'
 import { useDispatch, useSelector } from "react-redux";
-import { loadCheckList } from "../redux/modules/CheckIn";
+import { loadCheckList } from "../redux/modules/checkIn";
 
   
 const StopWatch = (props) => {
@@ -18,10 +18,10 @@ const StopWatch = (props) => {
   const [isPaused, setIsPaused] = useState(true);
   const [time, setTime] = useState(0);
 
-  const logList = useSelector((state) => state.CheckIn.checkIn);
+  const logList = useSelector((state) => state.checkIn.checkIn);
 
   const logs = logList?.todayLog
-  const logsa = logs?.[logs?.length-1].checkOut
+  const logsa = logs?.length === 0 ? logs?.[logs?.length-1] : logs?.[logs?.length-1].checkOut
   
   React.useEffect(() => {
     let interval = null;

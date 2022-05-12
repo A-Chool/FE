@@ -8,18 +8,19 @@ import chatIcon from "../assets/img/chatIcon.svg";
 import { toggleChatBox } from "../redux/modules/chat";
 
 const UserSidebar = (props) => {
+  
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const arr = []
-
   const boolen = props.teamList.map((e) => e.memberList.filter((w) => w.online === true))
-
-  console.log(boolen.map((a) => a.length))
+  
+  const totalOnlineUser = boolen?.map?.((a) => a.length).reduce( (a, b) => {
+    return a + b;
+  }, 0);
 
   return (
     <Sidebar>
-      <AdminLogo onClick={() => history.push("/UserCheckin")}>
+      <AdminLogo onClick={() => history.push("/check-in")}>
         <svg width="161" height="65" viewBox="0 0 161 65" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M70.61 40.46C70.61 48.425 75.74 52.565 83.12 52.565C90.5 52.565 95.585 48.425 95.585 40.46V23.99C95.585 16.025 90.5 11.885 83.12 11.885C75.74 11.885 70.61 16.025 70.61 23.99V40.46ZM100.13 53.42H109.04V34.745H110.525C113.225 34.745 114.08 32.675 114.08 30.83C114.08 29.03 113.27 26.915 110.525 26.915H109.04V15.53C109.04 12.695 106.88 11.165 104.585 11.165C102.245 11.165 100.13 12.65 100.13 15.53V53.42ZM79.43 23.765C79.43 20.75 80.96 19.265 83.12 19.265C85.28 19.265 86.81 20.75 86.81 23.765V40.685C86.81 43.745 85.28 45.185 83.12 45.185C80.96 45.185 79.43 43.745 79.43 40.685V23.765Z"
@@ -92,7 +93,7 @@ const UserSidebar = (props) => {
       <LogOutBtn>로그아웃</LogOutBtn>
       <UnderFn>
         <img alt="Access Users Icon" src={onlineUser} style={{ margin: "0 8px 0 35px", float: "left" }} />
-        <p style={{ fontSize: "14px", lineHeight: "15px", float: "left" }}>00명</p>
+        <p style={{ fontSize: "14px", lineHeight: "15px", float: "left" }}>{totalOnlineUser}명</p>
         <img onClick={() => dispatch(toggleChatBox())} alt="Chat Icon" src={chatIcon} style={{ margin: "0 0 0 40px", float: "left", cursor: "pointer" }} />
       </UnderFn>
     </Sidebar>

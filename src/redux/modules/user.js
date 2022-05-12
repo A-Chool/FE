@@ -37,7 +37,7 @@ const loginDB = (userId, password) => {
         password: password,
       })
       .then((response) => {
-        console.log(response);
+        console.log(response); 
         dispatch(
           logIn({
             is_login: true,

@@ -9,7 +9,7 @@ import UserTeamList from "./UserTeamList";
 import mascot from "../../assets/img/mascot.svg";
 import studyData from "../../assets/img/studydata.svg";
 
-import { loadCheckList } from "../../redux/modules/CheckIn";
+import { loadCheckList } from "../../redux/modules/checkIn";
 
 const UserCheckIn = () => {
   const dispatch = useDispatch();
@@ -19,9 +19,9 @@ const UserCheckIn = () => {
     dispatch(loadCheckList("1주차"));
   }, []);
 
-  const teamList = useSelector((state) => state.CheckIn.checkInList);
+  const teamList = useSelector((state) => state.checkIn.checkInList);
 
-  const logList = useSelector((state) => state.CheckIn.checkIn);
+  const logList = useSelector((state) => state.checkIn.checkIn);
 
   return (
     <React.Fragment>

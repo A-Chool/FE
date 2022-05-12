@@ -6,15 +6,15 @@ import AdminSidebar from "./AdminSideBar";
 import DndTeamList from '../../components/DndTeamList';
 import AdminMemberList from './AdminMemberList';
 import { useDispatch, useSelector } from 'react-redux';
-import { getTeamList } from '../../redux/modules/TeamList';
-import { addTeamList } from '../../redux/modules/TeamList';
-import { getWeekList } from '../../redux/modules/TeamList';
-import { deleteTeamList } from '../../redux/modules/TeamList';
-import { loadMemberList } from '../../redux/modules/MemberList';
+import { getTeamList } from '../../redux/modules/teamList';
+import { addTeamList } from '../../redux/modules/teamList';
+import { getWeekList } from '../../redux/modules/teamList';
+import { deleteTeamList } from '../../redux/modules/teamList';
+import { loadMemberList } from '../../redux/modules/memberList';
 
-import teamAdd from '../../img/teamAdd.svg'
-import memberAdd from '../../img/memberAdd.svg'
-import addMember from '../../img/addMember.svg'
+import teamAdd from '../../assets/img/teamAdd.svg'
+import memberAdd from '../../assets/img/memberAdd.svg'
+import addMember from '../../assets/img/addMember.svg'
 
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -32,7 +32,7 @@ const AdminTeamPage = () => {
   },[]);
 
   // 주차 리스트 정보 꺼내기
-  const weekList = useSelector((state) => state.TeamList.week);
+  const weekList = useSelector((state) => state.teamList.week);
 
   // 해당 주차의 팀 리스트 불러오기
   React.useEffect(() => {
@@ -40,7 +40,7 @@ const AdminTeamPage = () => {
   },[]);
 
   // 팀 리스트 정보 꺼내기
-  const teamList = useSelector((state) => state.TeamList.teams);
+  const teamList = useSelector((state) => state.teamList.teams);
 
   // 팀 리스트에서 가공한 데이터를 정리해서 푸쉬할 빈 배열
   // const teams = [];
@@ -80,7 +80,7 @@ const AdminTeamPage = () => {
   };
 
   // 팀이 없는 맴버 꺼내오기
-  const memberList = useSelector((state) => state.MemberList.memberList);
+  const memberList = useSelector((state) => state.memberList.memberList);
 
   // 팀 추가에서 주차를 입력 Input 변화를 담을 스테이트
   const [is_week, setWeek] = React.useState();

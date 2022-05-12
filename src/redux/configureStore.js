@@ -4,24 +4,24 @@ import { createBrowserHistory } from "history";
 import { connectRouter } from "connected-react-router";
 
 // 모듈
-import User from "./modules/user";
-import UserList from "./modules/UserList";
-import TeamList from "./modules/TeamList";
-import MemberList from "./modules/MemberList";
-import CheckIn from "./modules/CheckIn";
-import TeamBoard from "./modules/TeamBoard";
+import user from "./modules/user";
+import userList from "./modules/userList";
+import teamList from "./modules/teamList";
+import memberList from "./modules/memberList";
+import checkIn from "./modules/checkIn";
+import teamBoard from "./modules/teamBoard";
 import chat from "./modules/chat";
 
 // history를 페이지에서 편하게 사용할 수 있도록 준비
 export const history = createBrowserHistory();
 
 const rootReducer = combineReducers({
-  user: User,
-  UserList: UserList,
-  TeamList: TeamList,
-  MemberList: MemberList,
-  CheckIn: CheckIn,
-  TeamBoard: TeamBoard,
+  user: user,
+  userList: userList,
+  teamList: teamList,
+  memberList: memberList,
+  checkIn: checkIn,
+  teamBoard: teamBoard,
   chat: chat,
   router: connectRouter(history),
 });
