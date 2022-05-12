@@ -12,9 +12,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
-import { getWeekList } from '../../redux/modules/TeamList';
-import { loadTeamBoard } from '../../redux/modules/TeamBoard';
-import { setWeekTeamBoard } from '../../redux/modules/TeamBoard';
+import { getWeekList } from '../../redux/modules/teamList';
+import { loadTeamBoard } from '../../redux/modules/teamBoard';
+import { setWeekTeamBoard } from '../../redux/modules/teamBoard';
+import { loadCheckList } from "../../redux/modules/checkIn";
 
 
 const UserTeamBoard = () => {
@@ -33,10 +34,16 @@ const UserTeamBoard = () => {
   console.log(team)
 
     React.useEffect(() => {
+      dispatch(loadCheckList("1주차"));
+    }, []);
+
+    React.useEffect(() => {
       dispatch(loadTeamBoard());
     }, []);
 
-    const TeamBoard = useSelector((state) => state.TeamBoard.teamBoard);
+    const TeamBoard = useSelector((state) => state.teamBoard.teamBoard);
+
+    const teamList = useSelector((state) => state.checkIn.checkInList);
 
     console.log(TeamBoard)
     console.log(TeamBoard.weekTeamList)
@@ -46,7 +53,7 @@ const UserTeamBoard = () => {
   return (
     <React.Fragment>
       <div style={{display : 'flex'}}>
-        <UserSidebar />
+        <UserSidebar teamList={teamList} />
         <BackgroundDiv>
           <div style = {{
             width : "95%",

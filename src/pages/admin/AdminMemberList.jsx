@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
-import { addMemberList } from '../../redux/modules/MemberList';
-import { getMemberList } from '../../redux/modules/MemberList';
-import { getTeamList } from '../../redux/modules/TeamList';
+import { addMemberList } from '../../redux/modules/memberList';
+import { getMemberList } from '../../redux/modules/memberList';
+import { getTeamList } from '../../redux/modules/teamList';
 
 import { useDispatch, useSelector } from 'react-redux';
 
