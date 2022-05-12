@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import UserSidebar from '../../components/UserSideBar';
 import UserGroundRole from './UserGroundRole';
 import UserWorkSpace from './UserWorkSpace';
+import UserTodo from './UserTodo';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -31,8 +32,6 @@ const UserTeamBoard = () => {
     dispatch(setWeekTeamBoard(event.target.value));
   };
 
-  console.log(team)
-
     React.useEffect(() => {
       dispatch(loadCheckList("1주차"));
     }, []);
@@ -44,9 +43,11 @@ const UserTeamBoard = () => {
     const TeamBoard = useSelector((state) => state.teamBoard.teamBoard);
 
     const teamList = useSelector((state) => state.checkIn.checkInList);
+    
+    // const todoList = useSelector((state) => state.checkIn.checkInList);
 
-    console.log(TeamBoard)
-    console.log(TeamBoard.weekTeamList)
+    // console.log(TeamBoard)
+    // console.log(TeamBoard.weekTeamList)
 
     const weekTeamList = TeamBoard.weekTeamList
 
@@ -90,6 +91,9 @@ const UserTeamBoard = () => {
           <Zone>팀원정보 들어갈거임</Zone>
           <Zone>
             <UserGroundRole TeamBoard={TeamBoard}></UserGroundRole>
+          </Zone>
+          <Zone>
+            <UserTodo TeamBoard={TeamBoard}></UserTodo>
           </Zone>
           <Zone>
             <UserWorkSpace TeamBoard={TeamBoard}></UserWorkSpace>
