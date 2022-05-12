@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 
-import { editGroundRule } from '../../redux/modules/TeamBoard';
+import { editGroundRule } from '../../redux/modules/teamBoard';
 
 const UserGroundRole = (props) => {
 

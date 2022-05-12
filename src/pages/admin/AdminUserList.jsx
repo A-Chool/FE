@@ -7,8 +7,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { useDispatch } from "react-redux";
 
-import { deleteUserList } from "../../redux/modules/UserList";
-import { editUserList } from "../../redux/modules/UserList";
+import { deleteUserList } from "../../redux/modules/userList";
+import { editUserList } from "../../redux/modules/userList";
 import { height } from "@mui/system";
 
 
