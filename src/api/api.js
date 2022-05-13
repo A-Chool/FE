@@ -1,6 +1,6 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://3.39.0.208/"
+  baseURL: "https://www.a-chool.com:443/"
 });
 export default api;
