@@ -82,7 +82,7 @@ const UserTodoList = (props) => {
       <></>
     }
     {
-      edit === true 
+      edit === true  
       ?
       <img 
             src={todoUpBtnImg}  
