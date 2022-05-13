@@ -25,7 +25,7 @@ const ChatDetail = (props) => {
 
   // 소켓 연결에 필요한 변수
   // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
-  const devTarget = "http://3.39.0.208:8080/ws-stomp";
+  const devTarget = "https://www.a-chool.com:443:8080/ws-stomp";
   let sock = new SockJS(devTarget);
   let ws = Stomp.over(sock);
 
@@ -91,7 +91,7 @@ const ChatDetail = (props) => {
   // 저장된 메시지 출력
   const getMessageList = () => {
     axios
-      .get(`http://3.39.0.208:8080/chat/message/${room?.roomId}`, {
+      .get(`https://www.a-chool.com:443:8080/chat/message/${room?.roomId}`, {
         headers: {
           Authorization: `Bearer ${myToken}`,
         },

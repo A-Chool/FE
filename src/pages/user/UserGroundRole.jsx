@@ -1,8 +1,12 @@
+/* eslint-disable */
 import React from 'react';
 import styled from "styled-components";
 import { useDispatch } from 'react-redux';
 
 import { editGroundRule } from '../../redux/modules/teamBoard';
+
+import groundRuleImg from '../../assets/img/groundRule.svg'
+import editBtn from '../../assets/img/editBtn.svg'
 
 const UserGroundRole = (props) => {
 
@@ -29,59 +33,66 @@ const UserGroundRole = (props) => {
   })
 
   return (
-    <>
-      <div style={{
-        width : "90%",
-        margin : "auto",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}>
-        <div style={{float : "left"}}>
-          그라운드 룰 
-        </div>
+    <GroundRuleWrapper>
+      <UpBar>
+        <img src={groundRuleImg} style={{margin : '12px 0px 6px 12px'}} /> 
+
         {
           update === false
-          ? <button 
-            style={{backgroundColor:"white", border:"none" }} 
+          ? <img 
+            src={editBtn}
+            style={{margin : '8px 8px 4px 0px'}} 
             onClick={()=>{
             setupdate(!update)}
             
-            }>수정</button>
-          :<button 
-            style={{backgroundColor:"white", border:"none"}} 
+            }></img>
+          :<img 
+            src={editBtn}
+            style={{margin : '8px 8px 4px 0px'}} 
             onClick={() => {
             setupdate(!update)
             dispatch(editGroundRule(weekTeamId, rule));
-          }}>수정완료</button>
+          }}></img>
         }    
-      </div>
+      </UpBar>
+      <hr style={{width : '377px', margin : 'auto', border : '1px solid #E0E0E0'}}/>
         {
           update === false
           ? <Box>{split}</Box>
           :<UpdateBox defaultValue={groundRule} onChange={handleChange}></UpdateBox>
         }    
 
-    </>
+    </GroundRuleWrapper>
   );
 };
 
+const GroundRuleWrapper = styled.div`
+  width : 401px;
+  height : 180px;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+`
+
+const UpBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
 const Box = styled.div`
-  height : 200px;
-  width : 90%;
-  background-color : white;
-  margin : 10px auto;
-  border-radius : 10px;
+  height : 120px;
+  width : 377px;
+  margin : 6px auto;
 `
 
 const UpdateBox = styled.textarea`
-  height : 200px;
-  width : 90%;
+  height : 120px;
+  width : 377px;
   background-color : white;
   display : block;
-  margin : 10px auto;
-  border : 2px solid black;
+  margin : 6px auto;
+  border : 1px solid black;
   border-radius : 10px;
 `
 
