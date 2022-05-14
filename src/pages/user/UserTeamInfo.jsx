@@ -3,8 +3,6 @@ import styled from "styled-components";
 
 const UserTeamInfo = (props) => {
 
-  console.log(props)
-
   return (
     <UserInfoMenu>
       <UserInfoMenuP style={{width : '10%'}}>{props.e.user.userName}</UserInfoMenuP>
@@ -18,7 +16,7 @@ const UserTeamInfo = (props) => {
 };
 
 const UserInfoMenu = styled.div`
-  width : 100%;
+  width : 1084px;
   height : 40px;
   background-color: white;
   font-weight: 400;

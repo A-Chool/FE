@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import UserSidebar from '../../components/UserSideBar';
 import UserTeamInfo from './UserTeamInfo';
-import UserGroundRole from './UserGroundRole';
+import UserGroundRule from './UserGroundRule';
 import UserTodo from './UserTodo';
 import UserWorkSpace from './UserWorkSpace';
 
@@ -56,7 +56,6 @@ const UserTeamBoard = () => {
     const weekTeamList = TeamBoard.weekTeamList
     
     const MemberList = TeamBoard.memberList
-    // console.log(MemberList)
 
   return (
     <React.Fragment>
@@ -119,7 +118,7 @@ const UserTeamBoard = () => {
             justifyContent: 'space-between',
             alignItems: 'center'
           }}>
-            <UserGroundRole TeamBoard={TeamBoard}></UserGroundRole>
+            <UserGroundRule TeamBoard={TeamBoard}></UserGroundRule>
             
             <UserTodo TeamBoard={TeamBoard}></UserTodo>
           </div>
@@ -141,7 +140,7 @@ const BackgroundDiv = styled.div`
 `
 
 const UpBar = styled.div`
-  margin : 15px 32px 10px;
+  margin : 5px 32px 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

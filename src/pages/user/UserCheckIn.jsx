@@ -16,7 +16,7 @@ const UserCheckIn = () => {
 
   // checkInList 조회를 위한 useEffect
   React.useEffect(() => {
-    dispatch(loadCheckList("1주차"));
+    dispatch(loadCheckList("3주차"));
   }, []);
 
   const teamList = useSelector((state) => state.checkIn.checkInList);
@@ -33,7 +33,7 @@ const UserCheckIn = () => {
                 <img src={mascot} style={{height : 'auto' ,margin : '30px 39px', float : 'left'}}></img>
                 <StudyData>
                   <div style={{height : '70%'}}>
-                    <p style={{fontSize : '14px', fontWeight : '400'}}>
+                    <p style={{fontSize : '24px', fontWeight : '400'}}>
                       홍길동님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>{logList?.totalSumTime}</span> 시간 <br />학습하셨어요!
                     </p>
                   </div>
