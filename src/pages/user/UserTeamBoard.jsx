@@ -3,9 +3,10 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from 'react-redux';
 
 import UserSidebar from '../../components/UserSideBar';
-import UserGroundRole from './UserGroundRole';
-import UserWorkSpace from './UserWorkSpace';
+import UserTeamInfo from './UserTeamInfo';
+import UserGroundRule from './UserGroundRule';
 import UserTodo from './UserTodo';
+import UserWorkSpace from './UserWorkSpace';
 
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -17,6 +18,8 @@ import { getWeekList } from '../../redux/modules/teamList';
 import { loadTeamBoard } from '../../redux/modules/teamBoard';
 import { setWeekTeamBoard } from '../../redux/modules/teamBoard';
 import { loadCheckList } from "../../redux/modules/checkIn";
+
+import teamInfo from '../../assets/img/teamInfo.svg'
 
 
 const UserTeamBoard = () => {
@@ -43,28 +46,23 @@ const UserTeamBoard = () => {
     const TeamBoard = useSelector((state) => state.teamBoard.teamBoard);
 
     const teamList = useSelector((state) => state.checkIn.checkInList);
+
+    // const memberList = useSelector((state) => state.teamBoard.teamBoard.memberList);
     
     // const todoList = useSelector((state) => state.checkIn.checkInList);
 
-    // console.log(TeamBoard)
     // console.log(TeamBoard.weekTeamList)
-
+    
     const weekTeamList = TeamBoard.weekTeamList
+    
+    const MemberList = TeamBoard.memberList
 
   return (
     <React.Fragment>
       <div style={{display : 'flex'}}>
         <UserSidebar teamList={teamList} />
         <BackgroundDiv>
-          <div style = {{
-            width : "95%",
-            margin : "auto",
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-
-          }}>
+          <UpBar>
           <TeamNum>{TeamBoard.teamName} 팀보드</TeamNum>
 
             <SelectBoxWrapper>
@@ -86,18 +84,47 @@ const UserTeamBoard = () => {
                   <path d="M1.98242 1.5L9.01911 8.5L16.0558 1.5" stroke="#1F3A5E" stroke-width="2" stroke-linecap="round"/>
                   </SelectSVG>
                 </SelectBoxWrapper>
+          </UpBar>
+
+          <TeamInfoBox>
+            <img src={teamInfo} style={{margin : '12px 0px 8px 12px'}} />
+            <UserInfoBox>
+              <UserInfoMenu>
+                <UserInfoMenuP style={{width : '10%'}}>이름</UserInfoMenuP>
+                <UserInfoMenuP style={{width : '15%'}}>태그</UserInfoMenuP>
+                <UserInfoMenuP style={{width : '13%'}}>전화번호</UserInfoMenuP>
+                <UserInfoMenuP style={{width : '13%'}}>카톡아이디</UserInfoMenuP>
+                <UserInfoMenuP style={{width : '21%'}}>이메일주소</UserInfoMenuP>
+                <UserInfoMenuP style={{width : '28%'}}>GitHub</UserInfoMenuP>
+              </UserInfoMenu>
+                <UserDataWrapper>
+                  {
+                    MemberList && MemberList.map((e, idx)=>{
+                    return(
+                      <UserTeamInfo e={e} key={idx}></UserTeamInfo>
+                    )
+                    })
+                  }
+                </UserDataWrapper>
+            </UserInfoBox>
+          </TeamInfoBox>
+
+          <div style={{
+            width : '1108px', 
+            height : '180px', 
+            margin : '24px 32px',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center'
+          }}>
+            <UserGroundRule TeamBoard={TeamBoard}></UserGroundRule>
+            
+            <UserTodo TeamBoard={TeamBoard}></UserTodo>
           </div>
 
-          <Zone>팀원정보 들어갈거임</Zone>
-          <Zone>
-            <UserGroundRole TeamBoard={TeamBoard}></UserGroundRole>
-          </Zone>
-          <Zone>
-            <UserTodo TeamBoard={TeamBoard}></UserTodo>
-          </Zone>
-          <Zone>
-            <UserWorkSpace TeamBoard={TeamBoard}></UserWorkSpace>
-          </Zone>
+          <UserWorkSpace TeamBoard={TeamBoard}></UserWorkSpace>
+
         </BackgroundDiv>
       </div>
     </React.Fragment>
@@ -112,6 +139,60 @@ const BackgroundDiv = styled.div`
   flex-grow : 1;
 `
 
+const UpBar = styled.div`
+  margin : 5px 32px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const TeamInfoBox = styled.div`
+  height : 291px;
+  margin : 0 32px 24px;
+  background-color : white;
+  border-radius: 16px;
+`
+
+const UserInfoBox = styled.div`
+  height : 236px;
+  width : 1084px;
+  margin : 0px auto;
+`
+
+const UserInfoMenu = styled.div`
+  width : 100%;
+  height : 35px;
+  background-color: #FFF9D9;
+  border-radius: 8px 8px 0px 0px;
+  font-weight: 700;
+  font-size: 14px;
+  text-align : center;
+`
+
+const UserInfoMenuP = styled.p`
+  font-weight: 700;
+  font-size: 14px;
+  float : left;
+  line-height : 8px;
+  color: #1F3A5E;
+`
+
+const UserDataWrapper = styled.div`
+  height : 200px;
+  display: inline-block;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transition;
+  }
+`
+
+
+
 const Zone = styled.div`
   height : 250px;
   width : 95%;
@@ -121,14 +202,14 @@ const Zone = styled.div`
   padding : 5px;
 `
 
-const TeamNum = styled.h2`
-
+const TeamNum = styled.p`
+  font-weight: 700;
+  font-size: 24px;
 `
 
 const SelectBoxWrapper = styled.div`
 	display: flex;
-  float : left;
-  margin-right : 44px;
+  margin-right : 16px;
 `
 
 const Selecter = styled.select`

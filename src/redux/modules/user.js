@@ -58,12 +58,12 @@ const loginDB = (userId, password) => {
   };
 };
 
-const adminloginDB = (email, password) => {
+const adminloginDB = (userId, password) => {
   return async function (dispatch, getState, { history }) {
     await api
       .post("/api/admin/login", {
-        email: email,
-        password: password,
+        email : userId,
+        password : password,
       })
       .then((response) => {
         console.log(response);
@@ -74,15 +74,15 @@ const adminloginDB = (email, password) => {
         );
         console.log("로그인 성공");
         const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-        localStorage.setItem("adminUserToken", ACCESS_TOKEN);
-        localStorage.setItem("adminUserId", email);
-        // setCookie("userToken", ACCESS_TOKEN);
-        // setCookie("userId", userId);
-        // history.replace("/AdminTeamList");
+        // localStorage.setItem("adminUserToken", ACCESS_TOKEN);
+        // localStorage.setItem("adminUserId", email);
+        setCookie("userToken", ACCESS_TOKEN);
+        setCookie("userId", userId);
+        history.replace("/admin/user");
       })
       .catch((error) => {
-        // window.alert("아이디 또는 비밀번호를 확인해주세요.");
-        // console.log("Login Error", error);
+        window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        console.log("Login Error", error);
       });
   };
 };
@@ -91,7 +91,7 @@ const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios({
       method: "GET",
-      url: `http://3.39.0.208/api/user/kakao/callback?code=${code}`,
+      url: `https://www.a-chool.com:443/api/user/kakao/callback?code=${code}`,
     })
       .then((response) => {
         console.log(response);

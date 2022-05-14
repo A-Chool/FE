@@ -11,6 +11,7 @@ import dayjs from "dayjs";
 
 const ChatDetail = (props) => {
   const room = useSelector((state) => state.chat.room);
+  console.log(room?.roomId)
 
   const userId = getUserId();
 
@@ -21,11 +22,13 @@ const ChatDetail = (props) => {
   //   const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
   const myToken = getCookie("Authorization");
 
+  const chattingRef = React.useRef();
+
   const latestChatWrapRef = useRef();
 
   // 소켓 연결에 필요한 변수
   // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
-  const devTarget = "http://3.39.0.208:8080/ws-stomp";
+  const devTarget = "https://www.a-chool.com:443/ws-stomp";
   let sock = new SockJS(devTarget);
   let ws = Stomp.over(sock);
 
@@ -42,13 +45,15 @@ const ChatDetail = (props) => {
 
           //채팅 내역 불러오기
           console.log(recv);
-          // if (recv.type === "ENTER") {
+          if (recv.type === "ENTER") {
           setLoaded(true);
           setEnterMsg(recv);
-          // } else if (recv.type === "TALK") {
+          chattingRef.current.scrollIntoView({ behavior: "smooth" });
+          } else if (recv.type === "TALK") {
           //소켓 연결 후 받은 채팅 출력
           recvMessage(recv);
-          // }
+          chattingRef.current.scrollIntoView({ behavior: "smooth" });
+          }
           getMessageList();
         });
         ws.send(
@@ -91,7 +96,7 @@ const ChatDetail = (props) => {
   // 저장된 메시지 출력
   const getMessageList = () => {
     axios
-      .get(`http://3.39.0.208:8080/chat/message/${room?.roomId}`, {
+      .get(`https://www.a-chool.com:443/chat/message/${room?.roomId}`, {
         headers: {
           Authorization: `Bearer ${myToken}`,
         },
@@ -150,9 +155,10 @@ const ChatDetail = (props) => {
               </ChatWrap>
             );
           })
-        ) : (
-          <div style={{ textAlign: "center" }}>로딩중</div>
-        )}
+          ) : (
+            <div style={{ textAlign: "center" }}>로딩중</div>
+            )}
+            <div ref={chattingRef} />
       </ChatContents>
       <ChatInputArea>
         <ChatInput type="text" placeholder="채팅을 입력해주세요" value={content} onChange={handleChange} onKeyUp={handleKeyUp} />

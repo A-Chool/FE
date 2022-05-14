@@ -36,7 +36,7 @@ const __checkTodoList = createAction(CHECK_TODO_LIST, (todoId) => ({todoId}))
 export const loadTeamBoard = () => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get('http://3.39.0.208/api/user/teamBoard'
+    axios.get('https://www.a-chool.com:443/api/user/teamBoard'
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -52,7 +52,7 @@ export const loadTeamBoard = () => {
 export const setWeekTeamBoard = (weekTeamId) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`http://3.39.0.208/api/user/teamBoard/${weekTeamId}`
+    axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -72,7 +72,7 @@ export const editGroundRule = (weekTeamId, groundRule) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `http://3.39.0.208/api/user/teamBoard/groundRule/${weekTeamId}`,
+      url: `https://www.a-chool.com:443/api/user/teamBoard/groundRule/${weekTeamId}`,
       data: {
         groundRule
       },
@@ -80,7 +80,7 @@ export const editGroundRule = (weekTeamId, groundRule) => {
     })
     .then(() => {
       dispatch(__editGroundRule(groundRule));
-      axios.get(`http://3.39.0.208/api/user/teamBoard/${weekTeamId}`
+      axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -103,7 +103,7 @@ export const addTodoList = (weekTeamId, todoContent) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `http://3.39.0.208/api/user/teamBoard`,
+      url: `https://www.a-chool.com:443/api/user/teamBoard`,
       data: {
       teamId : weekTeamId,
       todoContent : todoContent
@@ -112,7 +112,7 @@ export const addTodoList = (weekTeamId, todoContent) => {
     })
     .then(() => {
       dispatch(__addTodoList(weekTeamId, todoContent));
-      axios.get(`http://3.39.0.208/api/user/teamBoard/${weekTeamId}`
+      axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -135,7 +135,7 @@ export const deleteTodoList = (todoId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `http://3.39.0.208/api/user/teamBoard/${todoId}`,  
+      url: `https://www.a-chool.com:443/api/user/teamBoard/${todoId}`,  
       headers: {
       Authorization: `Bearer ${myToken}`
       },
@@ -156,7 +156,7 @@ export const editTodoList = (todoId, todoContent) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `http://3.39.0.208/api/user/teamBoard/${todoId}`,
+      url: `https://www.a-chool.com:443/api/user/teamBoard/${todoId}`,
       data: {
         todoContent
       },
@@ -177,7 +177,7 @@ export const checkTodoList = (todoId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `http://3.39.0.208/api/user/teamBoard/check/${todoId}`,
+      url: `https://www.a-chool.com:443/api/user/teamBoard/check/${todoId}`,
       data: {
       },
       headers: {Authorization: `Bearer ${myToken}`},
@@ -198,7 +198,7 @@ export const editWorkSpace = (weekTeamId, workSpace) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `http://3.39.0.208/api/user/teamBoard/workSpace/${weekTeamId}`,
+      url: `https://www.a-chool.com:443/api/user/teamBoard/workSpace/${weekTeamId}`,
       data: {
         workSpace
       },
@@ -206,7 +206,7 @@ export const editWorkSpace = (weekTeamId, workSpace) => {
     })
     .then(() => {
       dispatch(__editWorkSpace(workSpace));
-      axios.get(`http://3.39.0.208/api/user/teamBoard/${weekTeamId}`
+      axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -248,6 +248,8 @@ export default handleActions(
     }),
     [CHECK_TODO_LIST]: (state, action) =>
       produce(state, (draft) => {
+        console.log(state)
+        console.log(action.payload)
       draft.teamBoard.toDoList = state.teamBoard.toDoList.map((e) => {
         if (e.todoId === action.payload.todoId.todoId){
           return {...e, todoCheck : action.payload.todoId.todoCheck}

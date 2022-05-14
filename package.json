@@ -1,5 +1,5 @@
 {
-  "proxy": "http://3.39.0.208:8080",
+  "proxy": "https://www.a-chool.com:443:8080",
   "name": "pratice",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +15,7 @@
     "connected-react-router": "^6.9.2",
     "dayjs": "^1.11.2",
     "history": "4.10.0",
+    "hoist-non-react-statics": "^3.3.2",
     "immer": "^9.0.12",
     "jwt-decode": "^3.1.2",
     "moment": "^2.29.3",

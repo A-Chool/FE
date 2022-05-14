@@ -1,9 +1,12 @@
+/* eslint-disable */
 import React from 'react';
 import styled from "styled-components";
-
 import { useDispatch } from 'react-redux';
 
 import { editWorkSpace } from '../../redux/modules/teamBoard';
+
+import workSpaceImg from '../../assets/img/workSpace.svg'
+import editBtn from '../../assets/img/editBtn.svg'
 
 const UserWorkSpace = (props) => {
 
@@ -30,59 +33,66 @@ const UserWorkSpace = (props) => {
   })
 
   return (
-    <>
-      <div style={{
-        width : "90%",
-        margin : "auto",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}>
-        <div style={{float : "left"}}>
-          워크 스페이스 
-        </div>
+    <WorkspaceWrapper>
+      <UpBar>
+        <img src={workSpaceImg} style={{margin : '12.5px 0px 8.5px 12px'}} /> 
         {
           update === false
-          ? <button 
-            style={{backgroundColor:"white", border:"none" }} 
+          ? <img 
+            src={editBtn}
+            style={{margin : '8px 8px 4px 0px'}} 
             onClick={()=>{
             setupdate(!update)}
-            
-            }>수정</button>
-          :<button 
-            style={{backgroundColor:"white", border:"none"}} 
+            }></img>
+          :<img 
+            src={editBtn}
+            style={{margin : '8px 8px 4px 0px'}} 
             onClick={() => {
             setupdate(!update)
             dispatch(editWorkSpace(weekTeamId, work));
-          }}>수정완료</button>
+          }}></img>
         }    
-      </div>
+      </UpBar>
+      <hr style={{width : '1084px', margin : 'auto', border : '1px solid #E0E0E0'}}/>
         {
           update === false
           ? <Box>{split}</Box>
           :<UpdateBox defaultValue={workSpace} onChange={handleChange}></UpdateBox>
         }    
 
-    </>
+    </WorkspaceWrapper>
   );
 };
 
+const WorkspaceWrapper = styled.div`
+  width : 1108px;
+  height : 147px;
+  margin : 0 24px 24px 32px;
+  background-color: #FFFFFF;
+  border-radius: 16px;
+  // float : left;
+`
+
+const UpBar = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`
+
 const Box = styled.div`
-  height : 200px;
-  width : 90%;
-  background-color : white;
-  margin : 10px auto;
-  border-radius : 10px;
+  width: 1084px;
+  height: 96px;
+  margin : 6px auto;
 `
 
 const UpdateBox = styled.textarea`
-  height : 200px;
-  width : 90%;
+  width: 1084px;
+  height: 96px;
   background-color : white;
   display : block;
-  margin : 10px auto;
-  border : 2px solid black;
+  margin : 6px auto;
+  border : 1px solid black;
   border-radius : 10px;
 `
 

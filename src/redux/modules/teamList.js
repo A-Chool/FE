@@ -31,7 +31,7 @@ const __deleteTeamList = createAction( DELETE_TEAM_LIST, (teamId) => ({teamId}) 
 export const getWeekList = () => {
 return function (dispatch, getState, { history }) {
   const myToken = getCookie("Authorization")
-  axios.get('http://3.39.0.208/api/admin/teams/week'
+  axios.get('https://www.a-chool.com:443/api/admin/teams/week'
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -47,7 +47,7 @@ return function (dispatch, getState, { history }) {
 export const getTeamList = (week) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`http://3.39.0.208/api/admin/teams/${week}`
+    axios.get(`https://www.a-chool.com:443/api/admin/teams/${week}`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -66,7 +66,7 @@ export const addTeamList = (teamName, week) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `http://3.39.0.208/api/admin/teams/`,
+      url: `https://www.a-chool.com:443/api/admin/teams/`,
       data: {
       teamName : teamName,
       week : week
@@ -91,7 +91,7 @@ export const deleteTeamList = (teamId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `http://3.39.0.208/api/admin/teams/${teamId}`,     
+      url: `https://www.a-chool.com:443/api/admin/teams/${teamId}`,     
       headers: {
       Authorization: `Bearer ${myToken}`
       },

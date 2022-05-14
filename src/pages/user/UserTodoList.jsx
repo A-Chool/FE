@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import styled from "styled-components";
 
@@ -7,6 +8,12 @@ import { addTodoList } from '../../redux/modules/teamBoard';
 import { deleteTodoList } from '../../redux/modules/teamBoard';
 import { editTodoList } from '../../redux/modules/teamBoard';
 import { checkTodoList } from '../../redux/modules/teamBoard';
+
+import todoCheckOnImg from '../../assets/img/todoCheckOn.svg'
+import todoCheckOffImg from '../../assets/img/todoCheckOff.svg'
+import deleteBtnImg from '../../assets/img/deleteBtn.svg'
+import editBtnImg from '../../assets/img/editBtn.svg'
+import todoUpBtnImg from '../../assets/img/todoUpBtn.svg'
 
 const UserTodoList = (props) => {
 
@@ -35,47 +42,104 @@ const UserTodoList = (props) => {
 
 
   return (
-    <Todo style={{color : props.e.todoCheck === false ? 'black' : 'green'}}>
-    <div 
-    style={{float : 'left', display : 'inlineBlock'}}
-    onClick={() => {dispatch(checkTodoList(props.e.todoId))}}
-    >
-      체크박스될거임 : 
-      </div>
+    <Todo>
+    {
+      props.e.todoCheck === false
+      ?
+      <img 
+      src = {todoCheckOffImg}
+      style={{float : 'left', display : 'inlineBlock', margin : '5px 8px 5px 6px'}}
+      onClick={() => {dispatch(checkTodoList(props.e.todoId))}}
+      />
+      :
+      <img 
+      src = {todoCheckOnImg}
+      style={{float : 'left', display : 'inlineBlock', margin : '5px 8px 5px 6px'}}
+      onClick={() => {dispatch(checkTodoList(props.e.todoId))}}
+      />
+    }
+
+
     {
       edit === false 
       ?
-      <AllTodoList>{props.e.todoContent}</AllTodoList>
+      <AllTodoList style={{textDecoration : props.e.todoCheck === false ? 'none' : 'line-through'}}>{props.e.todoContent}</AllTodoList>
       :
-      <input defaultValue={props.e.todoContent} onKeyDown={handleEvent} onChange={todoEdithandleEvent}></input>
+      <TodoInput defaultValue={props.e.todoContent} onKeyDown={handleEvent} onChange={todoEdithandleEvent}></TodoInput>
     }
-    <HideBtn onClick={() => {setEdit(true)}}>수정</HideBtn>
-    <HideBtn onClick={() => {dispatch(deleteTodoList(props.e.todoId))}}>삭제</HideBtn>
+    {
+      edit === false 
+      ?
+      <HideBtn src={editBtnImg} onClick={() => {setEdit(true)}}  style={{float : 'left'}} edit={edit}></HideBtn>
+      :
+      <></>
+    }
+    {
+      edit === false 
+      ?
+      <HideBtn src={deleteBtnImg} onClick={() => {dispatch(deleteTodoList(props.e.todoId))}} edit={edit}></HideBtn>
+      :
+      <></>
+    }
+    {
+      edit === true  
+      ?
+      <img 
+            src={todoUpBtnImg}  
+            style={{margin : '2px 0 0 8px'}} 
+            onClick={() => {
+              dispatch(addTodoList(weekTeamId, todoWrite));
+              setAdd(!add);
+            }}>
+          </img>
+      :
+      <></>
+    }
+          
   </Todo>
   );
 };
 
 const Todo = styled.div`
-  background-color : white;
-  margin : 5px;
+  width: 674px;
+  height: 29px;
+  margin : 0px auto;
+  border-radius: 16px;
   :hover {
-    background-color : red;
-    
+    background-color: rgba(255, 249, 217, 0.5);
   }
 `
 
-const HideBtn = styled.div`
-  display : none;
+const TodoInput = styled.input`
+  height : 24px;
+  width: 579px;
+  margin : 0 0 0 0px;
+  border : none;
+  border-bottom : 1px solid #FF5F00;
+  background-color : transparent;
+  float : left;
+  background-color: none;
+  &:focus {
+    outline : none;
+  }
+`
+
+const HideBtn = styled.img`
+  display: ${({ edit }) => (edit === false ? 'none' : 'none')};
   ${Todo}:hover & {
     display : inline-block;
-    background-color : red;
-    margin : 0 5px;
+    margin : 0px 4px;
   }
 `
 
 const AllTodoList = styled.div`
-  width : 300px;
   display : inline-block;
+  height : 28px;
+  width: 560px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height : 28px;
+  float : left;
 `
 
 export default UserTodoList;
