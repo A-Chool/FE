@@ -16,7 +16,6 @@ import AdminUserPage from "./pages/admin/AdminUserPage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AdminLogin from "./pages/AdminLogin";
-import KakaoOauth from "./shared/KakaoOauth";
 import ChatingPage from "./pages/ChatingPage";
 // import ChatRoom from "./pages/ChatRoom";
 import * as dayjs from "dayjs";
@@ -24,8 +23,17 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 
 import ChatContainer from "./components/chat/ChatContainer";
+import { actionCreators as userActions } from "./redux/modules/user";
+import { useDispatch } from "react-redux";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const code = new URL(window.location.href).searchParams.get("code");
+    if (!!code) dispatch(userActions.kakaoLoginDB(code));
+  }, []);
+
   useEffect(() => {
     dayjs.extend(relativeTime);
     dayjs.locale("ko");
@@ -38,12 +46,12 @@ function App() {
         <Route path="/" exact component={Login} />
         <Route path="/admin/login" exact component={AdminLogin} />
         <Route path="/signup" exact component={Signup} />
-        <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
         <Route path="/chat" exact component={ChatingPage} />
         <Route path="/admin/user" exact component={AdminUserPage} />
         <Route path="/admin/team" exact component={AdminTeamPage} />
         <Route path="/check-in" exact component={UserCheckIn} />
         <Route path="/team-board" exact component={UserTeamBoard} />
+        {/* 지정 외 페이지 찾을때, not found 페이지 */}
         <Route path="/*" component={NotFound} />
       </ConnectedRouter>
     </ContentWrap>

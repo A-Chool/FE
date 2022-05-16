@@ -8,7 +8,7 @@ import { BsFillChatFill } from "react-icons/bs";
 import { FiArrowRight } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import { actionCreators as userActions } from "../redux/modules/user";
-import { KAKAO_AUTH_URL } from "../api/Oauth";
+import { KAKAO_AUTH_URL } from "../api/oauth";
 const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
