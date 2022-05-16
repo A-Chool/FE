@@ -38,12 +38,16 @@ const ChatContainer = (props) => {
         <div>
           {room && <Grid onClick={() => dispatch(setRoom(null))}>목록</Grid>}
           <h1>{room?.name || "항해99"}</h1>
-          <Grid end onClick={() => setTrigger(false)}>
-            닫기
-          </Grid>
+          <Grid onClick={() => setTrigger(false)}>닫기</Grid>
         </div>
       </ChatWrapHeader>
-      <ChatWrapContent>{room ? <ChatDetail /> : chatList.map((item) => <ChatItem key={item.roomId} room={item} />)}</ChatWrapContent>
+      <ChatWrapContent>
+        {room ? (
+          <ChatDetail />
+        ) : (
+          chatList.map((item) => <ChatItem key={item.roomId} room={item} />)
+        )}
+      </ChatWrapContent>
     </ChatWrap>
   );
 };
@@ -72,7 +76,8 @@ const ChatWrap = styled.div`
   display: ${(props) => (props.isOpen ? "flex" : "none")};
   flex-direction: column;
 
-  animation: ${(props) => (props.animationTrigger ? "fadeIn" : "fadeOut")} 200ms ease-in-out;
+  animation: ${(props) => (props.animationTrigger ? "fadeIn" : "fadeOut")} 200ms
+    ease-in-out;
 
   @keyframes fadeIn {
     0% {
@@ -127,7 +132,7 @@ const ChatWrapHeader = styled.div`
 `;
 
 const Grid = styled.div`
-  justify-self: ${(props) => (props.end ? "end" : "start")};
+  /* justify-self: ${(props) => (props.end ? "end" : "start")}; */
   flex: none;
 `;
 
