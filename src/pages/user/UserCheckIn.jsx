@@ -16,7 +16,9 @@ const UserCheckIn = () => {
 
   // checkInList 조회를 위한 useEffect
   React.useEffect(() => {
-    dispatch(loadCheckList("3주차"));
+    setInterval(() => {
+      dispatch(loadCheckList("3주차"));
+    }, 300000);
   }, []);
 
   const teamList = useSelector((state) => state.checkIn.checkInList);
