@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import onlineUser from "../assets/img/onlineUser.svg";
 import chatIcon from "../assets/img/chatIcon.svg";
 import { toggleChatBox } from "../redux/modules/chat";
+import { logOut } from "../redux/modules/user";
 
 const UserSidebar = (props) => {
   
@@ -90,7 +91,7 @@ const UserSidebar = (props) => {
       {/* <Link to="/" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
           <Adminmenu>게시판 관리</Adminmenu>
         </Link> */}
-      <LogOutBtn>로그아웃</LogOutBtn>
+      <LogOutBtn onClick={() => {dispatch(logOut()); history.push("/");}}>로그아웃</LogOutBtn>
       <UnderFn>
         <img alt="Access Users Icon" src={onlineUser} style={{ margin: "0 8px 0 35px", float: "left" }} />
         <p style={{ fontSize: "14px", lineHeight: "15px", float: "left" }}>{totalOnlineUser}명</p>

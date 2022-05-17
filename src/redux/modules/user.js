@@ -23,7 +23,7 @@ const initialState = {
 // 액션 생성 함수
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const adminlogIn = createAction(LOG_IN, (user) => ({ user }));
-const logOut = createAction(LOG_OUT, (user) => ({ user }));
+export const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // const withdrawal = createAction(WITHDRAWAL, (user) => ({ user }));
 
 // 미들웨어
@@ -58,7 +58,7 @@ const loginDB = (userId, password) => {
   };
 };
 
-const adminloginDB = (userId, password) => {
+export const adminloginDB = (userId, password) => {
   return async function (dispatch, getState, { history }) {
     await api
       .post("/api/admin/login", {
@@ -81,7 +81,7 @@ const adminloginDB = (userId, password) => {
         history.replace("/admin/user");
       })
       .catch((error) => {
-        window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        window.alert("어드민이 아닙니다.");
         console.log("Login Error", error);
       });
   };
@@ -100,7 +100,7 @@ const kakaoLoginDB = (code) => {
         console.log(ACCESS_TOKEN);
         localStorage.setItem("kakaoToken", ACCESS_TOKEN);
         // setCookie("kakaoToken", ACCESS_TOKEN);
-        history.replace("/AdminTeamList");
+        history.replace("/admin/user");
       })
       .catch((err) => {
         console.log("소셜로그인 에러", err);
@@ -124,7 +124,7 @@ const signupDB = (email, userName, userPw, userPwCheck, phoneNumber) => {
       .then((response) => {
         console.log(response);
         window.alert("회원가입을 축하합니다!");
-        // history.push("/login");
+        history.push("/");
       })
       .catch((error) => {
         alert("중복된 아이디가 존재합니다.");
@@ -133,16 +133,15 @@ const signupDB = (email, userName, userPw, userPwCheck, phoneNumber) => {
   };
 };
 
-const logOutDb = (dispatch, getState, { history }) => {
-  console.log("로그아웃");
-  dispatch(logOut());
-  localStorage.removeItem("userToken");
-  localStorage.removeItem("userId");
-  localStorage.removeItem("kakaoToken");
+// export const logOutDb = (dispatch, getState, { history }) => {
+//   console.log("로그아웃");
+//   localStorage.removeItem("userToken");
+//   localStorage.removeItem("userId");
+//   localStorage.removeItem("kakaoToken");
+//   history.replace("/");
 
-  const token = sessionStorage.getItem("token");
-  history.replace("/");
-};
+//   const token = sessionStorage.getItem("token");
+// };
 
 // 회원탈퇴 액션
 // const withdrawalAC = (userId, userPw) => {
@@ -178,8 +177,8 @@ export default handleActions(
       }),
     [LOG_OUT]: (state, action) =>
       produce(state, (draft) => {
-        deleteCookie("Authorization");
         deleteCookie("userId");
+        deleteCookie("userToken");
         deleteCookie("is_login");
         draft.is_login = false;
       }),
