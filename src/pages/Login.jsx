@@ -9,6 +9,13 @@ import { FiArrowRight } from "react-icons/fi";
 import { useHistory } from "react-router-dom";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { KAKAO_AUTH_URL } from "../api/Oauth";
+
+import loginPage from '../assets/img/loginPage.png'
+import loginPage2 from '../assets/img/Frame 2330.svg'
+import loginPage3 from '../assets/img/Group 2162.svg'
+import loginPage4 from '../assets/img/Group 2187.png'
+
+
 const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -60,10 +67,10 @@ const Login = () => {
               또는
               <CenterLine />
             </CenterLineBox>
-            <SocialLoginNaver>
+            {/* <SocialLoginNaver>
               <SiNaver />
               <SocialGoogle>네이버 시작하기</SocialGoogle>
-            </SocialLoginNaver>
+            </SocialLoginNaver> */}
             <SocialLoginKakao href={KAKAO_AUTH_URL}>
               <BsFillChatFill />
               <SocialKakao>카카오톡으로 시작하기</SocialKakao>
@@ -77,10 +84,7 @@ const Login = () => {
             </InfutSingup>
           </PageInput>
         </InputMain>
-        <LogoMain>
-          <LogoMainImg src="https://item.kakaocdn.net/do/0928e136f08ba05c038243f2c4509a14f604e7b0e6900f9ac53a43965300eb9a" />
-          <LogoMainName>사용자 로그인</LogoMainName>
-        </LogoMain>
+        <LogoMain src = {loginPage4} />
       </PageMain>
     </React.Fragment>
   );
@@ -101,26 +105,9 @@ const PageInput = styled.div`
   justify-content: start;
 `;
 
-const LogoMain = styled.div`
+const LogoMain = styled.img`
   width: 50%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LogoMainImg = styled.img`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const LogoMainName = styled.div`
-  font-size: 50px;
-  color: white;
-  font-weight: bold;
 `;
 
 const InputMain = styled.div`
@@ -157,12 +144,12 @@ const InputBtn = styled.div`
 `;
 
 const CollectionBtn = styled.button`
-  width: 480px;
-  height: 45px;
+  width: 380px;
+  height: 40px;
   border-radius: 10px;
-  background-color: #939393;
+  background-color: #1F3A5E;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 700;
   border: none;
   color: white;
 `;
@@ -182,22 +169,22 @@ const CenterLine = styled.div`
 `;
 
 const UserInput = styled.input`
-  width: 450px;
-  font-size: 18px;
-  text-decoration: none solid rgb(29, 28, 29);
-  background-color: #ffffff;
-  border: 1px solid #c4c4c4;
+  width: 364px;
+  height: 20px;
+  font-weight: 400;
+  font-size: 16px;
+  border: 1px solid #828282;
   border-radius: 10px;
-  padding: 10px 15px 10px 15px;
-  margin-top: 10px;
+  margin-top: 16px;
+  padding : 10px 8px;
 `;
 
 const SocialLoginKakao = styled.a`
-  width: 480px;
+  width: 380px;
   height: 40px;
   border-radius: 10px;
   background-color: #fee500;
-  border: 2px solid gray;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -211,7 +198,7 @@ const SocialLoginNaver = styled.button`
   height: 40px;
   border-radius: 10px;
   background-color: white;
-  border: 2px solid gray;
+  // border: 2px solid gray;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -222,8 +209,7 @@ const SocialGoogle = styled.div`
   margin-left: 40px;
 `;
 const SocialKakao = styled.div`
-  margin-left: 30px;
-  margin-right: -30px;
+
 `;
 
 const InfutSingup = styled.div`
@@ -233,11 +219,13 @@ const InfutSingup = styled.div`
   align-items: center;
   margin-top: 20px;
 `;
+
 const SignupContents = styled.div`
   color: #706f6f;
   font-size: 15px;
   font-weight: 700;
 `;
+
 const SignupBtn = styled.button`
   display: flex;
   flex-direction: row;

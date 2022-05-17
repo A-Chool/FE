@@ -35,14 +35,14 @@ function App() {
       <ChatContainer />
       <ConnectedRouter history={history}>
         <Route path="/" exact component={Login} />
-        <Route path="/admin/login" exact component={AdminLogin} />
+        <Route path="/admin" exact component={AdminLogin} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
         <Route path="/chat" exact component={ChatingPage} />
-        <Route path="/admin/user" exact component={AdminUserPage}></Route>
-        <Route path="/admin/team" exact component={AdminTeamPage}></Route>
-        <Route path="/check-in" exact component={UserCheckIn}></Route>
-        <Route path="/team-board" exact component={UserTeamBoard}></Route>
+        <Route path="/admin/user" exact component={AdminUserPage} />
+        <Route path="/admin/team" exact component={AdminTeamPage} />
+        <Route path="/check-in" exact component={UserCheckIn} />
+        <Route path="/team-board" exact component={UserTeamBoard} />
       </ConnectedRouter>
     </ContentWrap>
   );
