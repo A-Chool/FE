@@ -158,8 +158,8 @@ const ChatDetail = (props) => {
           ) : (
             <div style={{ textAlign: "center" }}>로딩중</div>
             )}
-            <div ref={chattingRef} />
       </ChatContents>
+      <div ref={chattingRef} />
       <ChatInputArea>
         <ChatInput type="text" placeholder="채팅을 입력해주세요" value={content} onChange={handleChange} onKeyUp={handleKeyUp} />
         <ChatBtn disabled={!content} onClick={sendMessage}>

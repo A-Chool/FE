@@ -69,10 +69,10 @@ const UserCheckInList = (props) => {
 };
 
 const UserTag = styled.div`
-  width : 120px;
+  width : 100px;
   height : 36px;
   float : left;
-  margin : 3.25px;
+  margin : 6px 8px 3px;
 `
 
 const UserDetail = styled.p`

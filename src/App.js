@@ -4,7 +4,7 @@ import { history } from "./redux/configureStore";
 import styled from "styled-components";
 
 import { ConnectedRouter } from "connected-react-router";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import NotFound from "./pages/NotFound";
 import UserTeamBoard from "./pages/user/UserTeamBoard";
@@ -43,16 +43,18 @@ function App() {
     <ContentWrap>
       <ChatContainer />
       <ConnectedRouter history={history}>
-        <Route path="/" exact component={Login} />
-        <Route path="/admin/login" exact component={AdminLogin} />
-        <Route path="/signup" exact component={Signup} />
-        <Route path="/chat" exact component={ChatingPage} />
-        <Route path="/admin/user" exact component={AdminUserPage} />
-        <Route path="/admin/team" exact component={AdminTeamPage} />
-        <Route path="/check-in" exact component={UserCheckIn} />
-        <Route path="/team-board" exact component={UserTeamBoard} />
-        {/* 지정 외 페이지 찾을때, not found 페이지 */}
-        <Route path="/*" component={NotFound} />
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/admin" exact component={AdminLogin} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/chat" exact component={ChatingPage} />
+          <Route path="/admin/user" exact component={AdminUserPage} />
+          <Route path="/admin/team" exact component={AdminTeamPage} />
+          <Route path="/check-in" exact component={UserCheckIn} />
+          <Route path="/team-board" exact component={UserTeamBoard} />
+          {/* 지정 외 페이지 찾을때, not found 페이지 */}
+          <Route path="/*" component={NotFound} />
+        </Switch>
       </ConnectedRouter>
     </ContentWrap>
   );

@@ -2,8 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import {Link} from "react-router-dom"
 import '../../componentsCss/Font.css'
+import {useHistory } from "react-router-dom";
+
+import { useDispatch } from "react-redux";
+
+import { logOut } from "../../redux/modules/user"
 
 const AdminSidebar = () => {
+
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   return (
     <React.Fragment>
       <Sidebar>
@@ -52,7 +61,7 @@ const AdminSidebar = () => {
         {/* <Link to="/" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
           <Adminmenu>게시판 관리</Adminmenu>
         </Link> */}
-        <LogOutBtn>
+        <LogOutBtn onClick={() => {dispatch(logOut()); history.push("/");}}>
           로그아웃
         </LogOutBtn>
 

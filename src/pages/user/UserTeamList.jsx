@@ -29,6 +29,7 @@ const TeamTable = styled.div`
   border-radius: 8px;
   margin : 10px 10px;
   display: inline-block;
+  text-align: center;
   overflow : scroll;
   overflow-x : hidden;
   &::-webkit-scrollbar {

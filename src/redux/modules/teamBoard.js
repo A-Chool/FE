@@ -248,8 +248,6 @@ export default handleActions(
     }),
     [CHECK_TODO_LIST]: (state, action) =>
       produce(state, (draft) => {
-        console.log(state)
-        console.log(action.payload)
       draft.teamBoard.toDoList = state.teamBoard.toDoList.map((e) => {
         if (e.todoId === action.payload.todoId.todoId){
           return {...e, todoCheck : action.payload.todoId.todoCheck}
