@@ -2,7 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
-import api from "../../api/api";
+import api, { baseUrl } from "../../api/api";
 import cookies from "universal-cookie";
 // 액션
 
@@ -37,7 +37,7 @@ const loginDB = (userId, password) => {
         password: password,
       })
       .then((response) => {
-        console.log(response); 
+        console.log(response);
         dispatch(
           logIn({
             is_login: true,
@@ -62,8 +62,8 @@ export const adminloginDB = (userId, password) => {
   return async function (dispatch, getState, { history }) {
     await api
       .post("/api/admin/login", {
-        email : userId,
-        password : password,
+        email: userId,
+        password: password,
       })
       .then((response) => {
         console.log(response);
@@ -89,10 +89,8 @@ export const adminloginDB = (userId, password) => {
 
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
-    await axios({
-      method: "GET",
-      url: `https://www.a-chool.com:443/api/user/kakao/callback?code=${code}`,
-    })
+    await axios
+      .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
       .then((response) => {
         console.log(response);
 

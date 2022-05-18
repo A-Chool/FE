@@ -18,8 +18,8 @@ const ChatContainer = (props) => {
   }, [isOpen]);
 
   useEffect(() => {
-    dispatch(loadChatList());
-  }, [dispatch]);
+    // dispatch(loadChatList());
+  }, []);
 
   // console.log(chatList);
 

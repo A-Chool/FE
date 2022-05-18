@@ -141,7 +141,7 @@ const PageMain = styled.div`
   align-items: center;
 `;
 
-const PageInput = styled.div`
+const PageInput = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -221,6 +221,7 @@ const UserInput = styled.input`
   border-radius: 10px;
   padding: 10px 15px 10px 15px;
   margin-top: 15px;
+  outline-color: #ff5f00;
 `;
 
 export default Signup;
