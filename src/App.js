@@ -32,6 +32,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const kakaoToken = localStorage.kakaoToken;
+    if (!!kakaoToken) {
+      console.log(kakaoToken);
+      dispatch(userActions.getMyselfDB(kakaoToken));
+    }
+  }, []);
+
+  useEffect(() => {
     dayjs.extend(relativeTime);
     dayjs.locale("ko");
   }, []);

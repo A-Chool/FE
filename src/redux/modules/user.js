@@ -58,6 +58,38 @@ const loginDB = (userId, password) => {
   };
 };
 
+// 로그인 액션
+const getMyselfDB = (token) => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .get(`${baseUrl}/api/user/mypage`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        // dispatch(
+        //   logIn({
+        //     is_login: true,
+        //   })
+        // );
+        console.log("로그인 성공");
+        // const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
+        // localStorage.setItem("userToken", ACCESS_TOKEN);
+        // localStorage.setItem("userId", userId);
+        // setCookie("userToken", ACCESS_TOKEN);
+        // setCookie("userId", userId);
+        history.replace("/check-in");
+      })
+      .catch((error) => {
+        window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        console.log("Login Error", error);
+      });
+  };
+};
+
 export const adminloginDB = (userId, password) => {
   return async function (dispatch, getState, { history }) {
     await api
@@ -194,6 +226,7 @@ const actionCreators = {
   // withdrawal,
   loginDB,
   signupDB,
+  getMyselfDB,
   kakaoLoginDB,
   adminloginDB,
   // loadToken,
