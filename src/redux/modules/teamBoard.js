@@ -33,12 +33,15 @@ const __checkTodoList = createAction(CHECK_TODO_LIST, (todoId) => ({todoId}))
 // 미들웨어
 
 // 유저 팀보드 불러오기 미들웨어
-export const loadTeamBoard = () => {
+export const loadTeamBoard = (teamId) => {
+  console.log(teamId)
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get('https://www.a-chool.com:443/api/user/teamBoard'
-    ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-    )
+    const bucket = {
+      headers : {"Authorization" : `Bearer ${myToken}`}
+      ,params: {teamId: teamId}
+    }
+    axios.get('https://a-chool.com:443/api/user/teamBoard', bucket)
     .then((res) => {
       dispatch(__loadTeamBoard(res.data));
     })
@@ -49,10 +52,10 @@ export const loadTeamBoard = () => {
 }
 
 // 특정 주차의 팀보드 불러오기 미들웨어
-export const setWeekTeamBoard = (weekTeamId) => {
+export const setWeekTeamBoard = (teamId) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
+    axios.get(`https://a-chool.com:443/api/user/teamBoard/${teamId}`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -65,14 +68,14 @@ export const setWeekTeamBoard = (weekTeamId) => {
 }
 
 // 유저 팀보드 그라운드룰 수정 미들웨어
-export const editGroundRule = (weekTeamId, groundRule) => {
-  console.log(weekTeamId, groundRule)
+export const editGroundRule = (teamId, groundRule, weekId) => {
+  console.log(teamId, groundRule)
   return function (dispatch, getState, {history}) {
-    if(!weekTeamId) {window.alert("팀 아이디가 없습니다!")}
+    if(!teamId) {window.alert("팀 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://www.a-chool.com:443/api/user/teamBoard/groundRule/${weekTeamId}`,
+      url: `https://a-chool.com:443/api/user/teamBoard/groundRule/${teamId}`,
       data: {
         groundRule
       },
@@ -80,11 +83,12 @@ export const editGroundRule = (weekTeamId, groundRule) => {
     })
     .then(() => {
       dispatch(__editGroundRule(groundRule));
-      axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
+      axios.get('https://a-chool.com:443/api/user/teamBoard'
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
+      ,{params: {weekId: weekId}}, 
       )
       .then((res) => {
-        dispatch(__setWeekTeamBoard(res.data));
+        dispatch(__loadTeamBoard(res.data));
       })
       .catch((err)=> {
         console.log(err);
@@ -97,26 +101,27 @@ export const editGroundRule = (weekTeamId, groundRule) => {
 }
 
 // todo 추가 미들웨어
-export const addTodoList = (weekTeamId, todoContent) => {
+export const addTodoList = (teamId, todoContent, weekId) => {
   return function (dispatch, getState, {history}) {
-    if(!weekTeamId) {window.alert("팀아이디가 없습니다!")}
+    if(!teamId) {window.alert("팀아이디가 없습니다!")}
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://www.a-chool.com:443/api/user/teamBoard`,
+      url: `https://a-chool.com:443/api/user/teamBoard`,
       data: {
-      teamId : weekTeamId,
+      teamId : teamId,
       todoContent : todoContent
     },
     headers: {Authorization: `Bearer ${myToken}`},
     })
     .then(() => {
-      dispatch(__addTodoList(weekTeamId, todoContent));
-      axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
+      dispatch(__addTodoList(teamId, todoContent));
+      axios.get('https://a-chool.com:443/api/user/teamBoard'
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
+      ,{params: {weekId: weekId}}, 
       )
       .then((res) => {
-        dispatch(__setWeekTeamBoard(res.data));
+        dispatch(__loadTeamBoard(res.data));
       })
       .catch((err)=> {
         console.log(err);
@@ -135,7 +140,7 @@ export const deleteTodoList = (todoId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `https://www.a-chool.com:443/api/user/teamBoard/${todoId}`,  
+      url: `https://a-chool.com:443/api/user/teamBoard/${todoId}`,  
       headers: {
       Authorization: `Bearer ${myToken}`
       },
@@ -156,7 +161,7 @@ export const editTodoList = (todoId, todoContent) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://www.a-chool.com:443/api/user/teamBoard/${todoId}`,
+      url: `https://a-chool.com:443/api/user/teamBoard/${todoId}`,
       data: {
         todoContent
       },
@@ -177,7 +182,7 @@ export const checkTodoList = (todoId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://www.a-chool.com:443/api/user/teamBoard/check/${todoId}`,
+      url: `https://a-chool.com:443/api/user/teamBoard/check/${todoId}`,
       data: {
       },
       headers: {Authorization: `Bearer ${myToken}`},
@@ -192,13 +197,13 @@ export const checkTodoList = (todoId) => {
 }
 
 // 유저 팀보드 워크스페이스 수정 미들웨어
-export const editWorkSpace = (weekTeamId, workSpace) => {
+export const editWorkSpace = (teamId, workSpace, weekId) => {
   return function (dispatch, getState, {history}) {
-    if(!weekTeamId) {window.alert("팀 아이디가 없습니다!")}
+    if(!teamId) {window.alert("팀 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://www.a-chool.com:443/api/user/teamBoard/workSpace/${weekTeamId}`,
+      url: `https://a-chool.com:443/api/user/teamBoard/workSpace/${teamId}`,
       data: {
         workSpace
       },
@@ -206,11 +211,12 @@ export const editWorkSpace = (weekTeamId, workSpace) => {
     })
     .then(() => {
       dispatch(__editWorkSpace(workSpace));
-      axios.get(`https://www.a-chool.com:443/api/user/teamBoard/${weekTeamId}`
+      axios.get('https://a-chool.com:443/api/user/teamBoard'
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
+      ,{params: {weekId: weekId}}, 
       )
       .then((res) => {
-        dispatch(__setWeekTeamBoard(res.data));
+        dispatch(__loadTeamBoard(res.data));
       })
       .catch((err)=> {
         console.log(err);

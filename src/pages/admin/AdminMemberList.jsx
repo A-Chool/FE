@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
-import { addMemberList } from '../../redux/modules/memberList';
-import { getMemberList } from '../../redux/modules/memberList';
+import { addMemberList } from '../../redux/modules/teamList';
+import { getMemberList } from '../../redux/modules/teamList';
 import { getTeamList } from '../../redux/modules/teamList';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,8 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
 const AdminMemberList = (props) => {
+
+  // console.log(props)
 
   const dispatch = useDispatch();
   
@@ -43,6 +45,7 @@ const AdminMemberList = (props) => {
 
   const tema_list = props.teamList
   const user_id = props.e.userId
+  const weekId = props.weekBucket
   // const weeks = props.week
 
   return (
@@ -57,12 +60,13 @@ const AdminMemberList = (props) => {
           추가 할 팀
           </Typography>
           {
-            tema_list.map((data, idx)=>{
+            tema_list.map((e, idx)=>{
+              // console.log(e)
             return(
               <div key={idx}>
-                {data.teamName}
+                {e.teamName}
                 <button onClick={() => {
-                  dispatch(addMemberList(data.teamId, user_id));
+                  dispatch(addMemberList(user_id, e.teamId,  e.weekId));
                   setOpen(false);
                   }}>추가</button>
               </div>

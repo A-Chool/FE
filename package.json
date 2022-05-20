@@ -1,5 +1,5 @@
 {
-  "proxy": "https://www.a-chool.com:443:8080",
+  "proxy": "https://a-chool.com:443:8080",
   "name": "pratice",
   "version": "0.1.0",
   "private": true,

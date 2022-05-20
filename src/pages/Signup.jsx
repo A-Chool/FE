@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from "react";
 import { useDispatch } from "react-redux";
 
@@ -10,6 +11,9 @@ import {
   phoneCheck,
   nickCheck,
 } from "../shared/common";
+
+import loginPage from '../assets/img/loginPage.png'
+import logo from '../assets/img/로고.svg'
 
 const Signup = () => {
   const history = useHistory();
@@ -70,11 +74,9 @@ const Signup = () => {
   return (
     <PageMain>
       <InputMain>
-        <PageInput>
-          <MainName>아무튼 출석</MainName>
+        <img src={logo} style={{position : 'absolute',top : '32px',left : '0px'}}/>
 
-          <MainContents>회원가입정보를</MainContents>
-          <MainContents>입력해주세요.</MainContents>
+          <MainContents>회원가입</MainContents>
           <SubContents>
             아래의 가입정보를 입력 후 회원가입 버튼을 클릭해 주세요.
           </SubContents>
@@ -90,7 +92,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userName}
-            placeholder="사용할 닉네임을 입력해주세요.(2글자 이상  10글자 이하) "
+            placeholder="사용할 닉네임(2글자 이상 8글자 이하)"
             onChange={(e) => {
               setUserName(e.target.value);
             }}
@@ -98,7 +100,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userPw}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="비밀번호"
             onChange={(e) => {
               setUserPw(e.target.value);
             }}
@@ -106,7 +108,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userPwCheck}
-            placeholder="작성한 비밀번호를 한번더 입력해주세요."
+            placeholder="비밀번호 확인"
             onChange={(e) => {
               setUserPwCheck(e.target.value);
             }}
@@ -114,20 +116,18 @@ const Signup = () => {
           <UserInput
             type="text"
             value={phoneNumber}
-            placeholder="저장할 핸드폰 번호를 입력해주세요.( ‘-’ 포함)"
+            placeholder="휴대폰 번호( ‘-’ 포함)"
             onChange={(e) => {
               setPhoneNumber(e.target.value);
             }}
           />
-          <InputBtn>
+
             <CollectionBtn onClick={signup}>회원가입</CollectionBtn>
-          </InputBtn>
-        </PageInput>
+
       </InputMain>
-      <LogoMain>
-        <LogoMainImg src="https://item.kakaocdn.net/do/0928e136f08ba05c038243f2c4509a14f604e7b0e6900f9ac53a43965300eb9a" />
-        <LogoMainName>사용자 회원가입</LogoMainName>
-      </LogoMain>
+
+      <LogoMain src = {loginPage} />
+
     </PageMain>
   );
 };
@@ -141,86 +141,61 @@ const PageMain = styled.div`
   align-items: center;
 `;
 
-const PageInput = styled.div`
+const PageInput = styled.form`
   display: flex;
-  flex-direction: column;
-  justify-content: start;
 `;
 
-const LogoMain = styled.div`
+const LogoMain = styled.img`
   width: 50%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LogoMainImg = styled.img`
-  width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const LogoMainName = styled.div`
-  font-size: 50px;
-  color: white;
-  font-weight: bold;
 `;
 
 const InputMain = styled.div`
-  width: 50%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-const MainName = styled.div`
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 50px;
+width: 50%;
+height: 100%;
+text-align: center;
 `;
 
 const MainContents = styled.div`
-  font-size: 30px;
-  font-weight: bold;
-  margin-top: 10px;
+  font-weight: 700;
+  font-size: 24px;
+  margin : 23% 0 48px;
 `;
 const SubContents = styled.div`
-  font-size: 15px;
-  margin-top: 10px;
-  margin-bottom: 50px;
-`;
-const InputBtn = styled.div`
-  margin-top: 20px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  font-weight: 400;
+  font-size: 16px;
 `;
 
-const CollectionBtn = styled.button`
-  width: 480px;
-  height: 45px;
+const CollectionBtn = styled.div`
+  width: 384px;
+  height: 40px;
   border-radius: 10px;
-  background-color: #939393;
+  background-color: #1F3A5E;
+  font-weight: 700;
   font-size: 16px;
-  font-weight: bold;
-  border: none;
   color: white;
+  text-align : center;
+  line-height: 40px;
+  display : inline-block;
+  margin-top : 16px;
 `;
 
 const UserInput = styled.input`
-  width: 450px;
-  font-size: 18px;
-  text-decoration: none solid rgb(29, 28, 29);
-  background-color: #ffffff;
-  border: 1px solid #c4c4c4;
+  width: 372px;
+  height : 40px;
+  font-weight: 400;
+  font-size: 16px;
+  border: 1px solid #828282;
   border-radius: 10px;
-  padding: 10px 15px 10px 15px;
-  margin-top: 15px;
+  margin-top: 16px;
+  padding-left : 8px; 
+  &:hover {
+    border: 1.2px solid #282828;
+  }
+  &:focus {
+    outline: 1.2px solid #282828;
+    border: 0px;
+  }
 `;
 
 export default Signup;

@@ -2,7 +2,7 @@ import { createAction, handleActions } from "redux-actions";
 import { produce } from "immer";
 import axios from "axios";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
-import api from "../../api/api";
+import api, { baseUrl } from "../../api/api";
 import cookies from "universal-cookie";
 // 액션
 
@@ -37,7 +37,7 @@ const loginDB = (userId, password) => {
         password: password,
       })
       .then((response) => {
-        console.log(response); 
+        console.log(response);
         dispatch(
           logIn({
             is_login: true,
@@ -58,12 +58,44 @@ const loginDB = (userId, password) => {
   };
 };
 
+// 로그인 액션
+const getMyselfDB = (token) => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .get(`${baseUrl}/api/user/mypage`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        console.log(response);
+        // dispatch(
+        //   logIn({
+        //     is_login: true,
+        //   })
+        // );
+        console.log("로그인 성공");
+        // const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
+        // localStorage.setItem("userToken", ACCESS_TOKEN);
+        // localStorage.setItem("userId", userId);
+        // setCookie("userToken", ACCESS_TOKEN);
+        // setCookie("userId", userId);
+        history.replace("/check-in");
+      })
+      .catch((error) => {
+        window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        console.log("Login Error", error);
+      });
+  };
+};
+
 export const adminloginDB = (userId, password) => {
   return async function (dispatch, getState, { history }) {
     await api
       .post("/api/admin/login", {
-        email : userId,
-        password : password,
+        email: userId,
+        password: password,
       })
       .then((response) => {
         console.log(response);
@@ -89,10 +121,15 @@ export const adminloginDB = (userId, password) => {
 
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
+<<<<<<< HEAD
     await axios({
       method: "GET",
-      url: `https://www.a-chool.com:443/api/user/kakao/callback?code=${code}`,
+      url: `https://a-chool.com:443/api/user/kakao/callback?code=${code}`,
     })
+=======
+    await axios
+      .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
+>>>>>>> 254d6155ec06b94e34692c089bd3857875d363e6
       .then((response) => {
         console.log(response);
 
@@ -196,6 +233,7 @@ const actionCreators = {
   // withdrawal,
   loginDB,
   signupDB,
+  getMyselfDB,
   kakaoLoginDB,
   adminloginDB,
   // loadToken,

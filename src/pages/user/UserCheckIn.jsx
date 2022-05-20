@@ -17,13 +17,16 @@ const UserCheckIn = () => {
   // checkInList 조회를 위한 useEffect
   React.useEffect(() => {
     setInterval(() => {
-      dispatch(loadCheckList("3주차"));
+      dispatch(loadCheckList());
     }, 300000);
   }, []);
 
   const teamList = useSelector((state) => state.checkIn.checkInList);
 
   const logList = useSelector((state) => state.checkIn.checkIn);
+
+  console.log(teamList)
+  console.log(logList)
 
   return (
     <React.Fragment>
