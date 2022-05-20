@@ -12,8 +12,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteMemberList } from '../redux/modules/memberList';
-import { loadMemberList } from '../redux/modules/memberList';
+import { deleteMemberList } from '../redux/modules/teamList';
+import { loadMemberList } from '../redux/modules/teamList';
 
 import deleteUser from './../assets/img/deleteUser.svg'
 import deleteuser from './../assets/img/deleteUser.svg'
@@ -93,7 +93,7 @@ const DndTeamList = (props) => {
                   alignItems: "center",
                   }}>
                   <Members e={e}></Members>
-                    <button onClick={() => {dispatch(deleteMemberList(e.memberId, user_id))}}>제거</button>
+                    <button onClick={() => {dispatch(deleteMemberList(e.memberId, user_id, props.e.weekId))}}>제거</button>
                   </div>
                 </div>
               )

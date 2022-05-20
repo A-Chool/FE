@@ -118,7 +118,7 @@ padding: .5em .9em;
   border: 1px solid #999;
   font-weight: 700;
   font-size: 16px;
-  background: url('arrow.jpg') no-repeat 95% 50%;
+  // background: url('arrow.jpg') no-repeat 95% 50%;
   border: 2px solid #1F3A5E;
   box-sizing: border-box;
   border-radius: 4px;
