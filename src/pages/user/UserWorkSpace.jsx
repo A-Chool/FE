@@ -21,7 +21,7 @@ const UserWorkSpace = (props) => {
   };
 
   const workSpace = props.TeamBoard.workSpace
-  const weekTeamId = props.TeamBoard.teamId
+  const teamId = props.TeamBoard.teamId
 
   const split = workSpace?.split("\n").map((line) => {
     return (
@@ -49,7 +49,7 @@ const UserWorkSpace = (props) => {
             style={{margin : '8px 8px 4px 0px'}} 
             onClick={() => {
             setupdate(!update)
-            dispatch(editWorkSpace(weekTeamId, work));
+            dispatch(editWorkSpace(teamId, work));
           }}></img>
         }    
       </UpBar>

@@ -29,6 +29,7 @@ import { useDispatch } from "react-redux";
 import KakaoOauth from "./pages/KakaoOauth";
 
 function App() {
+  
   const dispatch = useDispatch();
 
   useEffect(() => {

@@ -31,12 +31,13 @@ const UserTeamBoard = () => {
   const [team, setTeam] = React.useState();
 
   const handleChange = (event) => {
+    console.log(event.target.value);
     setTeam(event.target.value);
-    dispatch(setWeekTeamBoard(event.target.value));
+    dispatch(loadTeamBoard(event.target.value));
   };
 
     React.useEffect(() => {
-      dispatch(loadCheckList("1주차"));
+      dispatch(loadCheckList());
     }, []);
 
     React.useEffect(() => {
@@ -53,9 +54,12 @@ const UserTeamBoard = () => {
 
     // console.log(TeamBoard.weekTeamList)
     
-    const weekTeamList = TeamBoard.weekTeamList
+    const weekTeamList = TeamBoard.teamDtoList
     
     const MemberList = TeamBoard.memberList
+
+    console.log(TeamBoard);
+    console.log(MemberList);
 
   return (
     <React.Fragment>
@@ -75,7 +79,7 @@ const UserTeamBoard = () => {
                     {
                       weekTeamList && weekTeamList.map((e, idx)=>{
                       return(
-                        <option key={idx} value={e.weekTeamId}>{e.week}{e.weekTeamName}</option>
+                        <option key={idx} value={e.teamId}>{e.weekName}{e.TeamName}</option>
                       )
                       })
                     }

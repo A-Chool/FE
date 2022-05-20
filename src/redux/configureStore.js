@@ -7,10 +7,11 @@ import { connectRouter } from "connected-react-router";
 import user from "./modules/user";
 import userList from "./modules/userList";
 import teamList from "./modules/teamList";
-import memberList from "./modules/memberList";
+import memberList from "./modules/teamList";
 import checkIn from "./modules/checkIn";
 import teamBoard from "./modules/teamBoard";
 import chat from "./modules/chat";
+import week from "./modules/week";
 
 // history를 페이지에서 편하게 사용할 수 있도록 준비
 export const history = createBrowserHistory();
@@ -23,6 +24,7 @@ const rootReducer = combineReducers({
   checkIn: checkIn,
   teamBoard: teamBoard,
   chat: chat,
+  week : week,
   router: connectRouter(history),
 });
 

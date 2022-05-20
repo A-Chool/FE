@@ -121,8 +121,15 @@ export const adminloginDB = (userId, password) => {
 
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
+<<<<<<< HEAD
+    await axios({
+      method: "GET",
+      url: `https://a-chool.com:443/api/user/kakao/callback?code=${code}`,
+    })
+=======
     await axios
       .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
+>>>>>>> 254d6155ec06b94e34692c089bd3857875d363e6
       .then((response) => {
         console.log(response);
 
