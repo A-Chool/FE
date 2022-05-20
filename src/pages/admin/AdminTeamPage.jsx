@@ -2,7 +2,6 @@
 import React from 'react';
 import styled from "styled-components";
 
-
 import AdminSidebar from "./AdminSideBar";
 import DndTeamList from '../../components/DndTeamList';
 import AdminMemberList from './AdminMemberList';
@@ -27,7 +26,6 @@ import Modal from '@mui/material/Modal';
 
 
 const AdminTeamPage = () => {
-  
   const dispatch = useDispatch();
 
   // 주차 리스트 불러오기
@@ -41,7 +39,7 @@ const AdminTeamPage = () => {
   // 해당 주차의 팀 리스트 불러오기
   React.useEffect(() => {
     dispatch(getTeamList());
-  },[]);
+  }, []);
 
   // 팀 리스트 정보 꺼내기
   const teamList = useSelector((state) => state.teamList.teams);
@@ -66,13 +64,13 @@ const AdminTeamPage = () => {
 
   // Modal style
   const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
     width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
+    bgcolor: "background.paper",
+    border: "2px solid #000",
     boxShadow: 24,
     p: 4,
   };
@@ -83,7 +81,7 @@ const AdminTeamPage = () => {
   const handleClose = () => setOpen(false);
 
   // 드랍박스에서 주차를 클릭했을때 변화를 담을 스테이트
-  const [week, setClickWeek] = React.useState('');
+  const [week, setClickWeek] = React.useState("");
 
   // 팀이 없는 맴버 꺼내오기
   const memberList = useSelector((state) => state.memberList.memberList);
@@ -93,8 +91,8 @@ const AdminTeamPage = () => {
 
   // 팀 추가에서 팀이름을 입력 Input 변화추적하기 위한 액션
   const handlesetTeamName = (e) => {
-    setTeamName(e.target.value)
-  }
+    setTeamName(e.target.value);
+  };
 
   const [test, setTest] = React.useState(true);
 
@@ -116,7 +114,6 @@ const AdminTeamPage = () => {
     }
 
   return (
-
     <React.Fragment>
       <div style={{display : 'flex'}}>
           <AdminSidebar />
@@ -203,19 +200,18 @@ const AdminTeamPage = () => {
   );
 };
 
-
 const BackgroundDiv = styled.div`
-  height : 100vh;
-  float : left;
-  background-color : #F4F6F9;
-  flex-grow : 1;
-`
+  height: 100vh;
+  float: left;
+  background-color: #f4f6f9;
+  flex-grow: 1;
+`;
 
 const PageName = styled.p`
   font-weight: 700;
   font-size: 24px;
-  margin : 40px 0 32px 32px;
-`
+  margin: 40px 0 32px 32px;
+`;
 
 const FnWrapper = styled.div`
   width : auto;
@@ -284,7 +280,7 @@ const Selecter = styled.select`
   font-weight: 700;
   font-size: 16px;
   // background: url('arrow.jpg') no-repeat 95% 50%;
-  border: 2px solid #1F3A5E;
+  border: 2px solid #1f3a5e;
   box-sizing: border-box;
   border-radius: 4px;
   -webkit-appearance: none;
@@ -293,44 +289,44 @@ const Selecter = styled.select`
   &::-ms-expand {
     display: none;
   }
-`
+`;
 
 const SelectSVG = styled.svg`
   margin-left: -35px;
   align-self: center;
   width: 20px;
   height: 14px;
-`
+`;
 
 const TeamListWrapper = styled.div`
-  width : auto;
-  height : 70%;
-  overflow : scroll;
-  overflow-x : hidden;
+  width: auto;
+  height: 70%;
+  overflow: scroll;
+  overflow-x: hidden;
   &::-webkit-scrollbar {
-    width : 4px;
+    width: 4px;
   }
   &::-webkit-scrollbar-thumb {
-    width : 4px;
-    background: #C4C4C4;
+    width: 4px;
+    background: #c4c4c4;
     border-radius: 4px;
   }
   &::-webkit-scrollbar-track {
     background: transition;
   }
-`
+`;
 
 const MemberDiv = styled.div`
-  width : 738px;
-  height : 216px;
-  background-color : white;
-  float : right;
-  position : absolute;
-  bottom : 46px;
-  right : 0px;
+  width: 738px;
+  height: 216px;
+  background-color: white;
+  float: right;
+  position: absolute;
+  bottom: 46px;
+  right: 0px;
   border-radius: 24px 0px 0px 24px;
-	-webkit-animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
-  animation: slide-in-left 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  -webkit-animation: slide-in-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  animation: slide-in-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   @-webkit-keyframes slide-in-left {
     0% {
       -webkit-transform: translateX(738px);
@@ -354,13 +350,13 @@ const MemberDiv = styled.div`
 `
 
 const MemberDivOff = styled.div`
-  width : 738px;
-  height : 216px;
-  background-color : white;
-  float : right;
-  position : absolute;
-  bottom : 46px;
-  right : -684px;
+  width: 738px;
+  height: 216px;
+  background-color: white;
+  float: right;
+  position: absolute;
+  bottom: 46px;
+  right: -684px;
   border-radius: 24px 0px 0px 24px;
   display : ;
   transition : 300ms ease-in-out;
@@ -386,13 +382,12 @@ const MemberDivOff = styled.div`
       transform: translateX(0);
     }
   }
-  
-`
+`;
 
 const AddMember = styled.div`
-  width : 54px;
-  height : 216px;
-  background: #FF5F00;
+  width: 54px;
+  height: 216px;
+  background: #ff5f00;
   border-radius: 24px 0px 0px 24px;
   text-align : center;
   margin-right : 8px;

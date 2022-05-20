@@ -39,7 +39,7 @@ export const loadTeamBoard = (teamId) => {
     const myToken = getCookie("Authorization");
     const bucket = {
       headers : {"Authorization" : `Bearer ${myToken}`}
-      ,params: {teamId: teamId} 
+      ,params: {teamId: teamId}
     }
     axios.get('https://a-chool.com:443/api/user/teamBoard', bucket)
     .then((res) => {

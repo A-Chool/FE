@@ -133,6 +133,15 @@ const Signup = () => {
 };
 
 const PageMain = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const PageInput = styled.form`
   display: flex;
 `;
 
