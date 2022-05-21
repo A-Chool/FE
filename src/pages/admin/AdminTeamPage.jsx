@@ -68,11 +68,10 @@ const AdminTeamPage = () => {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400,
+    width: 320,
+    height : 140,
     bgcolor: "background.paper",
-    border: "2px solid #000",
     boxShadow: 24,
-    p: 4,
   };
 
   // Modal 온 오프 액션을 위한 스테이트
@@ -128,8 +127,7 @@ const AdminTeamPage = () => {
                   )
                 })
               }
-              <WeekTag>
-                <WeekTagName onClick={addWeekHandleOpen}>추가</WeekTagName>
+                <WeekTagName onClick={addWeekHandleOpen}>+ 추가</WeekTagName>
                 <Modal
                   open={addWeekOpen}
                   onClose={addWeekHandleClose}
@@ -137,14 +135,10 @@ const AdminTeamPage = () => {
                   aria-describedby="modal-modal-description"
                 >
                   <Box sx={style}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                      주차추가
-                    </Typography>
-                    <input onChange={handleAddWeekName}></input>
-                    <button onClick={() => {dispatch(addWeekList(addWeekName))}}>추가</button>
+                    <AddWeekInput onChange={handleAddWeekName} placeholder="주차명을 입력해 주세요."></AddWeekInput>
+                    <AddWeekBtn onClick={() => {dispatch(addWeekList(addWeekName))}}>추가</AddWeekBtn>
                   </Box>
                 </Modal>
-              </WeekTag>
             </FnWrapper>
 
             <TeamListWrapper>
@@ -169,13 +163,15 @@ const AdminTeamPage = () => {
               <AddMember>
                 <OpenBtn src={memberAdd} onClick={() => {setTest(!test)}}/>
               </AddMember>
-              {
-                memberList.map((e, idx)=>{
-                  return(
-                    <AdminMemberList key={idx} e={e} teamList={teamList} weekBucket={weekBucket} week={week}/>
-                  )
-                })
-              }
+              <Members>
+                {
+                  memberList.map((e, idx)=>{
+                    return(
+                      <AdminMemberList key={idx} e={e} teamList={teamList} weekBucket={weekBucket} week={week}/>
+                    )
+                  })
+                }
+              </Members>
             </MemberDiv>
             :
               <AddMemberOff>
@@ -217,7 +213,7 @@ const FnWrapper = styled.div`
   width : auto;
   height : 42px;
   display: flex;
-  margin : 0 32px 24px;
+  margin : 0 32px -7px;
 
 `
 
@@ -245,17 +241,16 @@ const WeekTag = styled.div`
 `
 
 const WeekTagName = styled.div`
-  width: 129px;
-  height: 33px;
+  width: 71px;
+  height: 28px;
+  background: #1F3A5E;
+  border-radius: 8px;
+  color : white;
   font-weight: 700;
-  font-size: 16px;
-  margin : 0px auto;
-  float : left;
-  position : absolute;
-  line-height : 33px;
-  // ${WeekTag}:hover & {
-  //   width: 110px;
-  // }
+  font-size: 14px;
+  line-height: 26px;
+  text-align : center;
+  margin-left: auto;
 `
 
 const WeekTagEdit = styled.div`
@@ -300,7 +295,9 @@ const SelectSVG = styled.svg`
 
 const TeamListWrapper = styled.div`
   width: auto;
-  height: 70%;
+  height: 75%;
+  background: rgba(255, 255, 255, 0.7);
+  padding-top : 32px;
   overflow: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {
@@ -325,6 +322,7 @@ const MemberDiv = styled.div`
   bottom: 46px;
   right: 0px;
   border-radius: 24px 0px 0px 24px;
+
   -webkit-animation: slide-in-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   animation: slide-in-left 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   @-webkit-keyframes slide-in-left {
@@ -348,6 +346,23 @@ const MemberDiv = styled.div`
     }
   }
 `
+
+const Members = styled.div`
+  height: 216px;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    background: #c4c4c4;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transition;
+  }
+  `
 
 const MemberDivOff = styled.div`
   width: 738px;
@@ -434,6 +449,33 @@ margin : 92px 0 0 -38px;
 const OpenBtnOff = styled.img`
 position : absolute;
 margin : 92px 0 0 -11px;
+`
+
+const AddWeekInput = styled.input`
+width: 280px;
+height: 40px;
+border : none;
+border-bottom : 1px solid #E0E0E0;
+font-weight: 400;
+font-size: 18px;
+color: #828282;
+margin : 20px 20px;
+&:focus {
+  outline : none;
+}
+`
+
+const AddWeekBtn = styled.div`
+width: 280px;
+height: 40px;
+background: #FF5F00;
+border-radius: 100px;
+font-weight: 700;
+font-size: 14px;
+color : white;
+text-align : center;
+line-height : 40px;
+margin : 0px auto;
 `
 
 export default AdminTeamPage;

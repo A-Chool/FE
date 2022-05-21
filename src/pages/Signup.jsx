@@ -1,16 +1,11 @@
 /* eslint-disable */
 import React from "react";
-import { useDispatch } from "react-redux";
-
 import styled from "styled-components";
+
+import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { actionCreators as userActions } from "../redux/modules/user";
-import {
-  emailCheck,
-  passwordCheck,
-  phoneCheck,
-  nickCheck,
-} from "../shared/common";
+import {emailCheck, passwordCheck, phoneCheck, nickCheck} from "../shared/common";
 
 import loginPage from '../assets/img/loginPage.png'
 import logo from '../assets/img/로고.svg'
@@ -26,29 +21,20 @@ const Signup = () => {
   const [phoneNumber, setPhoneNumber] = React.useState("");
 
   const signup = () => {
-    if (
-      email === "" ||
-      userName === "" ||
-      userPw === "" ||
-      userPwCheck === "" ||
-      phoneNumber === ""
-    ) {
+    if (email === "" || userName === "" || userPw === "" || userPwCheck === "" || phoneNumber === "") {
       window.alert("입력값을 모두 입력해주세요");
       return;
     }
-
     // 비밀번호 확인
     if (userPw !== userPwCheck) {
       window.alert("비밀번호가 같지 않습니다!");
       return;
     }
-
     //이메일 체크
     if (!emailCheck(email)) {
       window.alert("이메일 형식이 맞지 않습니다!");
       return;
     }
-
     //닉네임 체크
     if (!nickCheck(userName)) {
       window.alert("닉네임은 한글, 영문, 숫자만 가능하며 2-10자리 가능합니다!");
@@ -56,9 +42,7 @@ const Signup = () => {
     }
     //비밀번호 체크
     if (!passwordCheck(userPw)) {
-      window.alert(
-        "비밀번호는 숫자와 문자 포함 형태의 6~12자리 이내로 가능합니다!"
-      );
+      window.alert("비밀번호는 숫자와 문자 포함 형태의 6~12자리 이내로 가능합니다!");
       return;
     }
     //핸드폰 번호 체크
@@ -74,11 +58,11 @@ const Signup = () => {
   return (
     <PageMain>
       <InputMain>
-        <img src={logo} style={{position : 'absolute',top : '32px',left : '0px'}}/>
-
+        <img src={logo} style={{position : 'absolute',top : '32px',left : '30px'}}/>
+          <SingUpContentsWrapper>
           <MainContents>회원가입</MainContents>
           <SubContents>
-            아래의 가입정보를 입력 후 회원가입 버튼을 클릭해 주세요.
+            가입정보를 입력 후 회원가입 버튼을 클릭해 주세요.
           </SubContents>
           <UserInput
             type="text"
@@ -123,7 +107,7 @@ const Signup = () => {
           />
 
             <CollectionBtn onClick={signup}>회원가입</CollectionBtn>
-
+            </SingUpContentsWrapper>
       </InputMain>
 
       <LogoMain src = {loginPage} />
@@ -154,13 +138,26 @@ const InputMain = styled.div`
 width: 50%;
 height: 100%;
 text-align: center;
+display: flex;
 `;
+
+const SingUpContentsWrapper = styled.div`
+  width: 380px;
+  height: 500px;
+  margin: auto;
+  padding : 0 30px;
+    @media screen and (min-width: 2560px) {
+      width: 700px;
+      height: 820px;
+    }
+`
 
 const MainContents = styled.div`
   font-weight: 700;
   font-size: 24px;
-  margin : 23% 0 48px;
+  margin : 0 0 48px;
 `;
+
 const SubContents = styled.div`
   font-weight: 400;
   font-size: 16px;
@@ -199,3 +196,8 @@ const UserInput = styled.input`
 `;
 
 export default Signup;
+
+
+// @media screen and (min-width: 2560px) {
+//   height: 750px;
+// }
