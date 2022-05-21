@@ -17,6 +17,13 @@ import singUp from "../assets/img/singUp.svg";
 
 import { KAKAO_AUTH_URL } from "../api/Oauth";
 
+const token = "3fa3aa6d41e97b2e2d44ea7d414b7a2b";
+
+const kakao = {
+  title: "KakaoLogin",
+  component: KakaoLogin,
+};
+
 const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,80 +41,109 @@ const Login = () => {
   const [userLogin, setUserLogin] = React.useState(false);
 
   return (
-  <React.Fragment>
-    <PageMain>
-      <InputMain>
-        <img
-        src={logo}
-        style={{ position: "absolute", top: "32px", left: "30px" }}
-        />
-        <LoginContentsWrapper>
-          <MainContents>아출에 오신것을 환영합니다.</MainContents>
-          <LoginContents>
-            <UserLoginContents onClick={() => {setUserLogin(false)}} userLogin={userLogin}>아출 계정으로 로그인</UserLoginContents>
-            <AdminLoginContents onClick={() => {setUserLogin(true)}} userLogin={userLogin}>어드민 로그인</AdminLoginContents>
-          </LoginContents>
-          {
-            userLogin === false 
-            ? 
-            (
+    <React.Fragment>
+      <PageMain>
+        <InputMain>
+          <img
+            src={logo}
+            style={{ position: "absolute", top: "32px", left: "30px" }}
+          />
+          <LoginContentsWrapper>
+            <MainContents>아출에 오신것을 환영합니다.</MainContents>
+            <LoginContents>
+              <UserLoginContents
+                onClick={() => {
+                  setUserLogin(false);
+                }}
+                userLogin={userLogin}
+              >
+                아출 계정으로 로그인
+              </UserLoginContents>
+              <AdminLoginContents
+                onClick={() => {
+                  setUserLogin(true);
+                }}
+                userLogin={userLogin}
+              >
+                어드민 로그인
+              </AdminLoginContents>
+            </LoginContents>
+            {userLogin === false ? (
               <UserLoginWrapper>
                 <UserInput
                   type="text"
                   value={userId}
                   placeholder="이메일 주소"
                   onChange={(e) => {
-                  setUserId(e.target.value);
-                }} />
+                    setUserId(e.target.value);
+                  }}
+                />
                 <UserInput
                   type="password"
                   value={password}
                   placeholder="비밀번호"
                   onChange={(e) => {
-                  setPassword(e.target.value);
-                }} />
+                    setPassword(e.target.value);
+                  }}
+                />
                 <CollectionBtn onClick={login}>로그인</CollectionBtn>
                 <OrImg src={or} />
                 <SocialLoginKakao href={KAKAO_AUTH_URL}>
-                  <KakaoImg src={kakaoLogin}/>
+                  <KakaoImg src={kakaoLogin} />
                 </SocialLoginKakao>
                 <InfutSingup>
                   <SignupContents>아직 계정이 없으신가요?</SignupContents>
-                  <SingUpImg
-                  src={singUp}
-                  onClick={gosignup} />
+                  <SingUpImg src={singUp} onClick={gosignup} />
                 </InfutSingup>
               </UserLoginWrapper>
-            ) 
-            : 
-            (
+            ) : (
               <UserLoginWrapper>
                 <UserInput
                   type="text"
                   value={userId}
                   placeholder="이메일 주소"
                   onChange={(e) => {
-                  setUserId(e.target.value);
-                }} />
+                    setUserId(e.target.value);
+                  }}
+                />
                 <UserInput
                   type="password"
                   value={password}
                   placeholder="비밀번호"
                   onChange={(e) => {
-                  setPassword(e.target.value);
-                }} />
-                <CollectionBtn onClick={() => {dispatch(adminloginDB(userId, password))}}>로그인</CollectionBtn>
+                    setPassword(e.target.value);
+                  }}
+                />
+                <CollectionBtn
+                  onClick={() => {
+                    dispatch(adminloginDB(userId, password));
+                  }}
+                >
+                  로그인
+                </CollectionBtn>
+
+                {/* <KakaoLogin
+                  token={token}
+                  onSuccess={(res) => {
+                    console.log(res.response.access_token);
+                    dispatch(
+                      userActions.kakaoLoginDB(res.response.access_token)
+                    );
+                  }}
+                  onFail={console.error}
+                  onLogout={console.info}
+                /> */}
+
                 <SocialLoginKakao href={KAKAO_AUTH_URL}>
                   <KakaoImg src={kakaoLogin} />
                 </SocialLoginKakao>
               </UserLoginWrapper>
-            )
-          }
-        </LoginContentsWrapper>
-      </InputMain>
-      <LogoMain src={loginPage} />
-    </PageMain>
-  </React.Fragment>
+            )}
+          </LoginContentsWrapper>
+        </InputMain>
+        <LogoMain src={loginPage} />
+      </PageMain>
+    </React.Fragment>
   );
 };
 
@@ -130,21 +166,21 @@ const LoginContentsWrapper = styled.div`
   width: 380px;
   height: 500px;
   margin: auto;
-  padding : 0 30px;
-    @media screen and (min-width: 2560px) {
-      width: 700px;
-      height: 820px;
-    }
-`
+  padding: 0 30px;
+  @media screen and (min-width: 2560px) {
+    width: 700px;
+    height: 820px;
+  }
+`;
 
 const MainContents = styled.div`
   font-weight: 700;
   font-size: 24px;
   margin: 0 45px 40px;
-    @media screen and (min-width: 2560px) {
-      font-size: 38px;
-      margin: 0 125px 40px;
-    }
+  @media screen and (min-width: 2560px) {
+    font-size: 38px;
+    margin: 0 125px 40px;
+  }
 `;
 
 const LoginContents = styled.div`
@@ -154,9 +190,9 @@ const LoginContents = styled.div`
   display: inline-block;
   text-align: left;
   margin: 8px 0;
-    @media screen and (min-width: 2560px) {
-      width: 700px;
-    }
+  @media screen and (min-width: 2560px) {
+    width: 700px;
+  }
 `;
 
 const UserLoginContents = styled.div`
@@ -167,11 +203,15 @@ const UserLoginContents = styled.div`
   text-align: center;
   margin: 8px 0;
   float: left;
-  border-bottom: ${({ userLogin }) => userLogin === false ? "4px solid #FF5F00" : "4px solid #E0E0E0"};
-    @media screen and (min-width: 2560px) {
-      width: 350px;
-      font-size: 24px;
-    }
+  border-bottom: ${({ userLogin }) =>
+    userLogin === false ? "4px solid #FF5F00" : "4px solid #E0E0E0"};
+  @media screen and (min-width: 2560px) {
+    width: 350px;
+    font-size: 24px;
+  }
+
+  cursor: pointer;
+  padding: 0.5rem 0;
 `;
 
 const UserLoginWrapper = styled.div`
@@ -187,11 +227,15 @@ const AdminLoginContents = styled.div`
   display: inline-block;
   text-align: center;
   margin: 8px 0;
-  border-bottom: ${({ userLogin }) => userLogin === true ? "4px solid #FF5F00" : "4px solid #E0E0E0"};
-    @media screen and (min-width: 2560px) {
-      width: 350px;
-      font-size: 24px;
-    }
+  border-bottom: ${({ userLogin }) =>
+    userLogin === true ? "4px solid #FF5F00" : "4px solid #E0E0E0"};
+  @media screen and (min-width: 2560px) {
+    width: 350px;
+    font-size: 24px;
+  }
+
+  cursor: pointer;
+  padding: 0.5rem 0;
 `;
 
 const CollectionBtn = styled.button`
@@ -204,12 +248,14 @@ const CollectionBtn = styled.button`
   border: none;
   color: white;
   margin: 8px 0;
-    @media screen and (min-width: 2560px) {
-      width: 580px;
-      height: 60px;
-      font-size: 24px;
-      margin : 8px 60px;
-    }
+  @media screen and (min-width: 2560px) {
+    width: 580px;
+    height: 60px;
+    font-size: 24px;
+    margin: 8px 60px;
+  }
+
+  cursor: pointer;
 `;
 
 const UserInput = styled.input`
@@ -228,30 +274,30 @@ const UserInput = styled.input`
     outline: 1.2px solid #282828;
     border: 0px;
   }
-    @media screen and (min-width: 2560px) {
-      width: 564px;
-      height: 40px;
-      font-size: 24px;
-      margin : 8px 60px;
-    }
+  @media screen and (min-width: 2560px) {
+    width: 564px;
+    height: 40px;
+    font-size: 24px;
+    margin: 8px 60px;
+  }
 `;
 
 const KakaoImg = styled.img`
   margin: 8px 0 8px;
-    @media screen and (min-width: 2560px) {
-      width: 580px;
-      height: 60px;
-      margin : 8px 60px;
-    }
-`
+  @media screen and (min-width: 2560px) {
+    width: 580px;
+    height: 60px;
+    margin: 8px 60px;
+  }
+`;
 
 const OrImg = styled.img`
   margin: 20px 0;
-    @media screen and (min-width: 2560px) {
-      width: 580px;
-      margin : 8px 60px;
-    }
-`
+  @media screen and (min-width: 2560px) {
+    width: 580px;
+    margin: 8px 60px;
+  }
+`;
 
 const SocialLoginKakao = styled.a`
   width: 380px;
@@ -262,10 +308,10 @@ const InfutSingup = styled.div`
   width: 380px;
   height: 40px;
   display: inline-block;
-    @media screen and (min-width: 2560px) {
-      width: 580px;
-      margin : 8px 60px;
-    }
+  @media screen and (min-width: 2560px) {
+    width: 580px;
+    margin: 8px 60px;
+  }
 `;
 
 const SignupContents = styled.div`
@@ -274,10 +320,10 @@ const SignupContents = styled.div`
   font-size: 16px;
   float: left;
   margin-right: -80px;
-    @media screen and (min-width: 2560px) {
-      font-size: 24px;
-    }
-`
+  @media screen and (min-width: 2560px) {
+    font-size: 24px;
+  }
+`;
 
 const SingUpImg = styled.img`
   margin: 2px 0 0 110px;
@@ -285,6 +331,6 @@ const SingUpImg = styled.img`
     height: 30px;
     margin: 3.5px 0 0 115px;
   }
-`
+`;
 
 export default Login;
