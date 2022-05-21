@@ -141,6 +141,19 @@ const BackgroundDiv = styled.div`
   float : left;
   background-color : #F4F6F9;
   flex-grow : 1;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    background: #c4c4c4;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transition;
+  }
 `
 
 const UpBar = styled.div`

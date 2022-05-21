@@ -48,6 +48,7 @@ const UserTodo = (props) => {
     <TodoWrapper>
       <img src={todoImg} style={{margin : '12px 0px 6px 12px'}} /> 
       <hr style={{width : '658px', margin : 'auto', border : '1px solid #E0E0E0'}}/>
+      <ScrollBox>
       {
         toDoList?.map((e, idx) => {
           return (
@@ -77,6 +78,8 @@ const UserTodo = (props) => {
             }}>
           </img>
       }
+      </ScrollBox>
+
     </TodoWrapper>
   );
 };
@@ -98,5 +101,24 @@ const TodoInput = styled.input`
     outline : none;
   }
 `
+
+const ScrollBox = styled.div`
+height : 130px;
+overflow: scroll;
+overflow-x: hidden;
+&::-webkit-scrollbar {
+  width: 4px;
+}
+&::-webkit-scrollbar-thumb {
+  width: 4px;
+  background: #c4c4c4;
+  border-radius: 4px;
+}
+&::-webkit-scrollbar-track {
+  background: transition;
+}
+`
+
+
 
 export default UserTodo;

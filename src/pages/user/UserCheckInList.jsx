@@ -72,7 +72,7 @@ const UserTag = styled.div`
   width : 100px;
   height : 36px;
   float : left;
-  margin : 6px 8px 3px;
+  margin : 6px 13px 3px;
 `
 
 const UserDetail = styled.p`

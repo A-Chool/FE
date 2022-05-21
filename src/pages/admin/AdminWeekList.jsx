@@ -73,6 +73,11 @@ const AdminWeekList = (props) => {
     }}>
     <WeekTagName>
       {props.e.weekName}
+      {/* <hr style={{
+        width : '0px',
+        height : '20px',
+        border: '0.7px solid #C4C4C4',
+        }}/> */}
     </WeekTagName>
     <WeekTagEdit>
       <img src = {etcBtn} onClick={weekHandleOpen}/>
@@ -151,7 +156,7 @@ const WeekTag = styled.div`
   height: 33px;
   text-align : center;
   // background-color: ${({ teamOpen }) => (teamOpen === true ? 'white' : 'none')};
-  border-right : 1px solid #C4C4C4;
+  
   border-bottom : ${({ e }) => (e === true ? '2px solid #FF5F00;' : 'none')};
   &:hover {
     background: rgba(196, 219, 225, 0.5);
@@ -160,7 +165,7 @@ const WeekTag = styled.div`
 `
 
 const WeekTagName = styled.div`
-  width: 129px;
+  width: 130px;
   height: 33px;
   font-weight: 700;
   font-size: 16px;
@@ -168,9 +173,6 @@ const WeekTagName = styled.div`
   float : left;
   position : absolute;
   line-height : 33px;
-  // ${WeekTag}:hover & {
-  //   width: 110px;
-  // }
 `
 
 const WeekTagEdit = styled.div`

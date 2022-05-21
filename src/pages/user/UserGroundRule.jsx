@@ -84,6 +84,19 @@ const Box = styled.div`
   height : 120px;
   width : 377px;
   margin : 6px auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    background: #c4c4c4;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transition;
+  }
 `
 
 const UpdateBox = styled.textarea`
