@@ -8,10 +8,18 @@ import { useDispatch } from "react-redux";
 
 import { logOut } from "../../redux/modules/user"
 
+import jwt_decode from "jwt-decode";
+
 const AdminSidebar = () => {
 
   const history = useHistory();
   const dispatch = useDispatch();
+
+  const value = "; " + document.cookie;
+
+  const parts = value.split('; userToken=');
+
+  const decode = jwt_decode ( parts[1] ) ; 
 
   return (
     <React.Fragment>
@@ -38,8 +46,14 @@ const AdminSidebar = () => {
             </svg>
           </div>
           <div style={{float : 'left', swidth : '56px', height : '48px', marginLeft : '16px'}}>
-            <p style={{margin : '0 0 0 0', fontSize : '20px', fontWeight : '900'}}>관리자</p>
-            <p style={{margin : '0 0 0 0', fontSize : '14px'}}>홍길동</p>
+            <p style={{margin : '0 0 0 0', fontSize : '20px', fontWeight : '900'}}>
+              {
+                decode.USER_LEVEL > 4 
+                ? "Admin"
+                : "User"
+              }
+            </p>
+            <p style={{margin : '0 0 0 0', fontSize : '14px'}}>{decode.USER_NAME}</p>
           </div>
           <div style={{width : '40px', height : '40px', float : 'left', marginLeft : '9px', textAlign : 'center'}}>
             <p style={{fontSize : '16px', textDecoration: 'underline', textUnderlinePosition: 'under'}}>수정</p>
