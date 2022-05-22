@@ -88,7 +88,7 @@ const getMyselfDB = (token) => {
           );
           console.log("로그인 성공");
           // const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-          // localStorage.setItem("userToken", ACCESS_TOKEN);
+          localStorage.setItem("userInfo", JSON.stringify(response.data));
           // localStorage.setItem("userId", userId);
           // setCookie("userToken", ACCESS_TOKEN);
           // setCookie("userId", userId);
