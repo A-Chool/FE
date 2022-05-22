@@ -1,4 +1,5 @@
 {
+  "proxy": "https://achool.shop",
   "name": "pratice",
   "version": "0.1.0",
   "private": true,

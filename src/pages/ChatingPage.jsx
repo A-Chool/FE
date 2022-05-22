@@ -25,7 +25,7 @@ const ChatingPage = (props) => {
 
   // 소켓 연결에 필요한 변수
   // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
-  const devTarget = "https://13.209.21.57:443:8080/ws-stomp";
+  const devTarget = "https://13.209.21.57:8080/ws-stomp";
   let sock = new SockJS(devTarget);
   let ws = Stomp.over(sock);
 
@@ -91,7 +91,7 @@ const ChatingPage = (props) => {
   // 저장된 메시지 출력
   const getMessageList = () => {
     axios
-      .get(`https://13.209.21.57:443:8080/chat/message/${roomId}`, {
+      .get(`https://13.209.21.57:8080/chat/message/${roomId}`, {
         headers: {
           Authorization: `Bearer ${myToken}`,
         },

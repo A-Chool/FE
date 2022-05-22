@@ -30,7 +30,7 @@ const __userCheckOut = createAction(USER_CHECKOUT, (checkOut) => ({checkOut}))
 export const loadCheckList = (week) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`https://13.209.21.57:443/api/checkInList`
+    axios.get(`https://13.209.21.57/api/checkInList`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -46,7 +46,7 @@ export const loadCheckList = (week) => {
 export const loadCheckIn = () => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get('https://13.209.21.57:443/api/checkIn'
+    axios.get('https://13.209.21.57/api/checkIn'
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -64,7 +64,7 @@ export const userCheckIn = (week) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://13.209.21.57:443/api/checkIn`,
+      url: `https://13.209.21.57/api/checkIn`,
       data: {
       },
       headers: {
@@ -87,7 +87,7 @@ export const userCheckOut = (week) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://13.209.21.57:443/api/checkOut`,
+      url: `https://13.209.21.57/api/checkOut`,
       data: {
       },
       headers: {

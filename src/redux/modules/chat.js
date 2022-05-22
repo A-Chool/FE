@@ -3,7 +3,7 @@ import { produce } from "immer";
 import axios from "axios";
 import { getCookie } from "../../shared/Cookie";
 
-const api_url = "https://13.209.21.57:443";
+const api_url = "https://13.209.21.57";
 
 const TOGGLE_CHATBOX = "TOGGLE_CHATBOX";
 const LOAD_CHAT_LIST = "LOAD_CHAT_LIST";
