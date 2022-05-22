@@ -7,6 +7,7 @@ import onlineUser from "../assets/img/onlineUser.svg";
 import chatIcon from "../assets/img/chatIcon.svg";
 import { toggleChatBox } from "../redux/modules/chat";
 import { logOut } from "../redux/modules/user";
+import jwt_decode from "jwt-decode";
 
 const UserSidebar = (props) => {
   
@@ -18,6 +19,12 @@ const UserSidebar = (props) => {
   const totalOnlineUser = boolen?.map?.((a) => a.length).reduce( (a, b) => {
     return a + b;
   }, 0);
+
+  const value = "; " + document.cookie;
+
+  const parts = value.split('; userToken=');
+
+  const decode = jwt_decode ( parts[1] ) ; 
 
   return (
     <Sidebar>
@@ -68,8 +75,14 @@ const UserSidebar = (props) => {
           </svg>
         </div>
         <div style={{ float: "left", swidth: "56px", height: "48px", marginLeft: "16px" }}>
-          <p style={{ margin: "0 0 0 0", fontSize: "20px", fontWeight: "900" }}>관리자</p>
-          <p style={{ margin: "0 0 0 0", fontSize: "14px" }}>항해99</p>
+          <p style={{ margin: "0 0 0 0", fontSize: "20px", fontWeight: "900" }}>
+            {
+              decode.USER_LEVEL > 4 
+              ? "Admin"
+              : "User"
+            }
+          </p>
+          <p style={{ margin: "0 0 0 0", fontSize: "14px" }}>{decode.USER_NAME}</p>
         </div>
         <div style={{ width: "40px", height: "40px", float: "left", marginLeft: "9px", textAlign: "center" }}>
           <p style={{ fontSize: "16px", textDecoration: "underline", textUnderlinePosition: "under" }}>수정</p>

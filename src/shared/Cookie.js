@@ -5,10 +5,12 @@ const getCookie = (name) => {
   
   // console.log(name)
   // console.log(`; ${name}=`)
-  // console.log(parts)
+  // console.log()
 
+  // const cookie_user_name = (parts[1])
+  
   if (parts.length === 2) {
-		return parts.pop().split(";").shift();
+    return parts.pop().split(";").shift();
 	}
   // console.log(parts.pop().split(";").shift())
 }

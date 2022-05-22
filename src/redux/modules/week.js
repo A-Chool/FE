@@ -28,7 +28,7 @@ const __setDisplayWeek = createAction(SET_DISPLAY_WEEK, (weekId) => ({weekId}))
 export const loadWeekList = () => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization")
-    axios.get('https://a-chool.com:443/api/admin/week'
+    axios.get('https://13.209.21.57:443/api/admin/week'
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -47,7 +47,7 @@ export const addWeekList = (weekName) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://a-chool.com:443/api/admin/week`,
+      url: `https://13.209.21.57:443/api/admin/week`,
       data: {
         weekName : weekName,
       },
@@ -71,7 +71,7 @@ export const deleteWeekList = (weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `https://a-chool.com:443/api/admin/week/${weekId}`,     
+      url: `https://13.209.21.57:443/api/admin/week/${weekId}`,     
       headers: {
       Authorization: `Bearer ${myToken}`
       },
@@ -92,7 +92,7 @@ export const editWeekName = (weekId, weekName) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://a-chool.com:443/api/admin/week/${weekId}`,
+      url: `https://13.209.21.57:443/api/admin/week/${weekId}`,
       data: {
         weekName
       },
@@ -114,7 +114,7 @@ export const setDisplayWeek = (weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://a-chool.com:443/api/admin/week/${weekId}`,
+      url: `https://13.209.21.57:443/api/admin/week/${weekId}`,
       data: {},
       headers: {
       Authorization: `Bearer ${myToken}`

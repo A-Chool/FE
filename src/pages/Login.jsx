@@ -19,10 +19,10 @@ import { KAKAO_AUTH_URL } from "../api/Oauth";
 
 const token = "3fa3aa6d41e97b2e2d44ea7d414b7a2b";
 
-const kakao = {
-  title: "KakaoLogin",
-  component: KakaoLogin,
-};
+// const kakao = {
+//   title: "KakaoLogin",
+//   component: KakaoLogin,
+// };
 
 const Login = () => {
   const history = useHistory();
