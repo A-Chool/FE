@@ -31,8 +31,8 @@ export const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // 로그인 액션
 const loginDB = (userId, password) => {
   return async function (dispatch, getState, { history }) {
-    await api
-      .post("/user/login", {
+    await axios
+      .post(`${baseUrl}/user/login`, {
         userId: userId,
         password: password,
       })
@@ -61,10 +61,10 @@ const loginDB = (userId, password) => {
 // 로그인 액션
 const getMyselfDB = (token) => {
   return async function (dispatch, getState, { history }) {
-    await axios
-      .get(`${baseUrl}/api/user/mypage`, {
+    await api
+      .get(`/api/user/mypage`, {
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
@@ -84,7 +84,7 @@ const getMyselfDB = (token) => {
         history.replace("/check-in");
       })
       .catch((error) => {
-        window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        // window.alert("아이디 또는 비밀번호를 확인해주세요.");
         console.log("Login Error", error);
       });
   };

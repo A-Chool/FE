@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 
 const ChatDetail = (props) => {
   const room = useSelector((state) => state.chat.room);
-  console.log(room?.roomId)
+  console.log(room?.roomId);
 
   const userId = getUserId();
 
@@ -46,22 +46,28 @@ const ChatDetail = (props) => {
           //채팅 내역 불러오기
           console.log(recv);
           if (recv.type === "ENTER") {
-          setLoaded(true);
-          setEnterMsg(recv);
-          chattingRef.current.scrollIntoView({ behavior: "smooth" });
+            setLoaded(true);
+            setEnterMsg(recv);
+            chattingRef.current.scrollIntoView({ behavior: "smooth" });
           } else if (recv.type === "TALK") {
-          //소켓 연결 후 받은 채팅 출력
-          recvMessage(recv);
-          chattingRef.current.scrollIntoView({ behavior: "smooth" });
+            //소켓 연결 후 받은 채팅 출력
+            recvMessage(recv);
+            chattingRef.current.scrollIntoView({ behavior: "smooth" });
           }
-          getMessageList();
+          // getMessageList();
         });
         ws.send(
           "/pub/chat/message",
           {
             Authorization: `Bearer ${myToken}`,
           },
-          JSON.stringify({ type: "ENTER", roomId: room?.roomId, sender: userId, message: "구독!", createdAt: "" })
+          JSON.stringify({
+            type: "ENTER",
+            roomId: room?.roomId,
+            sender: userId,
+            message: "구독!",
+            createdAt: "",
+          })
         );
       },
       (error) => {
@@ -84,7 +90,17 @@ const ChatDetail = (props) => {
 
   // 메세지 보내기
   const sendMessage = () => {
-    ws.send("/pub/chat/message", { Authorization: `Bearer ${myToken}` }, JSON.stringify({ type: "TALK", roomId: room?.roomId, sender: userId, message: content, createdAt: "" }));
+    ws.send(
+      "/pub/chat/message",
+      { Authorization: `Bearer ${myToken}` },
+      JSON.stringify({
+        type: "TALK",
+        roomId: room?.roomId,
+        sender: userId,
+        message: content,
+        createdAt: "",
+      })
+    );
     setContent("");
   };
 
@@ -148,20 +164,32 @@ const ChatDetail = (props) => {
           messages?.length > 0 &&
           messages.map((item, index) => {
             return (
-              <ChatWrap key={index} ref={index === messages.length - 1 ? latestChatWrapRef : null} align={item.sender === userId ? "end" : "start"}>
+              <ChatWrap
+                key={index}
+                ref={index === messages.length - 1 ? latestChatWrapRef : null}
+                align={item.sender === userId ? "end" : "start"}
+              >
                 <ChatUser>{item.sender}</ChatUser>
                 <ChatMsg self={item.sender === userId}>{item.message}</ChatMsg>
-                <Time dateTime={dayjs(item.createdAt).format("")}>{dayjs(item.createdAt).format("hh:mm a")}</Time>
+                <Time dateTime={dayjs(item.createdAt).format("")}>
+                  {dayjs(item.createdAt).format("hh:mm a")}
+                </Time>
               </ChatWrap>
             );
           })
-          ) : (
-            <div style={{ textAlign: "center" }}>로딩중</div>
-            )}
+        ) : (
+          <div style={{ textAlign: "center" }}>로딩중</div>
+        )}
       </ChatContents>
       <div ref={chattingRef} />
       <ChatInputArea>
-        <ChatInput type="text" placeholder="채팅을 입력해주세요" value={content} onChange={handleChange} onKeyUp={handleKeyUp} />
+        <ChatInput
+          type="text"
+          placeholder="채팅을 입력해주세요"
+          value={content}
+          onChange={handleChange}
+          onKeyUp={handleKeyUp}
+        />
         <ChatBtn disabled={!content} onClick={sendMessage}>
           전송
         </ChatBtn>
@@ -199,7 +227,8 @@ const ChatUser = styled.div`
 `;
 const ChatMsg = styled.div`
   padding: 0.8rem 1rem 0.8rem 0.8rem;
-  border-radius: ${(props) => (props.self ? " 2rem 0.5rem 2rem 2rem" : "0.5rem 2rem 2rem 2rem")};
+  border-radius: ${(props) =>
+    props.self ? " 2rem 0.5rem 2rem 2rem" : "0.5rem 2rem 2rem 2rem"};
   background-color: ${(props) => (props.self ? "#ff5e00" : "#fff")};
   border: ${(props) => (props.self ? "0" : "1px solid #ddd")};
   color: ${(props) => (props.self ? "#fff" : "inherit")};
