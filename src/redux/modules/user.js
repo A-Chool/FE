@@ -70,11 +70,11 @@ const getMyselfDB = (token) => {
       })
       .then((response) => {
         console.log(response);
-        // dispatch(
-        //   logIn({
-        //     is_login: true,
-        //   })
-        // );
+        dispatch(
+          logIn({
+            is_login: true,
+          })
+        );
         console.log("로그인 성공");
         // const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
         // localStorage.setItem("userToken", ACCESS_TOKEN);

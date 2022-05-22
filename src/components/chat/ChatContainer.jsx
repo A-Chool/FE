@@ -14,11 +14,11 @@ const ChatContainer = (props) => {
 
   useEffect(() => {
     if (isOpen) setTrigger(true);
-    // dispatch(loadChatList());
+    dispatch(loadChatList());
   }, [isOpen]);
 
   useEffect(() => {
-    // dispatch(loadChatList());
+    dispatch(loadChatList());
   }, []);
 
   // console.log(chatList);

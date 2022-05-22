@@ -25,23 +25,37 @@ import "dayjs/locale/ko";
 
 import ChatContainer from "./components/chat/ChatContainer";
 import { actionCreators as userActions } from "./redux/modules/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import KakaoOauth from "./pages/KakaoOauth";
 import { getCookie } from "./shared/Cookie";
 
+// import AuthGuard from "./shared/AuthGuard";
+
 function App() {
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
     const kakaoToken = localStorage.kakaoToken;
     const userToken = getCookie("userToken");
 
     if (!!kakaoToken || !!userToken) {
-      console.log(getCookie("userToken"));
+      // console.log(getCookie("userToken"));
       // console.log(kakaoToken);
       dispatch(userActions.getMyselfDB(userToken));
     }
   }, []);
+
+  useEffect(() => {
+    if (["/", "/register"].includes(history.location.pathname) && isLogin) {
+      return history.replace("/check-in");
+    } else if (
+      !["/", "/register"].includes(history.location.pathname) &&
+      !isLogin
+    ) {
+      return history.replace("/");
+    }
+  }, [history.location.pathname, isLogin]);
 
   useEffect(() => {
     dayjs.extend(relativeTime);

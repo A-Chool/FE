@@ -59,61 +59,45 @@ const Signup = () => {
     <PageMain>
       <InputMain>
         <img src={logo} style={{position : 'absolute',top : '32px',left : '30px'}}/>
-          <SingUpContentsWrapper>
+        <SingUpContentsWrapper>
           <MainContents>회원가입</MainContents>
-          <SubContents>
-            가입정보를 입력 후 회원가입 버튼을 클릭해 주세요.
-          </SubContents>
+          <SubContents>가입정보를 입력 후 회원가입 버튼을 클릭해 주세요.</SubContents>
           <UserInput
             type="text"
             value={email}
             placeholder="이메일 주소"
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
+            onChange={(e) => {setEmail(e.target.value)}}
           />
-
           <UserInput
             type="text"
             value={userName}
             placeholder="사용할 닉네임(2글자 이상 8글자 이하)"
-            onChange={(e) => {
-              setUserName(e.target.value);
-            }}
+            onChange={(e) => {setUserName(e.target.value)}}
           />
           <UserInput
             type="text"
             value={userPw}
             placeholder="비밀번호"
-            onChange={(e) => {
-              setUserPw(e.target.value);
-            }}
+            onChange={(e) => {setUserPw(e.target.value)}}
           />
           <UserInput
             type="text"
             value={userPwCheck}
             placeholder="비밀번호 확인"
-            onChange={(e) => {
-              setUserPwCheck(e.target.value);
-            }}
+            onChange={(e) => {setUserPwCheck(e.target.value)}}
           />
           <UserInput
             type="text"
             value={phoneNumber}
-            placeholder="휴대폰 번호( ‘-’ 포함)"
-            onChange={(e) => {
-              setPhoneNumber(e.target.value);
-            }}
+            placeholder="휴대폰 번호(‘-’ 포함)"
+            onChange={(e) => {setPhoneNumber(e.target.value)}}
           />
-
-            <CollectionBtn onClick={signup}>회원가입</CollectionBtn>
-            </SingUpContentsWrapper>
+          <CollectionBtn onClick={signup}>회원가입</CollectionBtn>
+        </SingUpContentsWrapper>
       </InputMain>
-
       <LogoMain src = {loginPage} />
-
     </PageMain>
-  );
+    );
 };
 
 const PageMain = styled.div`
@@ -156,11 +140,19 @@ const MainContents = styled.div`
   font-weight: 700;
   font-size: 24px;
   margin : 0 0 48px;
+    @media screen and (min-width: 2560px) {
+      font-size: 38px;
+      margin: 0 125px 40px;
+    }
 `;
 
 const SubContents = styled.div`
   font-weight: 400;
   font-size: 16px;
+    @media screen and (min-width: 2560px) {
+      font-size: 24px;
+      margin: 0 95px 40px;
+    }
 `;
 
 const CollectionBtn = styled.div`
@@ -175,6 +167,13 @@ const CollectionBtn = styled.div`
   line-height: 40px;
   display : inline-block;
   margin-top : 16px;
+    @media screen and (min-width: 2560px) {
+      width: 580px;
+      height: 60px;
+      font-size: 24px;
+      margin : 8px 60px;
+      line-height: 60px;
+    }
 `;
 
 const UserInput = styled.input`
@@ -193,6 +192,12 @@ const UserInput = styled.input`
     outline: 1.2px solid #282828;
     border: 0px;
   }
+    @media screen and (min-width: 2560px) {
+      width: 564px;
+      height: 60px;
+      font-size: 24px;
+      margin : 8px 60px;
+    }
 `;
 
 export default Signup;

@@ -28,7 +28,7 @@ const ChatDetail = (props) => {
 
   // 소켓 연결에 필요한 변수
   // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
-  const devTarget = "https://a-chool.com:443/ws-stomp";
+  const devTarget = "https://achool.shop/ws-stomp";
   let sock = new SockJS(devTarget);
   let ws = Stomp.over(sock);
 
@@ -112,7 +112,7 @@ const ChatDetail = (props) => {
   // 저장된 메시지 출력
   const getMessageList = () => {
     axios
-      .get(`https://a-chool.com:443/chat/message/${room?.roomId}`, {
+      .get(`https://achool.shop/chat/message/${room?.roomId}`, {
         headers: {
           Authorization: `Bearer ${myToken}`,
         },

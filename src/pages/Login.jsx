@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
@@ -30,6 +30,7 @@ const Login = () => {
 
   const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
+
   const login = (event) => {
     dispatch(userActions.loginDB(userId, password));
     event.stopPropagation();

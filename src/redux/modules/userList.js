@@ -40,7 +40,7 @@ const __editUserList = createAction(EDIT_USER_LIST, (userId, userLevel) => ({use
 export const getUserList = () => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization",)
-    axios.get('https://a-chool.com:443/api/admin/userList'
+    axios.get('https://achool.shop/api/admin/userList'
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -59,7 +59,7 @@ export const deleteUserList = (userId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `https://a-chool.com:443/api/admin/${userId}`,     
+      url: `https://achool.shop/api/admin/${userId}`,     
       headers: {Authorization: `Bearer ${myToken}`},
     })
     .then((response) => {
@@ -78,7 +78,7 @@ export const editUserList = (userId, userLevel) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://a-chool.com:443/api/admin/${userId}`,
+      url: `https://achool.shop/api/admin/${userId}`,
       data: {userLevel : userLevel},
       headers: {Authorization: `Bearer ${myToken}`},
     })
