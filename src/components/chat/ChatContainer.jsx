@@ -70,7 +70,7 @@ const ChatWrap = styled.div`
   min-height: 30vh;
   max-width: 25vw;
   width: 100%;
-  min-width: 16rem;
+  min-width: 20rem;
   white-space: pre-line;
   word-break: break-all;
   margin: 0.5rem;

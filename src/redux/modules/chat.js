@@ -9,6 +9,7 @@ const TOGGLE_CHATBOX = "TOGGLE_CHATBOX";
 const LOAD_CHAT_LIST = "LOAD_CHAT_LIST";
 const SET_ROOM = "SET_ROOM";
 const LOAD_CHAT_MESSAGES = "LOAD_CHAT_MESSAGES";
+const LOAD_CHAT_MESSAGES_PREV = "LOAD_CHAT_MESSAGES_PREV";
 const SET_LATEST_MESSAGE = "SET_LATEST_MESSAGE";
 
 const initialState = {
@@ -16,6 +17,8 @@ const initialState = {
   chatList: [],
   room: null,
   chatMessages: [],
+  chatMessagesPrevId: null,
+  isInitialized: false,
 };
 
 const __toggleChatBox = createAction(TOGGLE_CHATBOX, () => ({}));
@@ -26,6 +29,13 @@ const __setRoom = createAction(SET_ROOM, (room) => ({ room }));
 const __loadChatMessages = createAction(LOAD_CHAT_MESSAGES, (chatMessages) => ({
   chatMessages,
 }));
+const __loadChatMessagesPrev = createAction(
+  LOAD_CHAT_MESSAGES_PREV,
+  (chatMessages, chatMessagesPrevId) => ({
+    chatMessages,
+    chatMessagesPrevId,
+  })
+);
 const __setLatestMessage = createAction(
   SET_LATEST_MESSAGE,
   (latestMessage) => ({
@@ -74,7 +84,27 @@ export const loadChatMessages = (roomId) => {
       })
       .then((res) => {
         dispatch(__loadChatMessages(res.data));
-        console.log(res.data);
+        console.log(res.data.chatMessageLis);
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const loadChatMessagesPrev = (roomId) => {
+  return function (dispatch, getState, { history }) {
+    const userToken = getCookie("userToken");
+    const prevId = getState().chat.chatMessagesPrevId;
+    const url = prevId !== null ? `?prevId=${prevId}` : "?prevId=0";
+    axios
+      .get(`https://achool.shop/chat/message/file/${roomId}` + url, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      })
+      .then((res) => {
+        dispatch(
+          __loadChatMessagesPrev(res.data.chatMessageList, res.data.prevId)
+        );
       })
       .catch((err) => console.log(err));
   };
@@ -103,10 +133,17 @@ export default handleActions(
     [LOAD_CHAT_MESSAGES]: (state, action) =>
       produce(state, (draft) => {
         draft.chatMessages = action.payload.chatMessages;
+        draft.isInitialized = true;
+      }),
+    [LOAD_CHAT_MESSAGES_PREV]: (state, action) =>
+      produce(state, (draft) => {
+        let _chatMessages = [...state?.chatMessages];
+        const prevChatMessages = action.payload.chatMessages || [];
+        draft.chatMessages = prevChatMessages.concat(_chatMessages);
+        draft.chatMessagesPrevId = action.payload?.chatMessagesPrevId || null;
       }),
     [SET_LATEST_MESSAGE]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(state);
         let _chatMessages = [...state?.chatMessages];
         draft.chatMessages = _chatMessages.concat([
           action.payload.latestMessage,

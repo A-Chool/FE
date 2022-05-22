@@ -4,7 +4,11 @@ import styled from "styled-components";
 import Stomp from "stompjs";
 import SockJS from "sockjs-client";
 import { getUserId, getCookie } from "../../shared/Cookie";
-import { loadChatMessages, setLatestMessage } from "../../redux/modules/chat";
+import {
+  loadChatMessages,
+  setLatestMessage,
+  loadChatMessagesPrev,
+} from "../../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 
@@ -13,6 +17,10 @@ const ChatDetail = (props) => {
 
   const room = useSelector((state) => state.chat.room);
   const chatMessages = useSelector((state) => state.chat.chatMessages);
+  const isInitialized = useSelector((state) => state.chat.isInitialized);
+  const chatMessagesPrevId = useSelector(
+    (state) => state.chat.chatMessagesPrevId
+  );
   // console.log(chatMessages);
 
   const userId = getUserId();
@@ -21,9 +29,9 @@ const ChatDetail = (props) => {
   //   const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
   const myToken = getCookie("Authorization");
 
-  const chattingRef = React.useRef();
-
+  const chattingRef = useRef();
   const latestChatWrapRef = useRef();
+  const chatContentsRef = useRef();
 
   // 소켓 연결에 필요한 변수
   // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
@@ -49,15 +57,18 @@ const ChatDetail = (props) => {
   };
 
   const subscribe = (frame) => {
-    console.log("ㄴsubscribe");
-    ws.subscribe("/sub/chat/room/" + room?.roomId, (message) => {
-      const res = JSON.parse(message.body);
+    setTimeout(() => {
+      console.log("ㄴsubscribe");
+      ws.subscribe("/sub/chat/room/" + room?.roomId, (message) => {
+        const res = JSON.parse(message.body);
 
-      //채팅 내역 불러오기
-      const userInfo = JSON.parse(localStorage.userInfo);
-      dispatch(setLatestMessage(res));
-      //소켓 연결 후 받은 채팅 출력
-    });
+        //채팅 내역 불러오기
+        const userInfo = JSON.parse(localStorage.userInfo);
+        dispatch(setLatestMessage(res));
+        //소켓 연결 후 받은 채팅 출력
+      });
+    }, 100);
+
     enterChat();
   };
 
@@ -69,7 +80,7 @@ const ChatDetail = (props) => {
         type: "ENTER",
         roomId: room?.roomId,
         sender: userId,
-        message: null,
+        message: "",
         createdAt: "",
       })
     );
@@ -106,6 +117,8 @@ const ChatDetail = (props) => {
   //   if (room?.roomId) setRoomId(room.roomId);
   // }, [room]);
 
+  console.dir(chatContentsRef.current?.offsetTop);
+
   useEffect(() => {
     connect();
     dispatch(loadChatMessages(room?.roomId));
@@ -115,25 +128,43 @@ const ChatDetail = (props) => {
   }, [room?.roomId]);
 
   useEffect(() => {
-    if (chatMessages.length > 0)
+    if (isInitialized) {
       chattingRef.current.scrollIntoView({ block: "end" });
-  }, [chatMessages]);
+    }
+  }, [chatMessages, isInitialized]);
+
+  useEffect(() => {
+    console.log(isInitialized);
+  }, [isInitialized]);
+
+  console.log(chatContentsRef.current?.offsetTop);
+
+  // useEffect(() => {
+  //   const chatContentRefCurrent = chatContentsRef.current;
+  //   const listenChatContentsRef = (e) => {
+  //     console.log("sdf", chatContentsRef.current.offsetTop);
+  //   };
+  //   chatContentRefCurrent.addEventListener("scroll", listenChatContentsRef);
+  // }, []);
 
   if (!userId) return <>로그인이 필요합니다.</>;
   if (!room?.roomId) return <>연결된 방이 존재하지 않습니다.</>;
 
   return (
-    <ChatDisplay>
+    <ChatDisplay ref={chatContentsRef}>
       <button
+        style={{
+          backgroundColor: "transparent",
+          border: "0px solid transparent",
+          cursor: "pointer",
+          width: "100%",
+          padding: "0.5rem 0",
+        }}
         onClick={() => {
-          console.log("hihi");
-          chattingRef.current.scrollIntoView({
-            block: "end",
-            inline: "nearest",
-          });
+          dispatch(loadChatMessagesPrev(room?.roomId));
         }}
       >
-        to bottom
+        더불러오기
       </button>
       <ChatContents>
         {chatMessages?.length > 0 &&
