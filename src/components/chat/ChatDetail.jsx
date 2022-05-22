@@ -15,6 +15,7 @@ const ChatDetail = (props) => {
 
   const userId = getUserId();
 
+  const [isInitialized, setInitialized] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [messages, setMessages] = useState([]);
   const [enterMsg, setEnterMsg] = useState(null);
@@ -49,12 +50,13 @@ const ChatDetail = (props) => {
             setLoaded(true);
             setEnterMsg(recv);
             chattingRef.current.scrollIntoView({ behavior: "smooth" });
+            getMessageList();
+            setInitialized(true);
           } else if (recv.type === "TALK") {
             //소켓 연결 후 받은 채팅 출력
             recvMessage(recv);
             chattingRef.current.scrollIntoView({ behavior: "smooth" });
           }
-          // getMessageList();
         });
         ws.send(
           "/pub/chat/message",

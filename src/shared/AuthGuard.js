@@ -8,33 +8,33 @@ import { getCookie } from "../shared/Cookie";
 
 const AuthGuard = ({ children }) => {
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.user.is_loading);
   const isLogin = useSelector((state) => state.user.is_login);
-
-  const [isLoaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const kakaoToken = localStorage.kakaoToken;
     const userToken = getCookie("userToken");
 
     if (!!kakaoToken || !!userToken) {
-      console.log(getCookie("userToken"));
+      // console.log(getCookie("userToken"));
       // console.log(kakaoToken);
       dispatch(userActions.getMyselfDB(userToken));
     }
   }, []);
 
-  useEffect(() => {
-    if (["/", "/register"].includes(history.location.pathname) && isLogin) {
-      return history.replace("/check-in");
-    } else if (
-      !["/", "/register"].includes(history.location.pathname) &&
-      !isLogin
-    ) {
-      return history.replace("/");
-    }
-  }, [history.location.pathname, isLogin]);
+  //   useEffect(() => {
+  //     if (["/", "/register"].includes(history.location.pathname) && isLogin) {
+  //       return history.replace("/check-in");
+  //     } else if (
+  //       !["/", "/register"].includes(history.location.pathname) &&
+  //       !isLogin
+  //     ) {
+  //       return history.replace("/");
+  //     }
+  //   }, [history.location.pathname, isLogin]);
 
-  if (!isLoaded) return history.replace("/");
-  return <></>;
+  //   if (!isLoaded) return history.replace("/");
+
+  return children;
 };
 export default AuthGuard;
