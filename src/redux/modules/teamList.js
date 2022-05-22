@@ -39,7 +39,7 @@ const __deleteMemberList = createAction( DELETE_MEMBER_LIST, (memberId, userId) 
 export const getWeekList = () => {
 return function (dispatch, getState, { history }) {
   const myToken = getCookie("Authorization")
-  axios.get('https://13.209.21.57:443/api/admin/teams/week'
+  axios.get('https://13.209.21.57/api/admin/teams/week'
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -55,7 +55,7 @@ return function (dispatch, getState, { history }) {
 export const getTeamList = (weekId) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`https://13.209.21.57:443/api/admin/teams/${weekId}`
+    axios.get(`https://13.209.21.57/api/admin/teams/${weekId}`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -76,7 +76,7 @@ export const addTeamList = (teamName, weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://13.209.21.57:443/api/admin/teams/${weekId}`,
+      url: `https://13.209.21.57/api/admin/teams/${weekId}`,
       data: {teamName},
       headers: {
       Authorization: `Bearer ${myToken}`
@@ -84,7 +84,7 @@ export const addTeamList = (teamName, weekId) => {
     })
     .then((res) => {
       dispatch(__addTeamList(res.data));
-      axios.get(`https://13.209.21.57:443/api/admin/teams/${weekId}`
+      axios.get(`https://13.209.21.57/api/admin/teams/${weekId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -109,14 +109,14 @@ export const deleteTeamList = (teamId, weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `https://13.209.21.57:443/api/admin/teams/${teamId}`,     
+      url: `https://13.209.21.57/api/admin/teams/${teamId}`,     
       headers: {
       Authorization: `Bearer ${myToken}`
       },
     })
     .then((res) => {
       dispatch(__deleteTeamList(res.data));
-      axios.get(`https://13.209.21.57:443/api/admin/teams/${weekId}`
+      axios.get(`https://13.209.21.57/api/admin/teams/${weekId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -137,7 +137,7 @@ export const deleteTeamList = (teamId, weekId) => {
 export const loadMemberList = (weekId) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`https://13.209.21.57:443/api/admin/noMember/${weekId}`
+    axios.get(`https://13.209.21.57/api/admin/noMember/${weekId}`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -157,7 +157,7 @@ export const addMemberList = (userId, teamId, weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://13.209.21.57:443/api/admin/member/${weekId}`,
+      url: `https://13.209.21.57/api/admin/member/${weekId}`,
       data: {
       userId : userId,
       teamId : teamId,
@@ -166,7 +166,7 @@ export const addMemberList = (userId, teamId, weekId) => {
     })
     .then((res) => {
       dispatch(__addMemberList(res.data));
-      axios.get(`https://13.209.21.57:443/api/admin/teams/${weekId}`
+      axios.get(`https://13.209.21.57/api/admin/teams/${weekId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -177,7 +177,7 @@ export const addMemberList = (userId, teamId, weekId) => {
       .catch((err)=> {
         console.log("팀리스트 조회 에러: ", err)
       })
-      axios.get(`https://13.209.21.57:443/api/admin/noMember/${weekId}`
+      axios.get(`https://13.209.21.57/api/admin/noMember/${weekId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -201,7 +201,7 @@ export const deleteMemberList = (memberId, userId, weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `https://13.209.21.57:443/api/admin/member/${memberId}`,
+      url: `https://13.209.21.57/api/admin/member/${memberId}`,
       // data : {userId : userId},     
       headers: {
       Authorization: `Bearer ${myToken}`
@@ -209,7 +209,7 @@ export const deleteMemberList = (memberId, userId, weekId) => {
     })
     .then(() => {
       dispatch(__deleteMemberList(memberId));
-      axios.get(`https://13.209.21.57:443/api/admin/teams/${weekId}`
+      axios.get(`https://13.209.21.57/api/admin/teams/${weekId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
@@ -220,7 +220,7 @@ export const deleteMemberList = (memberId, userId, weekId) => {
       .catch((err)=> {
         console.log("팀리스트 조회 에러: ", err)
       })
-      axios.get(`https://13.209.21.57:443/api/admin/noMember/${weekId}`
+      axios.get(`https://13.209.21.57/api/admin/noMember/${weekId}`
       ,{headers : {"Authorization" : `Bearer ${myToken}`}}
       )
       .then((res) => {
