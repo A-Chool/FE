@@ -32,11 +32,11 @@ const AdminMemberList = (props) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 320,
+    height : 435,
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    borderRadius: '8px',
     boxShadow: 24,
-    p: 4,
   };
 
   // console.log(props.e)
@@ -56,102 +56,87 @@ const AdminMemberList = (props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description">
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-          추가 할 팀
-          </Typography>
-          {
-            tema_list.map((e, idx)=>{
-              // console.log(e)
-            return(
-              <div key={idx}>
-                {e.teamName}
-                <button onClick={() => {
-                  dispatch(addMemberList(user_id, e.teamId,  e.weekId));
-                  setOpen(false);
-                  }}>추가</button>
-              </div>
-            )
-            })
-          }
-          {/* <button onClick={() => {dispatch(addTeamList(is_teamName ,is_week))}}>+</button> */}
+          <TeamChoice>팀 지정</TeamChoice>
+          <TeamChoiceSub>팀 리스트</TeamChoiceSub>
+          <TeamChoiceBg>
+            {
+              tema_list.map((e, idx)=>{
+                return(
+                  <TeamChoiceList key={idx} onClick={() => {dispatch(addMemberList(user_id, e.teamId,  e.weekId));setOpen(false);}}>
+                    {e.teamName}
+                  </TeamChoiceList>
+                )
+              })
+            }
+          </TeamChoiceBg>
+
         </Box>
       </Modal>
     </>
   )
-
-
-
-
-
-  // const weeks = props.week
-
-  
-  // return (
-  //   <MemberDiv>
-  //     {
-  //       memberList.map((e, idx)=>{
-  //         const thisMember = e.userId
-  //         // console.log(e.userId)
-  //         return(
-  //           <div>
-  //           <MemberName key={idx} onClick={handleOpen}>{e.userName}</MemberName>
-  //           <Modal
-  //           open={open} onClose={handleClose}
-  //           aria-labelledby="modal-modal-title"
-  //           aria-describedby="modal-modal-description">
-  //             <Box sx={style}>
-  //               <Typography id="modal-modal-title" variant="h6" component="h2">
-  //               추가 할 팀
-  //               </Typography>
-  //               {
-  //                 props.teamList.map((data, idx)=>{
-  //                   // console.log(thisMember)
-  //                   // console.log(e)
-  //                 return(
-  //                   <div key={idx}>
-  //                     {data.teamName}
-  //                     <button onClick={() => {
-  //                       // dispatch(getMemberList(weeks))
-  //                       dispatch(addMemberList(data.teamId, thisMember));
-  //                       // dispatch(getMemberList(weeks))
-  //                       setOpen(false);
-  //                       }}>추가</button>
-  //                   </div>
-  //                 )
-  //                 })
-  //               }
-  //               {/* <button onClick={() => {dispatch(addTeamList(is_teamName ,is_week))}}>+</button> */}
-  //             </Box>
-  //           </Modal>
-  //           </div>
-  //         )
-  //       })
-  //     }
-  //   </MemberDiv>
-  // );
 };
 
-// dispatch(addMemberList( e.teamId , e.userId ))
-
-const MemberDiv = styled.div`
-  width : 800px;
-  height : 200px;
-  background-color : gray;
-  float : right;
+const Userdata = styled.div`
+  width: 110px;
+  min-width : 115px;
+  height: 40px;
+  border: 1px solid rgba(31, 58, 94, 0.5);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 40px;
+  text-align : center;
+  margin : 8px 8px;
+  display : inline-block;
 `
 
-const Userdata = styled.div`
-width: 110px;
-min-width : 115px;
-height: 40px;
-border: 1px solid rgba(31, 58, 94, 0.5);
-border-radius: 8px;
-font-weight: 700;
-font-size: 14px;
-line-height: 40px;
-text-align : center;
-margin : 8px 8px;
-display : inline-block;
+const TeamChoice = styled.p`
+  font-weight: 700;
+  font-size: 18px;
+  margin-left : 20px;
+`
+
+const TeamChoiceSub = styled.p`
+  font-weight: 400;
+  font-size: 13px;
+  margin-left : 20px;
+  margin-bottom : 4px;
+`
+
+const TeamChoiceBg = styled.div`
+  width: 304px;
+  height: 313px;
+  background: #F3F6F9;
+  border-radius: 4px;
+  margin : 0px auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width: 4px;
+    background: #c4c4c4;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transition;
+  }
+`
+
+const TeamChoiceList = styled.div`
+  width: 256px;
+  height: 40px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 40px;
+  margin : 0px auto;
+  border-bottom: 1px solid #EEEEEE;
+  padding : 0px 12px;
+  &:hover{
+    background: rgba(59, 135, 155, 0.3);
+    border-radius: 4px;
+  }
 `
 
 export default AdminMemberList;

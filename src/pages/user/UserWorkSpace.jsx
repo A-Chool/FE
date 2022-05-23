@@ -44,13 +44,13 @@ const UserWorkSpace = (props) => {
             onClick={()=>{
             setupdate(!update)}
             }></img>
-          :<img 
+          :<p 
             src={editBtn}
-            style={{margin : '8px 8px 4px 0px'}} 
+            style={{margin : '8px 10px 4px 0px', fontWeight : '700', color : '#1F3A5E'}} 
             onClick={() => {
             setupdate(!update)
             dispatch(editWorkSpace(teamId, work));
-          }}></img>
+          }}>Done</p>
         }    
       </UpBar>
       <hr style={{width : '1084px', margin : 'auto', border : '1px solid #E0E0E0'}}/>

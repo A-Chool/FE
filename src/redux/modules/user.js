@@ -11,18 +11,21 @@ const ADMINLOG_IN = "ADMINLOG_IN";
 const LOG_OUT = "LOG_OUT";
 const LOAD_TOKEN = "LOAD_TOKEN";
 const WITHDRAWAL = "WITHDRAWAL";
+const AUTH_FAILED = "AUTH_FAILED";
 
 // 초기값
 
 const initialState = {
   email: "",
   password: "",
+  is_loading: true,
   is_login: false,
 };
 
 // 액션 생성 함수
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const adminlogIn = createAction(LOG_IN, (user) => ({ user }));
+const authFailed = createAction(LOG_IN, () => {});
 export const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // const withdrawal = createAction(WITHDRAWAL, (user) => ({ user }));
 
@@ -31,27 +34,33 @@ export const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // 로그인 액션
 const loginDB = (userId, password) => {
   return async function (dispatch, getState, { history }) {
-    await api
-      .post("/user/login", {
+    await axios
+      .post(`${baseUrl}/user/login`, {
         userId: userId,
         password: password,
       })
       .then((response) => {
         console.log(response);
-        dispatch(
-          logIn({
-            is_login: true,
-          })
-        );
-        console.log("로그인 성공");
-        const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-        // localStorage.setItem("userToken", ACCESS_TOKEN);
-        // localStorage.setItem("userId", userId);
-        setCookie("userToken", ACCESS_TOKEN);
-        setCookie("userId", userId);
-        history.replace("/check-in");
+        if (Math.floor(response.status / 100) === 2) {
+          dispatch(
+            logIn({
+              is_loading: false,
+              is_login: true,
+            })
+          );
+          console.log("로그인 성공");
+          const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
+          // localStorage.setItem("userToken", ACCESS_TOKEN);
+          // localStorage.setItem("userId", userId);
+          setCookie("userToken", ACCESS_TOKEN);
+          setCookie("userId", userId);
+          history.replace("/check-in");
+        } else {
+          dispatch(authFailed());
+        }
       })
       .catch((error) => {
+        dispatch(authFailed());
         window.alert("아이디 또는 비밀번호를 확인해주세요.");
         console.log("Login Error", error);
       });
@@ -61,30 +70,36 @@ const loginDB = (userId, password) => {
 // 로그인 액션
 const getMyselfDB = (token) => {
   return async function (dispatch, getState, { history }) {
-    await axios
-      .get(`${baseUrl}/api/user/mypage`, {
+    await api
+      .get(`/api/user/mypage`, {
         headers: {
-          "Content-Type": "application/json",
+          // "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
         console.log(response);
-        // dispatch(
-        //   logIn({
-        //     is_login: true,
-        //   })
-        // );
-        console.log("로그인 성공");
-        // const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-        // localStorage.setItem("userToken", ACCESS_TOKEN);
-        // localStorage.setItem("userId", userId);
-        // setCookie("userToken", ACCESS_TOKEN);
-        // setCookie("userId", userId);
-        history.replace("/check-in");
+        if (Math.floor(response.status / 100) === 2) {
+          dispatch(
+            logIn({
+              is_loading: false,
+              is_login: true,
+            })
+          );
+          console.log("로그인 성공");
+          // const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
+          localStorage.setItem("userInfo", JSON.stringify(response.data));
+          // localStorage.setItem("userId", userId);
+          // setCookie("userToken", ACCESS_TOKEN);
+          // setCookie("userId", userId);
+          history.replace("/check-in");
+        } else {
+          dispatch(authFailed());
+        }
       })
       .catch((error) => {
-        window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        dispatch(authFailed());
+        // window.alert("아이디 또는 비밀번호를 확인해주세요.");
         console.log("Login Error", error);
       });
   };
@@ -101,6 +116,7 @@ export const adminloginDB = (userId, password) => {
         console.log(response);
         dispatch(
           adminlogIn({
+            is_loading: false,
             is_login: true,
           })
         );
@@ -198,11 +214,13 @@ export default handleActions(
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
         draft.user = action.payload.user;
+        draft.is_loading = false;
         draft.is_login = true;
       }),
     [ADMINLOG_IN]: (state, action) =>
       produce(state, (draft) => {
         draft.user = action.payload.user;
+        draft.is_loading = false;
         draft.is_login = true;
       }),
     [LOG_OUT]: (state, action) =>
@@ -210,9 +228,14 @@ export default handleActions(
         deleteCookie("userId");
         deleteCookie("userToken");
         deleteCookie("is_login");
+        draft.is_loading = false;
         draft.is_login = false;
       }),
     [LOAD_TOKEN]: (state, action) =>
+      produce(state, (draft) => {
+        draft.is_login = true;
+      }),
+    [AUTH_FAILED]: (state, action) =>
       produce(state, (draft) => {
         draft.is_login = true;
       }),

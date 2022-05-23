@@ -7,19 +7,20 @@ import ChatDetail from "./ChatDetail";
 
 const ChatContainer = (props) => {
   const isOpen = useSelector((state) => state.chat.open);
+  const isLogin = useSelector((state) => state.user.is_login);
   const chatList = useSelector((state) => state.chat.chatList);
   const room = useSelector((state) => state.chat.room);
   const dispatch = useDispatch();
   const [trigger, setTrigger] = useState(true);
 
   useEffect(() => {
-    if (isOpen) setTrigger(true);
-    // dispatch(loadChatList());
-  }, [isOpen]);
-
-  useEffect(() => {
-    // dispatch(loadChatList());
-  }, []);
+    if (isLogin) {
+      if (isOpen) setTrigger(true);
+      dispatch(loadChatList());
+    } else {
+      setTrigger(false);
+    }
+  }, [isLogin, isOpen]);
 
   // console.log(chatList);
 
@@ -34,20 +35,22 @@ const ChatContainer = (props) => {
         }
       }}
     >
-      <ChatWrapHeader>
-        <div>
-          {room && <Grid onClick={() => dispatch(setRoom(null))}>목록</Grid>}
-          <h1>{room?.name || "항해99"}</h1>
-          <Grid onClick={() => setTrigger(false)}>닫기</Grid>
-        </div>
-      </ChatWrapHeader>
-      <ChatWrapContent>
-        {room ? (
-          <ChatDetail />
-        ) : (
-          chatList.map((item) => <ChatItem key={item.roomId} room={item} />)
-        )}
-      </ChatWrapContent>
+      <ChatWrapper style={{ position: "relative" }}>
+        <ChatWrapHeader>
+          <div>
+            {room && <Grid onClick={() => dispatch(setRoom(null))}>목록</Grid>}
+            <h1>{room?.name || "항해99"}</h1>
+            <Grid onClick={() => setTrigger(false)}>닫기</Grid>
+          </div>
+        </ChatWrapHeader>
+        <ChatWrapContent>
+          {room ? (
+            <ChatDetail />
+          ) : (
+            chatList.map((item) => <ChatItem key={item.roomId} room={item} />)
+          )}
+        </ChatWrapContent>
+      </ChatWrapper>
     </ChatWrap>
   );
 };
@@ -63,15 +66,16 @@ const ChatWrap = styled.div`
   border-radius: 1rem;
   /* padding: 1rem; */
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  max-height: 400px;
-  min-height: 10vh;
-  max-width: 20vw;
-  width: 16rem;
-  min-width: 16rem;
-  overflow: scroll;
+  max-height: 720px;
+  min-height: 30vh;
+  max-width: 25vw;
+  width: 100%;
+  min-width: 20rem;
   white-space: pre-line;
   word-break: break-all;
   margin: 0.5rem;
+
+  overflow: hidden;
 
   display: ${(props) => (props.isOpen ? "flex" : "none")};
   flex-direction: column;
@@ -102,11 +106,18 @@ const ChatWrap = styled.div`
   }
 `;
 
+const ChatWrapper = styled.div`
+  position: relative;
+  height: 100%;
+  overflow-y: scroll;
+`;
+
 const ChatWrapHeader = styled.div`
   top: 0;
   z-index: 999;
-  position: sticky;
+  position: fixed;
   background-color: #fff;
+  width: 100%;
   & > div {
     display: flex;
     justify-content: space-between;
@@ -134,13 +145,16 @@ const ChatWrapHeader = styled.div`
 const Grid = styled.div`
   /* justify-self: ${(props) => (props.end ? "end" : "start")}; */
   flex: none;
+  cursor: pointer;
 `;
 
 const ChatWrapContent = styled.div`
+  margin-top: 50px;
   flex: 1 1 0;
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
 `;
 
 export default ChatContainer;

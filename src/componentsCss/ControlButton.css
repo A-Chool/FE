@@ -1,23 +1,23 @@
-.Control-Buttons {
+/* .Control-Buttons {
   margin: 3rem 0;
   width: 80%;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
-.btn-grp {
+/* .btn-grp {
   display: flex;
   align-items: center;
   justify-content: space-around;
-}
+} */
 
 .btn {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   width: 98px;
   height: 40px;
-  margin: 55px 6px;
+  margin: 0px 20px;
   display: flex;
   border: 2px solid #ff5f00;
   justify-content: center;
@@ -28,6 +28,7 @@
   border-radius: 100px;
   font-weight: 700;
   font-size: 16px;
+  float: right;
 }
 
 .btn-one {

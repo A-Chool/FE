@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Link, useHistory } from "react-router-dom";
 import "../componentsCss/Font.css";
@@ -8,28 +8,40 @@ import chatIcon from "../assets/img/chatIcon.svg";
 import { toggleChatBox } from "../redux/modules/chat";
 import { logOut } from "../redux/modules/user";
 import jwt_decode from "jwt-decode";
+import { getCookie } from "../shared/Cookie";
 
 const UserSidebar = (props) => {
-  
   const history = useHistory();
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.is_login);
 
-  const boolen = props.teamList.map((e) => e.memberList.filter((w) => w.online === true))
-  
-  const totalOnlineUser = boolen?.map?.((a) => a.length).reduce( (a, b) => {
-    return a + b;
-  }, 0);
+  const [decode, setDecode] = useState("");
 
-  const value = "; " + document.cookie;
+  const boolen = props.teamList.map((e) =>
+    e.memberList.filter((w) => w.online === true)
+  );
 
-  const parts = value.split('; userToken=');
+  const totalOnlineUser = boolen
+    ?.map?.((a) => a.length)
+    .reduce((a, b) => {
+      return a + b;
+    }, 0);
 
-  const decode = jwt_decode ( parts[1] ) ; 
+  useEffect(() => {
+    const userToken = getCookie("userToken");
+    setDecode(jwt_decode(userToken));
+  }, []);
 
   return (
     <Sidebar>
       <AdminLogo onClick={() => history.push("/check-in")}>
-        <svg width="161" height="65" viewBox="0 0 161 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg
+          width="161"
+          height="65"
+          viewBox="0 0 161 65"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <path
             d="M70.61 40.46C70.61 48.425 75.74 52.565 83.12 52.565C90.5 52.565 95.585 48.425 95.585 40.46V23.99C95.585 16.025 90.5 11.885 83.12 11.885C75.74 11.885 70.61 16.025 70.61 23.99V40.46ZM100.13 53.42H109.04V34.745H110.525C113.225 34.745 114.08 32.675 114.08 30.83C114.08 29.03 113.27 26.915 110.525 26.915H109.04V15.53C109.04 12.695 106.88 11.165 104.585 11.165C102.245 11.165 100.13 12.65 100.13 15.53V53.42ZM79.43 23.765C79.43 20.75 80.96 19.265 83.12 19.265C85.28 19.265 86.81 20.75 86.81 23.765V40.685C86.81 43.745 85.28 45.185 83.12 45.185C80.96 45.185 79.43 43.745 79.43 40.685V23.765Z"
             fill="#1F3A5E"
@@ -42,8 +54,24 @@ const UserSidebar = (props) => {
             d="M58.8179 46.2119C60.2012 46.9326 60.7485 48.6463 59.9105 49.9619C56.8654 54.7419 52.613 58.6574 47.5619 61.2991C41.674 64.3785 34.9836 65.5792 28.3923 64.7394C21.8011 63.8996 15.6255 61.0596 10.6979 56.6022C5.77022 52.1448 2.3272 46.2841 0.832718 39.8098C-0.66176 33.3355 -0.135879 26.5586 2.33951 20.3924C4.81489 14.2261 9.12083 8.96673 14.6772 5.32288C20.2335 1.67902 26.7732 -0.174207 33.4151 0.012886C39.1131 0.173389 44.6514 1.82886 49.4835 4.79059C50.8134 5.6057 51.0726 7.38591 50.1452 8.64002V8.64002C49.2177 9.89412 47.4555 10.1445 46.111 9.35382C42.2194 7.06539 37.7992 5.78712 33.2561 5.65915C27.7685 5.50457 22.3654 7.03571 17.7748 10.0463C13.1841 13.0568 9.62657 17.4021 7.5814 22.4967C5.53624 27.5912 5.10175 33.1903 6.33649 38.5394C7.57123 43.8884 10.4159 48.7306 14.4871 52.4133C18.5583 56.096 23.6605 58.4423 29.1063 59.1362C34.552 59.83 40.0795 58.838 44.9441 56.2938C48.9715 54.1875 52.3842 51.1012 54.879 47.3386C55.741 46.0386 57.4346 45.4912 58.8179 46.2119V46.2119Z"
             fill="#FF5F00"
           />
-          <rect x="13.6211" y="34.5" width="8.80472" height="28.4301" rx="4.40236" transform="rotate(-45.5117 13.6211 34.5)" fill="#FF5F00" />
-          <rect x="58.6289" y="17" width="8.80472" height="43.9389" rx="4.40236" transform="rotate(43.6621 58.6289 17)" fill="#FF5F00" />
+          <rect
+            x="13.6211"
+            y="34.5"
+            width="8.80472"
+            height="28.4301"
+            rx="4.40236"
+            transform="rotate(-45.5117 13.6211 34.5)"
+            fill="#FF5F00"
+          />
+          <rect
+            x="58.6289"
+            y="17"
+            width="8.80472"
+            height="43.9389"
+            rx="4.40236"
+            transform="rotate(43.6621 58.6289 17)"
+            fill="#FF5F00"
+          />
           <path
             d="M36.5571 10.1839C37.056 9.35355 38.326 9.64676 38.4105 10.6118L38.4272 10.8028C38.4649 11.2344 38.7763 11.5926 39.1984 11.69L39.3853 11.7332C40.3292 11.9511 40.4428 13.2495 39.5511 13.628L39.3745 13.703C38.9758 13.8723 38.7313 14.2791 38.7691 14.7106L38.7858 14.9017C38.8702 15.8667 37.6704 16.376 37.0349 15.6449L36.9091 15.5002C36.6249 15.1732 36.1624 15.0664 35.7636 15.2357L35.5871 15.3106C34.6954 15.6891 33.8403 14.7055 34.3392 13.8751L34.438 13.7107C34.6611 13.3394 34.6198 12.8666 34.3355 12.5396L34.2097 12.3949C33.5742 11.6638 34.2455 10.5466 35.1894 10.7645L35.3762 10.8076C35.7984 10.9051 36.2352 10.7196 36.4584 10.3483L36.5571 10.1839Z"
             fill="#FF5F00"
@@ -60,8 +88,17 @@ const UserSidebar = (props) => {
       </AdminLogo>
       <UserInfobox>
         <div style={{ float: "left" }}>
-          <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 20C0 8.95431 8.95431 0 20 0V0C31.0457 0 40 8.95431 40 20V20C40 31.0457 31.0457 40 20 40V40C8.95431 40 0 31.0457 0 20V20Z" fill="#C4DBE1" />
+          <svg
+            width="40"
+            height="40"
+            viewBox="0 0 40 40"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 20C0 8.95431 8.95431 0 20 0V0C31.0457 0 40 8.95431 40 20V20C40 31.0457 31.0457 40 20 40V40C8.95431 40 0 31.0457 0 20V20Z"
+              fill="#C4DBE1"
+            />
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -95,11 +132,27 @@ const UserSidebar = (props) => {
       <hr style={{ width: "204px", border: "0.5px solid #BCC4CF" }}></hr>
 
       <div style={{ width: "172px", height: "92px", margin: "32px 0 0 32px" }}>
-        <Link to="check-in" style={{ textDecoration: "none", color: "black", fontSize: "20px", fontWeight: "700" }}>
+        <Link
+          to="check-in"
+          style={{
+            textDecoration: "none",
+            color: "black",
+            fontSize: "20px",
+            fontWeight: "700",
+          }}
+        >
           <Adminmenu>체크인</Adminmenu>
         </Link>
 
-        <Link to="team-board" style={{ textDecoration: "none", color: "black", fontSize: "20px", fontWeight: "700" }}>
+        <Link
+          to="team-board"
+          style={{
+            textDecoration: "none",
+            color: "black",
+            fontSize: "20px",
+            fontWeight: "700",
+          }}
+        >
           <Adminmenu>팀보드</Adminmenu>
         </Link>
       </div>
@@ -107,11 +160,29 @@ const UserSidebar = (props) => {
       {/* <Link to="/" style={{ textDecoration: 'none', color : "black", fontSize : "20px", fontWeight : "700" }}>
           <Adminmenu>게시판 관리</Adminmenu>
         </Link> */}
-      <LogOutBtn onClick={() => {dispatch(logOut()); history.push("/");}}>로그아웃</LogOutBtn>
+      <LogOutBtn
+        onClick={() => {
+          dispatch(logOut());
+          history.push("/");
+        }}
+      >
+        로그아웃
+      </LogOutBtn>
       <UnderFn>
-        <img alt="Access Users Icon" src={onlineUser} style={{ margin: "0 8px 0 35px", float: "left" }} />
-        <p style={{ fontSize: "14px", lineHeight: "15px", float: "left" }}>{totalOnlineUser}명</p>
-        <img onClick={() => dispatch(toggleChatBox())} alt="Chat Icon" src={chatIcon} style={{ margin: "0 0 0 40px", float: "left", cursor: "pointer" }} />
+        <img
+          alt="Access Users Icon"
+          src={onlineUser}
+          style={{ margin: "0 8px 0 35px", float: "left" }}
+        />
+        <p style={{ fontSize: "14px", lineHeight: "15px", float: "left" }}>
+          {totalOnlineUser}명
+        </p>
+        <img
+          onClick={() => dispatch(toggleChatBox())}
+          alt="Chat Icon"
+          src={chatIcon}
+          style={{ margin: "0 0 0 40px", float: "left", cursor: "pointer" }}
+        />
       </UnderFn>
     </Sidebar>
   );
