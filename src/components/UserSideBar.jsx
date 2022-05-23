@@ -111,39 +111,21 @@ const UserSidebar = (props) => {
             />
           </svg>
         </div>
-        <div
-          style={{
-            float: "left",
-            swidth: "56px",
-            height: "48px",
-            marginLeft: "16px",
-          }}
-        >
+        <div style={{ float: "left", width: "56px", height: "48px", marginLeft: "16px" }}>
           <p style={{ margin: "0 0 0 0", fontSize: "20px", fontWeight: "900" }}>
-            {decode.USER_LEVEL > 4 ? "Admin" : "User"}
-          </p>
-          <p style={{ margin: "0 0 0 0", fontSize: "14px" }}>
             {decode.USER_NAME}
           </p>
-        </div>
-        <div
-          style={{
-            width: "40px",
-            height: "40px",
-            float: "left",
-            marginLeft: "9px",
-            textAlign: "center",
-          }}
-        >
-          <p
-            style={{
-              fontSize: "16px",
-              textDecoration: "underline",
-              textUnderlinePosition: "under",
-            }}
-          >
-            수정
+          <p style={{ margin: "0 0 0 0", fontSize: "14px" }}>
+              {/* {
+                decode.USER_LEVEL > 4 
+                ? "Admin"
+                : "User"
+              } */}
+              항해99
           </p>
+        </div>
+        <div style={{ width: "40px", height: "40px", float: "left", marginLeft: "9px", textAlign: "center" }}>
+          {/* <p style={{ fontSize: "16px", textDecoration: "underline", textUnderlinePosition: "under" }}>수정</p> */}
         </div>
       </UserInfobox>
 

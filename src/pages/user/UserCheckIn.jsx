@@ -10,6 +10,7 @@ import mascot from "../../assets/img/mascot.svg";
 import studyData from "../../assets/img/studydata.svg";
 
 import { loadCheckList } from "../../redux/modules/checkIn";
+import jwt_decode from "jwt-decode";
 
 const UserCheckIn = () => {
   const dispatch = useDispatch();
@@ -25,47 +26,44 @@ const UserCheckIn = () => {
 
   const logList = useSelector((state) => state.checkIn.checkIn);
 
-  // console.log(teamList)
-  // console.log(logList)
+  const value = "; " + document.cookie;
+
+  const parts = value.split('; userToken=');
+
+  const decode = jwt_decode ( parts[1] ) ; 
 
   return (
     <React.Fragment>
       <div style={{ display: "flex" }}>
         <BackgroundDiv>
-          <UserSidebar teamList={teamList} />
-          <UpDataBox>
-            <UpDataLeftBox>
-              <img
-                src={mascot}
-                style={{ height: "auto", margin: "30px 39px", float: "left" }}
-              ></img>
-              <StudyData>
-                <div style={{ height: "70%" }}>
-                  <p style={{ fontSize: "24px", fontWeight: "400" }}>
-                    홍길동님 지금까지{" "}
-                    <span style={{ color: "#FF5F00", fontWeight: "600" }}>
-                      {logList?.totalSumTime}
-                    </span>{" "}
-                    시간 <br />
-                    학습하셨어요!
-                  </p>
-                </div>
-                <div style={{ marginLeft: "55%" }}>
-                  <img src={studyData}></img>
-                </div>
-              </StudyData>
-            </UpDataLeftBox>
+          <UserSidebar teamList={teamList}/>
+            <UpDataBox>
+              <UpDataLeftBox>
+                <Mascot src={mascot}></Mascot>
+                <StudyData>
+                      {decode.USER_NAME}님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>{logList?.totalSumTime}</span> 시간 <br />학습하셨어요!
+                  {/* <div style={{marginLeft : '55%'}}>
+                    <img src={studyData}></img>
+                  </div> */}
+                </StudyData>
+              </UpDataLeftBox>
+              
+              <UpDataRightBox>
+                <StopWatch logList={logList}>
+                </StopWatch>  
+              </UpDataRightBox>
 
-            <UpDataRightBox>
-              <StopWatch logList={logList}></StopWatch>
-            </UpDataRightBox>
-          </UpDataBox>
+            </UpDataBox>
 
-          <CheckInList>
-            {teamList.map((e, idx) => {
-              return <UserTeamList key={idx} e={e}></UserTeamList>;
-            })}
-          </CheckInList>
+            <CheckInList>
+              {
+                teamList.map((e, idx)=>{
+                  return(
+                    <UserTeamList key={idx} e={e}></UserTeamList>
+                  )
+                })
+              }
+            </CheckInList>
         </BackgroundDiv>
       </div>
     </React.Fragment>
@@ -93,7 +91,24 @@ const UpDataLeftBox = styled.div`
   float: left;
   display: flex;
   align-items: center;
+
+  // background-color : red;
 `;
+
+const Mascot = styled.img`
+width: 145.85px;
+height: 185.79px;
+margin : 30px 39px;
+float : left;
+@media screen and (min-width: 1920px) {
+  width: 145.85px;
+  height: 185.79px;
+}
+@media screen and (min-width: 2560px) {
+  width: 187.54px;
+  height: 252.2px;
+}
+`
 
 const UpDataRightBox = styled.div`
   width: 50%;
@@ -104,14 +119,34 @@ const UpDataRightBox = styled.div`
 `;
 
 const StudyData = styled.div`
-  height: 140px;
-  width: 400px;
+  width: 372.15px;
+  height: 140.61px;
   float: left;
   box-shadow: rgba(149, 157, 165, 0.4) 0px 8px 24px;
-  background-color: white;
+  // background-color: green;
   border-radius: 40px;
   padding: 20px;
+  font-weight: 500;
+  font-size: 22px;
+  @media screen and (min-width: 1920px) {
+    width: 580px;
+    font-weight: 500;
+    font-size: 30px;
+    padding: 30px;
+  }
+  @media screen and (min-width: 2560px) {
+    width: 746.15px;
+    height: 176.16px;
+    font-weight: 500;
+    font-size: 38px;
+    padding: 40px;
+  }
 `;
+
+const StudyDataDiv = styled.div`
+height : 70%;
+background-color: green;
+`
 
 const CheckInList = styled.div`
   width: auto;

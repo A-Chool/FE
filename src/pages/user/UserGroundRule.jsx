@@ -46,13 +46,12 @@ const UserGroundRole = (props) => {
             setupdate(!update)}
             
             }></img>
-          :<img 
-            src={editBtn}
-            style={{margin : '8px 8px 4px 0px'}} 
+          :<p 
+            style={{margin : '8px 10px 4px 0px', fontWeight : '700', color : '#1F3A5E'}} 
             onClick={() => {
             setupdate(!update)
             dispatch(editGroundRule(weekTeamId, rule));
-          }}></img>
+          }}>Done</p>
         }    
       </UpBar>
       <hr style={{width : '377px', margin : 'auto', border : '1px solid #E0E0E0'}}/>
@@ -107,6 +106,7 @@ const UpdateBox = styled.textarea`
   margin : 6px auto;
   border : 1px solid black;
   border-radius : 10px;
+  resize : none;
 `
 
 export default UserGroundRole;

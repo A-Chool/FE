@@ -64,7 +64,7 @@ const UserTodo = (props) => {
       {
         add === false 
         ? <></> 
-        : <TodoInput onKeyDown={handleEvent} onChange={todoWritehandleEvent}></TodoInput>
+        : <TodoInput onKeyDown={handleEvent} onChange={todoWritehandleEvent} maxLength="40" />
       }
       {
         add === false 

@@ -83,10 +83,11 @@ export const editGroundRule = (teamId, groundRule, weekId) => {
     })
     .then(() => {
       dispatch(__editGroundRule(groundRule));
-      axios.get('https://achool.shop/api/user/teamBoard'
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      ,{params: {weekId: weekId}}, 
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {teamId: teamId}
+      }
+      axios.get('https://achool.shop/api/user/teamBoard', bucket)
       .then((res) => {
         dispatch(__loadTeamBoard(res.data));
       })
@@ -116,10 +117,11 @@ export const addTodoList = (teamId, todoContent, weekId) => {
     })
     .then(() => {
       dispatch(__addTodoList(teamId, todoContent));
-      axios.get('https://achool.shop/api/user/teamBoard'
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      ,{params: {weekId: weekId}}, 
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {teamId: teamId}
+      }
+      axios.get('https://achool.shop/api/user/teamBoard', bucket)
       .then((res) => {
         dispatch(__loadTeamBoard(res.data));
       })
@@ -211,10 +213,11 @@ export const editWorkSpace = (teamId, workSpace, weekId) => {
     })
     .then(() => {
       dispatch(__editWorkSpace(workSpace));
-      axios.get('https://achool.shop/api/user/teamBoard'
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      ,{params: {weekId: weekId}}, 
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {teamId: teamId}
+      }
+      axios.get('https://achool.shop/api/user/teamBoard', bucket)
       .then((res) => {
         dispatch(__loadTeamBoard(res.data));
       })

@@ -270,11 +270,11 @@ const UserInput = styled.input`
   margin: 8px 0;
   padding: 10px 8px;
   &:hover {
-    border: 1.2px solid #282828;
+    border: 1px solid #282828;
   }
   &:focus {
-    outline: 1.2px solid #282828;
-    border: 0px;
+    outline: 1px solid #282828;
+    border: -1px solid white;
   }
   @media screen and (min-width: 2560px) {
     width: 564px;
@@ -328,10 +328,10 @@ const SignupContents = styled.div`
 `;
 
 const SingUpImg = styled.img`
-  margin: 2px 0 0 110px;
+  margin: 3px 0 0 110px;
   @media screen and (min-width: 2560px) {
     height: 30px;
-    margin: 3.5px 0 0 115px;
+    margin: 4.5px 0 0 115px;
   }
 `;
 
