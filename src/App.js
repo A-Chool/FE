@@ -25,33 +25,47 @@ import "dayjs/locale/ko";
 
 import ChatContainer from "./components/chat/ChatContainer";
 import { actionCreators as userActions } from "./redux/modules/user";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import KakaoOauth from "./pages/KakaoOauth";
+import { getCookie } from "./shared/Cookie";
+
+// import AuthGuard from "./shared/AuthGuard";
 
 function App() {
-  
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.is_login);
 
   useEffect(() => {
     const kakaoToken = localStorage.kakaoToken;
-    if (!!kakaoToken) {
-      console.log(kakaoToken);
-      dispatch(userActions.getMyselfDB(kakaoToken));
+    const userToken = getCookie("userToken");
+
+    if (!!kakaoToken || !!userToken) {
+      // console.log(getCookie("userToken"));
+      // console.log(kakaoToken);
+      dispatch(userActions.getMyselfDB(userToken));
     }
   }, []);
+
+  useEffect(() => {
+    if (["/", "/register"].includes(history.location.pathname) && isLogin) {
+      return history.replace("/check-in");
+    } else if (
+      !["/", "/register"].includes(history.location.pathname) &&
+      !isLogin
+    ) {
+      return history.replace("/");
+    }
+  }, [history.location.pathname, isLogin]);
 
   useEffect(() => {
     dayjs.extend(relativeTime);
     dayjs.locale("ko");
   }, []);
 
-// console.log("____  ____  ____  ____  ____  ____  ____  ____ \n||A ||||- ||||c ||||h ||||o ||||o ||||l ||||! ||\n||__||||__||||__||||__||||__||||__||||__||||__||\n|/__\\||/__\\||/__\\||/__\\||/__\\||/__\\||/__\\||/__\\|");
-console.log("   ______                       __                          ___  \n  /\\  _  \\                     /\\ \\                        /\\_ \\ \n  \\ \\ \\L\\ \\              ___   \\ \\ \\___      ___     ___   \\//\\ \\ \n   \\ \\  __ \\   _______  /'___\\  \\ \\  _ `\\   / __`\\  / __`\\   \\ \\ \\ \n    \\ \\ \\/\\ \\ /\\______\\/\\ \\__/   \\ \\ \\ \\ \\ /\\ \\L\\ \\/\\ \\L\\ \\   \\_\\ \\_  \n     \\ \\_\\ \\_\\\\/______/\\ \\____\\   \\ \\_\\ \\_\\\\ \\____/\\ \\____/   /\\____\\ \n      \\/_/\\/_/          \\/____/    \\/_/\\/_/ \\/___/  \\/___/    \\/____/");
-
-
-                                     
-                                                
-
+  // console.log("____  ____  ____  ____  ____  ____  ____  ____ \n||A ||||- ||||c ||||h ||||o ||||o ||||l ||||! ||\n||__||||__||||__||||__||||__||||__||||__||||__||\n|/__\\||/__\\||/__\\||/__\\||/__\\||/__\\||/__\\||/__\\|");
+  console.log(
+    "   ______                       __                          ___  \n  /\\  _  \\                     /\\ \\                        /\\_ \\ \n  \\ \\ \\L\\ \\              ___   \\ \\ \\___      ___     ___   \\//\\ \\ \n   \\ \\  __ \\   _______  /'___\\  \\ \\  _ `\\   / __`\\  / __`\\   \\ \\ \\ \n    \\ \\ \\/\\ \\ /\\______\\/\\ \\__/   \\ \\ \\ \\ \\ /\\ \\L\\ \\/\\ \\L\\ \\   \\_\\ \\_  \n     \\ \\_\\ \\_\\\\/______/\\ \\____\\   \\ \\_\\ \\_\\\\ \\____/\\ \\____/   /\\____\\ \n      \\/_/\\/_/          \\/____/    \\/_/\\/_/ \\/___/  \\/___/    \\/____/"
+  );
 
   return (
     <ContentWrap>

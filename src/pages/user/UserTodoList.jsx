@@ -64,7 +64,7 @@ const UserTodoList = (props) => {
       ?
       <AllTodoList style={{textDecoration : props.e.todoCheck === false ? 'none' : 'line-through'}}>{props.e.todoContent}</AllTodoList>
       :
-      <TodoInput defaultValue={props.e.todoContent} onKeyDown={handleEvent} onChange={todoEdithandleEvent}></TodoInput>
+      <TodoInput defaultValue={props.e.todoContent} onKeyDown={handleEvent} onChange={todoEdithandleEvent} maxLength="40"></TodoInput>
     }
     {
       edit === false 

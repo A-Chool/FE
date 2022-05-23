@@ -101,16 +101,16 @@ const AdminTeamPage = () => {
 
 
 
-    // 주차 추가 모달
-    const [addWeekOpen, setAddWeekOpen] = React.useState(false);
-    const addWeekHandleOpen = () => setAddWeekOpen(true);
-    const addWeekHandleClose = () => setAddWeekOpen(false);
+  // 주차 추가 모달
+  const [addWeekOpen, setAddWeekOpen] = React.useState(false);
+  const addWeekHandleOpen = () => setAddWeekOpen(true);
+  const addWeekHandleClose = () => setAddWeekOpen(false);
 
-    const [addWeekName, setAddWeekName] = React.useState("");
+  const [addWeekName, setAddWeekName] = React.useState("");
 
-    const handleAddWeekName = (e) => {
-      setAddWeekName(e.target.value)
-    }
+  const handleAddWeekName = (e) => {
+    setAddWeekName(e.target.value)
+  }
 
   return (
     <React.Fragment>
@@ -178,20 +178,6 @@ const AdminTeamPage = () => {
                 <OpenBtnOff src={addMember} onClick={() => {setTest(!test)}}/>
               </AddMemberOff>
           }
-          {/* <MemberDiv>
-            <AddMember>
-              <OpenBtn src={memberAdd} onClick={() => {
-                setTest(!test)
-              }}/>
-            </AddMember>
-            {
-              memberList.map((e, idx)=>{
-                return(
-                <AdminMemberList key={idx} e={e} teamList={teamList} week={week}/>
-                )
-              })
-            }
-          </MemberDiv> */}
     </React.Fragment>
   );
 };

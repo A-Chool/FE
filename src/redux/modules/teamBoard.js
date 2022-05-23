@@ -41,7 +41,7 @@ export const loadTeamBoard = (teamId) => {
       headers : {"Authorization" : `Bearer ${myToken}`}
       ,params: {teamId: teamId}
     }
-    axios.get('https://13.209.21.57/api/user/teamBoard', bucket)
+    axios.get('https://achool.shop/api/user/teamBoard', bucket)
     .then((res) => {
       dispatch(__loadTeamBoard(res.data));
     })
@@ -55,7 +55,7 @@ export const loadTeamBoard = (teamId) => {
 export const setWeekTeamBoard = (teamId) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`https://13.209.21.57/api/user/teamBoard/${teamId}`
+    axios.get(`https://achool.shop/api/user/teamBoard/${teamId}`
     ,{headers : {"Authorization" : `Bearer ${myToken}`}}
     )
     .then((res) => {
@@ -75,7 +75,7 @@ export const editGroundRule = (teamId, groundRule, weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://13.209.21.57/api/user/teamBoard/groundRule/${teamId}`,
+      url: `https://achool.shop/api/user/teamBoard/groundRule/${teamId}`,
       data: {
         groundRule
       },
@@ -83,10 +83,11 @@ export const editGroundRule = (teamId, groundRule, weekId) => {
     })
     .then(() => {
       dispatch(__editGroundRule(groundRule));
-      axios.get('https://13.209.21.57/api/user/teamBoard'
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      ,{params: {weekId: weekId}}, 
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {teamId: teamId}
+      }
+      axios.get('https://achool.shop/api/user/teamBoard', bucket)
       .then((res) => {
         dispatch(__loadTeamBoard(res.data));
       })
@@ -107,7 +108,7 @@ export const addTodoList = (teamId, todoContent, weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "post",
-      url: `https://13.209.21.57/api/user/teamBoard`,
+      url: `https://achool.shop/api/user/teamBoard`,
       data: {
       teamId : teamId,
       todoContent : todoContent
@@ -116,10 +117,11 @@ export const addTodoList = (teamId, todoContent, weekId) => {
     })
     .then(() => {
       dispatch(__addTodoList(teamId, todoContent));
-      axios.get('https://13.209.21.57/api/user/teamBoard'
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      ,{params: {weekId: weekId}}, 
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {teamId: teamId}
+      }
+      axios.get('https://achool.shop/api/user/teamBoard', bucket)
       .then((res) => {
         dispatch(__loadTeamBoard(res.data));
       })
@@ -140,7 +142,7 @@ export const deleteTodoList = (todoId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "delete",
-      url: `https://13.209.21.57/api/user/teamBoard/${todoId}`,  
+      url: `https://achool.shop/api/user/teamBoard/${todoId}`,  
       headers: {
       Authorization: `Bearer ${myToken}`
       },
@@ -161,7 +163,7 @@ export const editTodoList = (todoId, todoContent) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://13.209.21.57/api/user/teamBoard/${todoId}`,
+      url: `https://achool.shop/api/user/teamBoard/${todoId}`,
       data: {
         todoContent
       },
@@ -182,7 +184,7 @@ export const checkTodoList = (todoId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://13.209.21.57/api/user/teamBoard/check/${todoId}`,
+      url: `https://achool.shop/api/user/teamBoard/check/${todoId}`,
       data: {
       },
       headers: {Authorization: `Bearer ${myToken}`},
@@ -203,7 +205,7 @@ export const editWorkSpace = (teamId, workSpace, weekId) => {
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
-      url: `https://13.209.21.57/api/user/teamBoard/workSpace/${teamId}`,
+      url: `https://achool.shop/api/user/teamBoard/workSpace/${teamId}`,
       data: {
         workSpace
       },
@@ -211,10 +213,11 @@ export const editWorkSpace = (teamId, workSpace, weekId) => {
     })
     .then(() => {
       dispatch(__editWorkSpace(workSpace));
-      axios.get('https://13.209.21.57/api/user/teamBoard'
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      ,{params: {weekId: weekId}}, 
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {teamId: teamId}
+      }
+      axios.get('https://achool.shop/api/user/teamBoard', bucket)
       .then((res) => {
         dispatch(__loadTeamBoard(res.data));
       })

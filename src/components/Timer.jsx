@@ -53,12 +53,27 @@ const TimerBox = styled.div`
   height: 12%;
   justify-content: center;
   align-items: center;
+
+  @media screen and (min-width: 1920px) {
+    max-height : 300px;
+  }
+  @media screen and (min-width: 2560px) {
+    max-height : 300px;
+  }
 `
 
 const Times = styled.span`
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 700;
-  font-size: 80px;
+  font-size: 100px;
   color: #000000;
+
+  @media screen and (min-width: 1920px) {
+    font-weight: 700;
+    font-size: 140px;
+  }
+  @media screen and (min-width: 2560px) {
+    font-size: 150px;
+  }
 `
 

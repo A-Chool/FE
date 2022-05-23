@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 
 import { useDispatch } from "react-redux";
@@ -16,6 +16,7 @@ import or from "../assets/img/or.svg";
 import singUp from "../assets/img/singUp.svg";
 
 import { KAKAO_AUTH_URL } from "../api/Oauth";
+import AuthGuard from "../shared/AuthGuard";
 
 const token = "3fa3aa6d41e97b2e2d44ea7d414b7a2b";
 
@@ -30,6 +31,7 @@ const Login = () => {
 
   const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
+
   const login = (event) => {
     dispatch(userActions.loginDB(userId, password));
     event.stopPropagation();
@@ -41,7 +43,7 @@ const Login = () => {
   const [userLogin, setUserLogin] = React.useState(false);
 
   return (
-    <React.Fragment>
+    <AuthGuard>
       <PageMain>
         <InputMain>
           <img
@@ -143,7 +145,7 @@ const Login = () => {
         </InputMain>
         <LogoMain src={loginPage} />
       </PageMain>
-    </React.Fragment>
+    </AuthGuard>
   );
 };
 
@@ -268,11 +270,11 @@ const UserInput = styled.input`
   margin: 8px 0;
   padding: 10px 8px;
   &:hover {
-    border: 1.2px solid #282828;
+    border: 1px solid #282828;
   }
   &:focus {
-    outline: 1.2px solid #282828;
-    border: 0px;
+    outline: 1px solid #282828;
+    border: -1px solid white;
   }
   @media screen and (min-width: 2560px) {
     width: 564px;
@@ -326,10 +328,10 @@ const SignupContents = styled.div`
 `;
 
 const SingUpImg = styled.img`
-  margin: 2px 0 0 110px;
+  margin: 3px 0 0 110px;
   @media screen and (min-width: 2560px) {
     height: 30px;
-    margin: 3.5px 0 0 115px;
+    margin: 4.5px 0 0 115px;
   }
 `;
 

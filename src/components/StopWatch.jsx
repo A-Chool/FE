@@ -55,35 +55,72 @@ const StopWatch = (props) => {
   return (
     <StopWatchDiv>
       <Timer time={time}/>
-      <div>
+      <TimerWarrape>
+        <TodayTotalP>오늘 누적 학습 시간</TodayTotalP>
         { isPaused === true 
-        ?
-        <div className="btn btn-one btn-start"
-        onClick={() => {
-          dispatch(userCheckIn());
-          setIsActive(true);
-          setIsPaused(!isPaused);
-        }}>start</div>
-        :
-        <div className="btn btn-one btn-start"
-        onClick={() => {
-          dispatch(userCheckOut());
-          setIsPaused(false);
-          setIsPaused(!isPaused);
-        }}>stop</div>
-      }
-        
-      </div>
+          ?
+          <div className="btn btn-one btn-start"
+          onClick={() => {
+            dispatch(userCheckIn());
+            setIsActive(true);
+            setIsPaused(!isPaused);
+          }}>start</div>
+          :
+          <div className="btn btn-one btn-start"
+          onClick={() => {
+            dispatch(userCheckOut());
+            setIsPaused(false);
+            setIsPaused(!isPaused);
+          }}>stop</div>
+        }
+      </TimerWarrape>
     </StopWatchDiv>
   );
 };
 
 const StopWatchDiv = styled.div`
-  height: 25%;
+  height: 100%;
+  max-height : 200px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  // background-color : green;
+  @media screen and (min-width: 1920px) {
+    max-height : 300px;
+  }
+  @media screen and (min-width: 2560px) {
+    max-height : 300px;
+  }
+`
+
+const TimerWarrape = styled.div`
+  width: 100%;
+  max-width : 520px;
+  height: 50px;
+  // background-color : red;
+  align-items: center;
+  @media screen and (min-width: 1920px) {
+    max-width : 620px;
+  }
+  @media screen and (min-width: 2560px) {
+    max-width : 720px;
+  }
+`
+
+const TodayTotalP = styled.p`
+float : left;
+margin: 0px 0px 0px 20px;
+line-height : 40px
+font-weight: 400;
+font-size: 22px;
+@media screen and (min-width: 1920px) {
+  font-size: 26px;
+}
+@media screen and (min-width: 2560px) {
+  font-size: 30px;
+}
 `
 
 export default StopWatch;
