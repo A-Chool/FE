@@ -71,7 +71,6 @@ const UserCheckInList = (props) => {
 const UserTag = styled.div`
   width : 100px;
   height : 36px;
-
   margin : 10px 10px;
   display : inline-block;
 `

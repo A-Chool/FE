@@ -12,6 +12,7 @@ import checkIn from "./modules/checkIn";
 import teamBoard from "./modules/teamBoard";
 import chat from "./modules/chat";
 import week from "./modules/week";
+import myPage from "./modules/myPage";
 
 // history를 페이지에서 편하게 사용할 수 있도록 준비
 export const history = createBrowserHistory();
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   teamBoard: teamBoard,
   chat: chat,
   week : week,
+  myPage: myPage,
   router: connectRouter(history),
 });
 

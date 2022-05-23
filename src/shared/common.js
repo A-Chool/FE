@@ -13,7 +13,7 @@ export const passwordCheck = (password) => {
 // 숫자와 문자포함 6~12자 비밀번호 정규식
 
 export const phoneCheck = (phone) => {
-  var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+  var regPhone = /^01([0|1|6|7|8|9])-([0-9]{3,4})-([0-9]{4})$/;
   return regPhone.test(phone);
 };
 
