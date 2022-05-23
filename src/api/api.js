@@ -9,5 +9,5 @@ const api = axios.create({
 export default api;
 
 // export const baseUrl = "https://achool.shop:8090";
-export const baseUrl = "https://achool.shop";
+export const baseUrl = "https://a-chool.com:443";
 // export const baseUrl = "http://a-chool.com:8080";
