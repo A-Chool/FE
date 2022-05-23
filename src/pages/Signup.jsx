@@ -58,7 +58,7 @@ const Signup = () => {
   return (
     <PageMain>
       <InputMain>
-        <img src={logo} style={{position : 'absolute',top : '32px',left : '30px'}}/>
+        <img src={logo} style={{position : 'absolute',top : '32px',left : '30px'}} onClick={() => {history.push('/')}}/>
         <SingUpContentsWrapper>
           <MainContents>회원가입</MainContents>
           <SubContents>가입정보를 입력 후 회원가입 버튼을 클릭해 주세요.</SubContents>
@@ -75,13 +75,13 @@ const Signup = () => {
             onChange={(e) => {setUserName(e.target.value)}}
           />
           <UserInput
-            type="text"
+            type="password"
             value={userPw}
             placeholder="비밀번호"
             onChange={(e) => {setUserPw(e.target.value)}}
           />
           <UserInput
-            type="text"
+            type="password"
             value={userPwCheck}
             placeholder="비밀번호 확인"
             onChange={(e) => {setUserPwCheck(e.target.value)}}
@@ -186,11 +186,11 @@ const UserInput = styled.input`
   margin-top: 16px;
   padding-left : 8px; 
   &:hover {
-    border: 1.2px solid #282828;
+    border: 1px solid #282828;
   }
   &:focus {
-    outline: 1.2px solid #282828;
-    border: 0px;
+    outline: 1px solid #282828;
+    border: -1px solid white;
   }
     @media screen and (min-width: 2560px) {
       width: 564px;

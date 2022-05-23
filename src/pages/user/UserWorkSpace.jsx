@@ -101,12 +101,13 @@ const Box = styled.div`
 
 const UpdateBox = styled.textarea`
   width: 1084px;
-  height: 96px;
+  height: 85px;
   background-color : white;
   display : block;
   margin : 6px auto;
   border : 1px solid black;
   border-radius : 10px;
+  resize : none;
 `
 
 export default UserWorkSpace;

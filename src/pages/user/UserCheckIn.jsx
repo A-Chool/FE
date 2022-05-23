@@ -10,6 +10,7 @@ import mascot from "../../assets/img/mascot.svg";
 import studyData from "../../assets/img/studydata.svg";
 
 import { loadCheckList } from "../../redux/modules/checkIn";
+import jwt_decode from "jwt-decode";
 
 const UserCheckIn = () => {
   const dispatch = useDispatch();
@@ -25,8 +26,11 @@ const UserCheckIn = () => {
 
   const logList = useSelector((state) => state.checkIn.checkIn);
 
-  console.log(teamList)
-  console.log(logList)
+  const value = "; " + document.cookie;
+
+  const parts = value.split('; userToken=');
+
+  const decode = jwt_decode ( parts[1] ) ; 
 
   return (
     <React.Fragment>
@@ -39,7 +43,7 @@ const UserCheckIn = () => {
                 <StudyData>
                   <div style={{height : '70%'}}>
                     <p style={{fontSize : '24px', fontWeight : '400'}}>
-                      홍길동님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>{logList?.totalSumTime}</span> 시간 <br />학습하셨어요!
+                      {decode.USER_NAME}님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>{logList?.totalSumTime}</span> 시간 <br />학습하셨어요!
                     </p>
                   </div>
                   <div style={{marginLeft : '55%'}}>

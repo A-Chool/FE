@@ -80,7 +80,7 @@ const AdminWeekList = (props) => {
         }}/> */}
     </WeekTagName>
     <WeekTagEdit>
-      <img src = {etcBtn} onClick={weekHandleOpen}/>
+      <img src = {etcBtn} style={{width : '4px'}} onClick={weekHandleOpen}/>
       <Modal
         open={weekOpen}
         onClose={weekHandleClose}

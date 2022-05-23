@@ -107,6 +107,7 @@ const UpdateBox = styled.textarea`
   margin : 6px auto;
   border : 1px solid black;
   border-radius : 10px;
+  resize : none;
 `
 
 export default UserGroundRole;
