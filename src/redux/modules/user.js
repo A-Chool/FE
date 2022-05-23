@@ -144,8 +144,8 @@ const kakaoLoginDB = (code) => {
 
         const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
         console.log(ACCESS_TOKEN);
-        localStorage.setItem("kakaoToken", ACCESS_TOKEN);
-        // setCookie("kakaoToken", ACCESS_TOKEN);
+        // localStorage.setItem("kakaoToken", ACCESS_TOKEN);
+        setCookie("kakaoToken", ACCESS_TOKEN);
         history.replace("/admin/user");
       })
       .catch((err) => {
