@@ -136,7 +136,7 @@ const Login = () => {
                   onLogout={console.info}
                 /> */}
 
-                <SocialLoginKakao href={KAKAO_AUTH_URL}>
+                <SocialLoginKakao href={KAKAO_AUTH_URL} onClick={() => {console.log(KAKAO_AUTH_URL)}}>
                   <KakaoImg src={kakaoLogin} />
                 </SocialLoginKakao>
               </UserLoginWrapper>
