@@ -1,17 +1,42 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminSidebar from "./admin/AdminSideBar";
 import styled from "styled-components";
 import camera from "../assets/img/camera.svg";
+import { useDispatch, useSelector } from "react-redux";
+
+import jwt_decode from "jwt-decode";
+import { getCookie } from "../shared/Cookie";
+
+import { loadMyPage } from "../redux/modules/myPage";
 
 const MyPage = (props) => {
+
+  const dispatch = useDispatch();
+
+  // const [decode, setDecode] = useState("");
+
+    useEffect(() => {
+      // const userToken = getCookie("userToken");
+      // setDecode(jwt_decode(userToken));
+      dispatch(loadMyPage());
+    }, []);
+
+
+    const userData = useSelector((state) => state.myPage.userInfo);
+    console.log(userData)
+
+    // const UserName = decode.USER_NAME
+
   const [my, setMy] = useState({
-    nickname: "닉",
-    email: "이",
-    phoneNumber: "010",
-    kakaoId: "asdf@asdf.asdf",
-    github: "asdf.io",
+    nickname : '홍길동',
+    email: userData.userEmail,
+    phoneNumber: userData.userPhoneNumber,
+    kakaoId: userData.userKakao,
+    github: userData.userGitHub,
     tags: ["FE"],
   });
+
+  console.log(my)
 
   return (
     <div style={{ display: "flex" }}>
@@ -27,7 +52,7 @@ const MyPage = (props) => {
             }}
           >
             <ProfileImg
-              src="https://images.pexels.com/photos/9887601/pexels-photo-9887601.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
+              src={userData.userImage}
               alt=""
             />
             <ProfilImgIcon>

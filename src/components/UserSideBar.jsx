@@ -27,10 +27,11 @@ const UserSidebar = (props) => {
       return a + b;
     }, 0);
 
-  useEffect(() => {
-    const userToken = getCookie("userToken");
-    setDecode(jwt_decode(userToken));
-  }, []);
+    
+    useEffect(() => {
+      const userToken = getCookie("userToken");
+      setDecode(jwt_decode(userToken));
+    }, []);
 
   return (
     <Sidebar>
@@ -125,7 +126,7 @@ const UserSidebar = (props) => {
           </p>
         </div>
         <div style={{ width: "40px", height: "40px", float: "left", marginLeft: "9px", textAlign: "center" }}>
-          {/* <p style={{ fontSize: "16px", textDecoration: "underline", textUnderlinePosition: "under" }}>수정</p> */}
+          <p style={{ fontSize: "16px", textDecoration: "underline", textUnderlinePosition: "under", cursor : 'pointer' }} onClick={() => history.push("/my")}>수정</p>
         </div>
       </UserInfobox>
 
@@ -206,6 +207,7 @@ const AdminLogo = styled.h2`
   display: inline-block;
   margin-top: 31px;
   margin-left: 32px;
+  cursor : pointer; 
 `;
 
 const Adminmenu = styled.p`
@@ -227,6 +229,7 @@ const LogOutBtn = styled.button`
   font-size: 16px;
   font-family: Roboto;
   font-style: normal;
+  cursor : pointer;
 `;
 
 const UnderFn = styled.div`
