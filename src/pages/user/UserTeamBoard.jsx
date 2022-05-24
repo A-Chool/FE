@@ -113,19 +113,11 @@ const UserTeamBoard = () => {
             </UserInfoBox>
           </TeamInfoBox>
 
-          <div style={{
-            width : '1108px', 
-            height : '180px', 
-            margin : '24px 32px',
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center'
-          }}>
+          <WorkspaceWrapper>
             <UserGroundRule TeamBoard={TeamBoard}></UserGroundRule>
             
             <UserTodo TeamBoard={TeamBoard}></UserTodo>
-          </div>
+          </WorkspaceWrapper>
 
           <UserWorkSpace TeamBoard={TeamBoard}></UserWorkSpace>
 
@@ -166,15 +158,34 @@ const UpBar = styled.div`
 
 const TeamInfoBox = styled.div`
   height : 291px;
+  display : inline-block;
   margin : 0 32px 24px;
   background-color : white;
   border-radius: 16px;
+  @media screen and (min-width: 2560px) {
+    height: 430px;
+  }
+`
+
+const WorkspaceWrapper = styled.div`
+  width : auto;
+  height : 180px;
+  margin : 24px 32px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @media screen and (min-width: 2560px) {
+    height: 430px;
+  }
 `
 
 const UserInfoBox = styled.div`
   height : 236px;
-  width : 1084px;
+  width : 99%;
   margin : 0px auto;
+  
 `
 
 const UserInfoMenu = styled.div`
@@ -193,6 +204,10 @@ const UserInfoMenuP = styled.p`
   float : left;
   line-height : 8px;
   color: #1F3A5E;
+  @media screen and (min-width: 2560px) {
+    font-size: 18px;
+    line-height : 4px;
+  }
 `
 
 const UserDataWrapper = styled.div`
@@ -205,6 +220,9 @@ const UserDataWrapper = styled.div`
   }
   &::-webkit-scrollbar-track {
     background: transition;
+  }
+  @media screen and (min-width: 2560px) {
+    height: 340px;
   }
 `
 

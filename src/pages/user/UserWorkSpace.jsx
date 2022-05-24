@@ -53,7 +53,7 @@ const UserWorkSpace = (props) => {
           }}>Done</p>
         }    
       </UpBar>
-      <hr style={{width : '1084px', margin : 'auto', border : '1px solid #E0E0E0'}}/>
+      <hr style={{width : '99%', margin : 'auto', border : '1px solid #E0E0E0'}}/>
         {
           update === false
           ? <Box>{split}</Box>
@@ -65,12 +65,15 @@ const UserWorkSpace = (props) => {
 };
 
 const WorkspaceWrapper = styled.div`
-  width : 1108px;
+  width : auto;
   height : 147px;
   margin : 0 24px 24px 32px;
   background-color: #FFFFFF;
   border-radius: 16px;
   // float : left;
+  @media screen and (min-width: 2560px) {
+    height: 350px;
+  }
 `
 
 const UpBar = styled.div`
@@ -81,7 +84,7 @@ const UpBar = styled.div`
 `
 
 const Box = styled.div`
-  width: 1084px;
+  width: 99%;
   height: 96px;
   margin : 6px auto;
   overflow: scroll;
@@ -97,10 +100,14 @@ const Box = styled.div`
   &::-webkit-scrollbar-track {
     background: transition;
   }
+  @media screen and (min-width: 2560px) {
+    height: 290px;
+    font-size: 20px;
+  }
 `
 
 const UpdateBox = styled.textarea`
-  width: 1084px;
+  width: 99%; 
   height: 85px;
   background-color : white;
   display : block;
@@ -108,6 +115,10 @@ const UpdateBox = styled.textarea`
   border : 1px solid black;
   border-radius : 10px;
   resize : none;
+  @media screen and (min-width: 2560px) {
+    height: 290px;
+    font-size: 20px;
+  }
 `
 
 export default UserWorkSpace;

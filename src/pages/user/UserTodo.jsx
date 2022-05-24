@@ -47,7 +47,7 @@ const UserTodo = (props) => {
   return (
     <TodoWrapper>
       <img src={todoImg} style={{margin : '12px 0px 6px 12px'}} /> 
-      <hr style={{width : '658px', margin : 'auto', border : '1px solid #E0E0E0'}}/>
+      <hr style={{width : '98%', margin : 'auto', border : '1px solid #E0E0E0'}}/>
       <ScrollBox>
       {
         toDoList?.map((e, idx) => {
@@ -85,14 +85,17 @@ const UserTodo = (props) => {
 };
 
 const TodoWrapper = styled.div`
-  width : 682px;
+  width : 62%;
   height : 180px;
   background-color: #FFFFFF;
   border-radius: 16px;
+  @media screen and (min-width: 2560px) {
+    height: 400px;
+  }
 `
 const TodoInput = styled.input`
   height : 18px;
-  width: 593px;
+  width: 88%;
   margin : 8px 0 0 10px;
   border : none;
   border-bottom : 1px solid #FF5F00;
@@ -116,6 +119,9 @@ overflow-x: hidden;
 }
 &::-webkit-scrollbar-track {
   background: transition;
+}
+@media screen and (min-width: 2560px) {
+  height: 340px;
 }
 `
 

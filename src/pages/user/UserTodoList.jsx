@@ -100,7 +100,7 @@ const UserTodoList = (props) => {
 };
 
 const Todo = styled.div`
-  width: 674px;
+  width: 99%;
   height: 29px;
   margin : 0px auto;
   border-radius: 16px;
@@ -111,7 +111,7 @@ const Todo = styled.div`
 
 const TodoInput = styled.input`
   height : 24px;
-  width: 579px;
+  width: 88%;
   margin : 0 0 0 0px;
   border : none;
   border-bottom : 1px solid #FF5F00;
@@ -134,11 +134,17 @@ const HideBtn = styled.img`
 const AllTodoList = styled.div`
   display : inline-block;
   height : 28px;
-  width: 560px;
+  width: 82%;
   font-weight: 400;
   font-size: 14px;
   line-height : 28px;
   float : left;
+  @media screen and (min-width: 1920px) {
+    width: 88%;
+  }
+  @media screen and (min-width: 2560px) {
+    width: 90%;
+  }
 `
 
 export default UserTodoList;

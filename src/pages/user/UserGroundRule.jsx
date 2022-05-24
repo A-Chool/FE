@@ -54,7 +54,7 @@ const UserGroundRole = (props) => {
           }}>Done</p>
         }    
       </UpBar>
-      <hr style={{width : '377px', margin : 'auto', border : '1px solid #E0E0E0'}}/>
+      <hr style={{width : '97%', margin : 'auto', border : '1px solid #E0E0E0'}}/>
         {
           update === false
           ? <Box>{split}</Box>
@@ -66,10 +66,13 @@ const UserGroundRole = (props) => {
 };
 
 const GroundRuleWrapper = styled.div`
-  width : 401px;
+  width : 36%;
   height : 180px;
   background-color: #FFFFFF;
   border-radius: 16px;
+  @media screen and (min-width: 2560px) {
+    height: 400px;
+  }
 `
 
 const UpBar = styled.div`
@@ -81,7 +84,7 @@ const UpBar = styled.div`
 
 const Box = styled.div`
   height : 120px;
-  width : 377px;
+  width : 95%;
   margin : 6px auto;
   overflow: scroll;
   overflow-x: hidden;
@@ -96,17 +99,25 @@ const Box = styled.div`
   &::-webkit-scrollbar-track {
     background: transition;
   }
+  @media screen and (min-width: 2560px) {
+    height: 330px;
+    font-size: 20px;
+  }
 `
 
 const UpdateBox = styled.textarea`
   height : 120px;
-  width : 377px;
+  width : 95%;
   background-color : white;
   display : block;
   margin : 6px auto;
   border : 1px solid black;
   border-radius : 10px;
   resize : none;
+  @media screen and (min-width: 2560px) {
+    height: 330px;
+    font-size: 20px;
+  }
 `
 
 export default UserGroundRole;
