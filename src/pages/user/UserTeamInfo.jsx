@@ -16,7 +16,7 @@ const UserTeamInfo = (props) => {
 };
 
 const UserInfoMenu = styled.div`
-  width : 1084px;
+  width : 100%;
   height : 40px;
   background-color: white;
   font-weight: 400;
@@ -31,6 +31,9 @@ const UserInfoMenuP = styled.p`
   float : left;
   line-height : 8px;
   color: #282828;
+  @media screen and (min-width: 2560px) {
+    font-size: 18px;
+  }
 `
 
 export default UserTeamInfo;

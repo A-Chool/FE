@@ -140,10 +140,10 @@ const kakaoLoginDB = (code) => {
     await axios
       .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
 
         const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-        console.log(ACCESS_TOKEN);
+        // console.log(ACCESS_TOKEN);
         // localStorage.setItem("kakaoToken", ACCESS_TOKEN);
         setCookie("userToken", ACCESS_TOKEN);
         history.replace("/check-in");
