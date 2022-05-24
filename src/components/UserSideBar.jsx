@@ -191,6 +191,7 @@ const UserSidebar = (props) => {
 
 const Sidebar = styled.div`
   width: 268px;
+  min-width : 268px;
   height: 100vh;
   background-color: white;
   float: left;

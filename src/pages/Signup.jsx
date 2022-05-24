@@ -73,6 +73,7 @@ const Signup = () => {
             value={userName}
             placeholder="사용할 닉네임(2글자 이상 8글자 이하)"
             onChange={(e) => {setUserName(e.target.value)}}
+            maxLength="8"
           />
           <UserInput
             type="password"
