@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   checkIn: checkIn,
   teamBoard: teamBoard,
   chat: chat,
-  week : week,
+  week: week,
   myPage: myPage,
   router: connectRouter(history),
 });
@@ -42,7 +42,10 @@ if (env === "development") {
 }
 
 // 리덕스 데브툴 설정하기
-const composeEnhancers = typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({}) : compose;
+const composeEnhancers =
+  typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 
 // 미들웨어 묶기
 const enhancer = composeEnhancers(applyMiddleware(...middlewares));

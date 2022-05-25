@@ -8,6 +8,7 @@ import {
   loadChatMessages,
   setLatestMessage,
   loadChatMessagesPrev,
+  resetChatMessagesState,
 } from "../../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
@@ -18,20 +19,24 @@ const ChatDetail = (props) => {
   const room = useSelector((state) => state.chat.room);
   const chatMessages = useSelector((state) => state.chat.chatMessages);
   const isInitialized = useSelector((state) => state.chat.isInitialized);
-  const chatMessagesPrevId = useSelector(
-    (state) => state.chat.chatMessagesPrevId
-  );
+  const chatMessagesPrevId = useSelector((state) => state.chat.chatMessagesPrevId);
+  const isEnd = useSelector((state) => state.chat.isEnd);
+  const lastChatCreatedAt = useSelector((state) => state.chat.lastChatCreatedAt);
   // console.log(chatMessages);
 
   const userId = getUserId();
   const [content, setContent] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [isInLoadingArea, setInLoadingArea] = useState(false);
 
   //   const [roomId, setRoomId] = useState("faaa902e-f2d4-4221-a0ca-e413025f8834");
   const myToken = getCookie("Authorization");
 
-  const chattingRef = useRef();
-  const latestChatWrapRef = useRef();
-  const chatContentsRef = useRef();
+  const chattingRef = useRef(null);
+  const latestChatWrapRef = useRef(null);
+  const chatContentsRef = useRef(null);
+  const chatContentsRefCurrent = chatContentsRef.current;
+  const theChat = useRef(null);
 
   // 소켓 연결에 필요한 변수
   // console.log(userId); const devTarget = "http://localhost:8080/ws-stomp";
@@ -113,75 +118,125 @@ const ChatDetail = (props) => {
     }
   };
 
-  // useEffect(() => {
-  //   if (room?.roomId) setRoomId(room.roomId);
-  // }, [room]);
-
-  console.dir(chatContentsRef.current?.offsetTop);
-
   useEffect(() => {
     connect();
     dispatch(loadChatMessages(room?.roomId));
     return () => {
       ws.disconnect();
+      dispatch(resetChatMessagesState());
     };
   }, [room?.roomId]);
+
+  const listenScrollChange = (e) => {
+    // console.log(e.target.scrollTop);
+    if (e.target.scrollTop < 50) {
+      setInLoadingArea(true);
+      e.preventDefault();
+    } else {
+      setInLoadingArea(false);
+    }
+  };
 
   useEffect(() => {
     if (isInitialized) {
       chattingRef.current.scrollIntoView({ block: "end" });
+      setInLoadingArea(false);
+      chatContentsRefCurrent?.addEventListener("scroll", listenScrollChange);
     }
-  }, [chatMessages, isInitialized]);
-
-  useEffect(() => {
-    console.log(isInitialized);
+    return () => {
+      chatContentsRefCurrent?.removeEventListener("scroll", listenScrollChange);
+    };
   }, [isInitialized]);
 
-  console.log(chatContentsRef.current?.offsetTop);
+  useEffect(() => {
+    if (chatMessagesPrevId) {
+      if (theChat.current) {
+        theChat.current.scrollIntoView({ block: "start" });
+        theChat.current.style.borderTop = "1px solid #ff5e00";
+        theChat.current.style.backgroundColor = "#ff5e0033";
+        setTimeout(() => {
+          theChat.current.style.borderTop = "0px solid transparent";
+          theChat.current.style.backgroundColor = "transparent";
+        }, 3000);
+      }
+    }
+  }, [chatMessagesPrevId]);
 
-  // useEffect(() => {
-  //   const chatContentRefCurrent = chatContentsRef.current;
-  //   const listenChatContentsRef = (e) => {
-  //     console.log("sdf", chatContentsRef.current.offsetTop);
-  //   };
-  //   chatContentRefCurrent.addEventListener("scroll", listenChatContentsRef);
-  // }, []);
+  const loadChatPrev = async () => {
+    setLoading(true);
+    await dispatch(loadChatMessagesPrev(room?.roomId));
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    if (isInLoadingArea && !isEnd) {
+      loadChatPrev();
+    }
+  }, [isInLoadingArea, isEnd]);
+
+  useEffect(() => {
+    console.log(isLoading);
+  }, [isLoading]);
 
   if (!userId) return <>로그인이 필요합니다.</>;
   if (!room?.roomId) return <>연결된 방이 존재하지 않습니다.</>;
 
   return (
     <ChatDisplay ref={chatContentsRef}>
-      <button
-        style={{
-          backgroundColor: "transparent",
-          border: "0px solid transparent",
-          cursor: "pointer",
-          width: "100%",
-          padding: "0.5rem 0",
-        }}
-        onClick={() => {
-          dispatch(loadChatMessagesPrev(room?.roomId));
-        }}
-      >
-        더불러오기
-      </button>
+      {isLoading ? (
+        <div
+          style={{
+            backgroundColor: "transparent",
+            border: "0px solid transparent",
+            cursor: !isEnd && "pointer",
+            width: "100%",
+            padding: "1rem 0 0.5rem",
+            textAlign: "center",
+            fontSize: "0.85rem",
+            color: "#ff5e00",
+          }}
+        >
+          이전 채팅을 불러오고 있어요.
+        </div>
+      ) : isEnd ? (
+        <div
+          style={{
+            backgroundColor: "transparent",
+            border: "0px solid transparent",
+            cursor: !isEnd && "pointer",
+            width: "100%",
+            padding: "1rem 0 0.5rem ",
+            textAlign: "center",
+            fontSize: "0.85rem",
+            color: "#ff5e00",
+            position: "fixed",
+            top: "20",
+          }}
+        >
+          더 불러올 채팅이 없어요.
+        </div>
+      ) : (
+        <></>
+      )}
       <ChatContents>
         {chatMessages?.length > 0 &&
           chatMessages.map((item, index) => {
+            // if (item.createdAt === lastChatCreatedAt) console.log(item.message);
             return (
               <ChatWrap
                 key={index}
                 ref={
-                  index === chatMessages.length - 1 ? latestChatWrapRef : null
+                  index === chatMessages.length - 1
+                    ? latestChatWrapRef
+                    : item.createdAt === lastChatCreatedAt
+                    ? theChat
+                    : null
                 }
                 align={item.sender === userId ? "end" : "start"}
               >
                 <ChatUser>{item.sender}</ChatUser>
                 <ChatMsg self={item.sender === userId}>{item.message}</ChatMsg>
-                <Time dateTime={dayjs(item.createdAt).format("")}>
-                  {dayjs(item.createdAt).format("hh:mm a")}
-                </Time>
+                <Time dateTime={dayjs(item.createdAt).format("")}>{dayjs(item.createdAt).format("hh:mm a")}</Time>
               </ChatWrap>
             );
           })}
@@ -196,15 +251,10 @@ const ChatDetail = (props) => {
           value={content}
           onChange={handleChange}
           onKeyUp={handleKeyUp}
+          disabled={isLoading}
         />
-        <ChatBtn disabled={!content} onClick={sendMessage}>
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+        <ChatBtn disabled={isLoading || !content} onClick={sendMessage}>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="12" cy="12" r="12" fill="#FF5F00" />
             <path
               d="M17.8383 6.16988C17.7595 6.09152 17.6599 6.03728 17.5513 6.01351C17.4427 5.98974 17.3295 5.99745 17.2251 6.03572L4.37689 10.7021C4.26609 10.7441 4.17069 10.8188 4.10337 10.9162C4.03605 11.0136 4 11.1292 4 11.2475C4 11.3659 4.03605 11.4815 4.10337 11.5789C4.17069 11.6763 4.26609 11.7509 4.37689 11.7929L9.39355 13.7937L13.0962 10.0838L13.9196 10.9063L10.1995 14.6219L12.2085 19.6325C12.2518 19.7411 12.3267 19.8341 12.4235 19.8996C12.5203 19.9651 12.6346 20.0001 12.7516 20C12.8696 19.9976 12.9841 19.9595 13.0801 19.8908C13.176 19.822 13.2488 19.7259 13.2889 19.615L17.961 6.78235C18.0008 6.67915 18.0104 6.56678 17.9887 6.45834C17.9669 6.3499 17.9148 6.24985 17.8383 6.16988Z"
@@ -220,14 +270,16 @@ const ChatDetail = (props) => {
 const ChatDisplay = styled.div`
   height: 100%;
   position: relative;
-  /* overflow: hidden; */
-  /* background-color: aliceblue; */
+  margin-top: 50px;
+  flex: 1 1 0;
+  flex-grow: 1;
+  overflow-y: scroll;
+  height: 100%;
 `;
 
 const ChatContents = styled.div`
   /* flex: 1 1 100%; */
   width: 100%;
-  height: 100%;
   padding: 1rem;
   box-sizing: border-box;
 `;
@@ -238,6 +290,8 @@ const ChatWrap = styled.div`
   align-items: ${(props) => props.align};
   padding: 1rem 0;
   box-sizing: border-box;
+
+  transition: all 500ms ease-in-out;
 `;
 
 const ChatUser = styled.div`
@@ -246,8 +300,7 @@ const ChatUser = styled.div`
 `;
 const ChatMsg = styled.div`
   padding: 0.8rem 1rem 0.8rem 0.8rem;
-  border-radius: ${(props) =>
-    props.self ? " 2rem 0.5rem 2rem 2rem" : "0.5rem 2rem 2rem 2rem"};
+  border-radius: ${(props) => (props.self ? " 2rem 0.5rem 2rem 2rem" : "0.5rem 2rem 2rem 2rem")};
   background-color: ${(props) => (props.self ? "#ff5e00" : "#fff")};
   border: ${(props) => (props.self ? "0" : "1px solid #ddd")};
   color: ${(props) => (props.self ? "#fff" : "inherit")};

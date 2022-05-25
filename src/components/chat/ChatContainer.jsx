@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { toggleChatBox, loadChatList, setRoom } from "../../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,19 +11,21 @@ const ChatContainer = (props) => {
   const chatList = useSelector((state) => state.chat.chatList);
   const room = useSelector((state) => state.chat.room);
   const dispatch = useDispatch();
+  const chatWrapperRef = useRef(null);
 
   useEffect(() => {
     if (isLogin) {
       dispatch(loadChatList());
-    } else {
     }
   }, [isLogin, isOpen]);
 
-  console.log(isOpen);
+  useEffect(() => {
+    chatWrapperRef.current?.scrollTo(0, 0);
+  }, [room]);
 
   return (
     <ChatWrap isOpen={isOpen}>
-      <ChatWrapper style={{ position: "relative" }}>
+      <ChatWrapper ref={chatWrapperRef} style={{ position: "relative" }}>
         <ChatWrapHeader>
           <div>
             {room && <Grid onClick={() => dispatch(setRoom(null))}>목록</Grid>}
@@ -32,9 +34,17 @@ const ChatContainer = (props) => {
           </div>
         </ChatWrapHeader>
 
-        <ChatWrapContent>
-          {room ? <ChatDetail /> : chatList.map((item) => <ChatItem key={item.roomId} room={item} />)}
-        </ChatWrapContent>
+        <>
+          {room ? (
+            <ChatDetail />
+          ) : (
+            <ChatWrapContent>
+              {chatList.map((item) => (
+                <ChatItem key={item.roomId} room={item} />
+              ))}
+            </ChatWrapContent>
+          )}
+        </>
       </ChatWrapper>
     </ChatWrap>
   );
@@ -50,9 +60,9 @@ const ChatWrap = styled.div`
 
   border-radius: 1rem;
   /* padding: 1rem; */
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  max-height: 720px;
-  min-height: 30vh;
+  box-shadow: 0 8px 10px -1px rgb(0 0 0 / 0.4), 0 4px 6px -2px rgb(0 0 0 / 0.1), 0 2px 3px -2px rgb(0 0 0 / 0.1);
+  max-height: 100vh;
+  height: 600px;
   max-width: 350px;
   width: 100%;
   min-width: 20rem;
@@ -74,7 +84,9 @@ const ChatWrap = styled.div`
 
 const ChatWrapper = styled.div`
   position: relative;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   overflow-y: scroll;
 `;
 
@@ -115,10 +127,12 @@ const Grid = styled.div`
 `;
 
 const ChatWrapContent = styled.div`
+  height: 100%;
+  position: relative;
   margin-top: 50px;
   flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: scroll;
   height: 100%;
   position: relative;
 `;

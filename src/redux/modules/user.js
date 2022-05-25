@@ -85,7 +85,6 @@ const getMyselfDB = (token) => {
         },
       })
       .then((response) => {
-        console.log(response);
         if (Math.floor(response.status / 100) === 2) {
           console.log("로그인 성공", response);
           localStorage.setItem("userInfo", JSON.stringify(response.data));

@@ -11,6 +11,7 @@ const SET_ROOM = "SET_ROOM";
 const LOAD_CHAT_MESSAGES = "LOAD_CHAT_MESSAGES";
 const LOAD_CHAT_MESSAGES_PREV = "LOAD_CHAT_MESSAGES_PREV";
 const SET_LATEST_MESSAGE = "SET_LATEST_MESSAGE";
+const RESET_CHAT_MESSAGES_STATE = "RESET_CHAT_MESSAGES_STATE";
 
 const initialState = {
   open: false,
@@ -19,9 +20,10 @@ const initialState = {
   chatMessages: [],
   chatMessagesPrevId: null,
   isInitialized: false,
+  isEnd: false,
+  lastChatCreatedAt: null,
 };
 
-const __toggleChatBox = createAction(TOGGLE_CHATBOX, () => ({}));
 const __loadChatList = createAction(LOAD_CHAT_LIST, (chatList) => ({
   chatList,
 }));
@@ -37,11 +39,8 @@ const __setLatestMessage = createAction(SET_LATEST_MESSAGE, (latestMessage) => (
   latestMessage,
 }));
 
-export const toggleChatBox = () => {
-  return function (dispatch, getState, { history }) {
-    dispatch(__toggleChatBox());
-  };
-};
+export const toggleChatBox = createAction(TOGGLE_CHATBOX, () => ({}));
+export const resetChatMessagesState = createAction(RESET_CHAT_MESSAGES_STATE, () => ({}));
 
 export const loadChatList = () => {
   return function (dispatch, getState, { history }) {
@@ -79,25 +78,27 @@ export const loadChatMessages = (roomId) => {
       })
       .then((res) => {
         dispatch(__loadChatMessages(res.data));
-        console.log(res.data.chatMessageLis);
+        // console.log(res.data.chatMessageList);
       })
       .catch((err) => console.log(err));
   };
 };
 
 export const loadChatMessagesPrev = (roomId) => {
-  return function (dispatch, getState, { history }) {
+  return async function (dispatch, getState, { history }) {
     const userToken = getCookie("userToken");
     const prevId = getState().chat.chatMessagesPrevId;
-    console.log(userToken, prevId);
-    // ?prevId=${prevId}
-    axios
-      .get(`https://achool.shop/chat/message/file/${roomId}`, {
+    const isEnd = getState().chat.isEnd;
+    if (isEnd) return console.log("마지막 내역입니다.");
+    // console.log("prevId", prevId);
+    await axios
+      .get(`https://achool.shop/chat/message/file/${roomId}${!!prevId ? `?prevId=${prevId}` : ``}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((res) => {
+        // console.log(res);
         dispatch(__loadChatMessagesPrev(res.data.chatMessageList, res.data.prevId));
       })
       .catch((err) => console.log(err));
@@ -128,18 +129,29 @@ export default handleActions(
       produce(state, (draft) => {
         draft.chatMessages = action.payload.chatMessages;
         draft.isInitialized = true;
+        draft.lastChatCreatedAt = action.payload?.chatMessages[0]?.createdAt;
       }),
     [LOAD_CHAT_MESSAGES_PREV]: (state, action) =>
       produce(state, (draft) => {
         let _chatMessages = [...state?.chatMessages];
         const prevChatMessages = action.payload.chatMessages || [];
-        draft.chatMessages = prevChatMessages.concat(_chatMessages);
+        _chatMessages = prevChatMessages.concat(_chatMessages);
+        draft.chatMessages = _chatMessages;
+        draft.lastChatCreatedAt = _chatMessages[5]?.createdAt; // 추가 로드될때 채팅 개수 늘어나는 만큼 수정해야
         draft.chatMessagesPrevId = action.payload?.chatMessagesPrevId || null;
+        draft.isEnd = action?.payload?.chatMessagesPrevId === 0;
       }),
     [SET_LATEST_MESSAGE]: (state, action) =>
       produce(state, (draft) => {
         let _chatMessages = [...state?.chatMessages];
         draft.chatMessages = _chatMessages.concat([action.payload.latestMessage]);
+      }),
+    [RESET_CHAT_MESSAGES_STATE]: (state, action) =>
+      produce(state, (draft) => {
+        draft.chatMessages = [];
+        draft.chatMessagesPrevId = null;
+        draft.isInitialized = false;
+        draft.isEnd = false;
       }),
   },
   initialState
