@@ -22,7 +22,7 @@ const ChatContainer = (props) => {
     }
   }, [isLogin, isOpen]);
 
-  // console.log(chatList);
+  console.log(isOpen);
 
   return (
     <ChatWrap
@@ -43,12 +43,9 @@ const ChatContainer = (props) => {
             <Grid onClick={() => setTrigger(false)}>닫기</Grid>
           </div>
         </ChatWrapHeader>
+
         <ChatWrapContent>
-          {room ? (
-            <ChatDetail />
-          ) : (
-            chatList.map((item) => <ChatItem key={item.roomId} room={item} />)
-          )}
+          {room ? <ChatDetail /> : chatList.map((item) => <ChatItem key={item.roomId} room={item} />)}
         </ChatWrapContent>
       </ChatWrapper>
     </ChatWrap>
@@ -80,8 +77,7 @@ const ChatWrap = styled.div`
   display: ${(props) => (props.isOpen ? "flex" : "none")};
   flex-direction: column;
 
-  animation: ${(props) => (props.animationTrigger ? "fadeIn" : "fadeOut")} 200ms
-    ease-in-out;
+  animation: ${(props) => (props.animationTrigger ? "fadeIn" : "fadeOut")} 200ms ease-in-out;
 
   @keyframes fadeIn {
     0% {
