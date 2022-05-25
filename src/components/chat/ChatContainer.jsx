@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styled from "styled-components";
 import { toggleChatBox, loadChatList, setRoom } from "../../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,45 +11,40 @@ const ChatContainer = (props) => {
   const chatList = useSelector((state) => state.chat.chatList);
   const room = useSelector((state) => state.chat.room);
   const dispatch = useDispatch();
-  const [trigger, setTrigger] = useState(true);
+  const chatWrapperRef = useRef(null);
 
   useEffect(() => {
     if (isLogin) {
-      if (isOpen) setTrigger(true);
       dispatch(loadChatList());
-    } else {
-      setTrigger(false);
     }
   }, [isLogin, isOpen]);
 
-  // console.log(chatList);
+  useEffect(() => {
+    chatWrapperRef.current?.scrollTo(0, 0);
+  }, [room]);
 
   return (
-    <ChatWrap
-      isOpen={isOpen}
-      animationTrigger={trigger}
-      onAnimationEnd={() => {
-        if (!trigger) {
-          dispatch(toggleChatBox());
-          setTrigger(true);
-        }
-      }}
-    >
-      <ChatWrapper style={{ position: "relative" }}>
+    <ChatWrap isOpen={isOpen}>
+      <ChatWrapper ref={chatWrapperRef} style={{ position: "relative" }}>
         <ChatWrapHeader>
           <div>
             {room && <Grid onClick={() => dispatch(setRoom(null))}>목록</Grid>}
             <h1>{room?.name || "항해99"}</h1>
-            <Grid onClick={() => setTrigger(false)}>닫기</Grid>
+            <Grid onClick={() => dispatch(toggleChatBox())}>닫기</Grid>
           </div>
         </ChatWrapHeader>
-        <ChatWrapContent>
+
+        <>
           {room ? (
             <ChatDetail />
           ) : (
-            chatList.map((item) => <ChatItem key={item.roomId} room={item} />)
+            <ChatWrapContent>
+              {chatList.map((item) => (
+                <ChatItem key={item.roomId} room={item} />
+              ))}
+            </ChatWrapContent>
           )}
-        </ChatWrapContent>
+        </>
       </ChatWrapper>
     </ChatWrap>
   );
@@ -65,10 +60,10 @@ const ChatWrap = styled.div`
 
   border-radius: 1rem;
   /* padding: 1rem; */
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  max-height: 720px;
-  min-height: 30vh;
-  max-width: 25vw;
+  box-shadow: 0 8px 10px -1px rgb(0 0 0 / 0.4), 0 4px 6px -2px rgb(0 0 0 / 0.1), 0 2px 3px -2px rgb(0 0 0 / 0.1);
+  max-height: 100vh;
+  height: 600px;
+  max-width: 350px;
   width: 100%;
   min-width: 20rem;
   white-space: pre-line;
@@ -77,38 +72,21 @@ const ChatWrap = styled.div`
 
   overflow: hidden;
 
-  display: ${(props) => (props.isOpen ? "flex" : "none")};
+  display: flex;
   flex-direction: column;
 
-  animation: ${(props) => (props.animationTrigger ? "fadeIn" : "fadeOut")} 200ms
-    ease-in-out;
+  visibility: ${(props) => (props.isOpen ? "visible" : "hidden")};
+  transform: ${(props) => (props.isOpen ? "translateX(0)" : "translateX(-12rem)")};
+  opacity: ${(props) => (props.isOpen ? "1" : "0")};
 
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateX(-2rem);
-    }
-    100% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    100% {
-      opacity: 0;
-      transform: translateX(-10rem);
-    }
-  }
+  transition: all 200ms ease-in-out;
 `;
 
 const ChatWrapper = styled.div`
   position: relative;
-  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   overflow-y: scroll;
 `;
 
@@ -149,10 +127,12 @@ const Grid = styled.div`
 `;
 
 const ChatWrapContent = styled.div`
+  height: 100%;
+  position: relative;
   margin-top: 50px;
   flex: 1 1 0;
-  display: flex;
-  flex-direction: column;
+  flex-grow: 1;
+  overflow-y: scroll;
   height: 100%;
   position: relative;
 `;

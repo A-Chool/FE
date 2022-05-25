@@ -5,6 +5,7 @@ import {getCookie} from "../../shared/Cookie";
 
 // 액션
 const LOAD_MYPAGE = 'LOAD_MYPAGE';
+const EDIT_PROFILE = 'EDIT_PROFILE';
 
 // 초기값
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
 
 // 액션 생성 함수
 const __loadMyPage = createAction(LOAD_MYPAGE, (userInfo) => ({userInfo}));
+const __editProfile = createAction(EDIT_PROFILE, (userInfo) => ({userInfo}))
 
 // 미들웨어
 
@@ -35,38 +37,43 @@ export const loadMyPage = () => {
 }
 
 // 수정 미들웨어
-// export const editGroundRule = (teamId, groundRule, weekId) => {
-//   console.log(teamId, groundRule)
-//   return function (dispatch, getState, {history}) {
-//     if(!teamId) {window.alert("팀 아이디가 없습니다!")}
-//     const myToken = getCookie("Authorization");
-//     axios({
-//       method: "put",
-//       url: `https://achool.shop/api/user/teamBoard/groundRule/${teamId}`,
-//       data: {
-//         groundRule
-//       },
-//       headers: {Authorization : `Bearer ${myToken}`},
-//     })
-//     .then(() => {
-//       dispatch(__editGroundRule(groundRule));
-//       const bucket = {
-//         headers : {"Authorization" : `Bearer ${myToken}`}
-//         ,params: {teamId: teamId}
-//       }
-//       axios.get('https://achool.shop/api/user/teamBoard', bucket)
-//       .then((res) => {
-//         dispatch(__loadTeamBoard(res.data));
-//       })
-//       .catch((err)=> {
-//         console.log(err);
-//       })
-//       })
-//     .catch((err) => {
-//       console.log("서버에러: ", err)
-//     })
-//   }
-// }
+export const editProfile = (userName, userTag, userGitHub, findKakaoId, phoneNumber) => {
+  console.log(userName, userTag, userGitHub, findKakaoId, phoneNumber)
+  return function (dispatch, getState, {history}) {
+    // if(!) {window.alert("팀 아이디가 없습니다!")}
+    const myToken = getCookie("Authorization");
+    axios({
+      method: "put",
+      url: `https://achool.shop/api/user/mypage`,
+      data: {
+        userName : userName,
+        userTag : userTag,
+        userGitHub : userGitHub,
+        findKakaoId : findKakaoId, 
+        phoneNumber : phoneNumber
+      },
+      headers: {Authorization : `Bearer ${myToken}`},
+    })
+    .then((res) => {
+      console.log(res.data)
+      dispatch(__editProfile(res.data));
+      // const bucket = {
+      //   headers : {"Authorization" : `Bearer ${myToken}`}
+      //   ,params: {teamId: teamId}
+      // }
+      // axios.get('https://achool.shop/api/user/teamBoard', bucket)
+      // .then((res) => {
+      //   dispatch(__loadTeamBoard(res.data));
+      // })
+      // .catch((err)=> {
+      //   console.log(err);
+      // })
+      })
+    .catch((err) => {
+      console.log("프로필 수정 에러: ", err)
+    })
+  }
+}
 
 // 리듀서
 export default handleActions(

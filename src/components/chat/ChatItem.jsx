@@ -15,7 +15,13 @@ const ChatItem = (props) => {
           <RoomTitle>{props.room?.name}</RoomTitle>
           {props.room?.lastMessage && (
             <time
-              style={{ minWidth: "max-content", height: "fit-content", color: "#282828", fontWeight: "400", fontSize: "0.9em" }}
+              style={{
+                minWidth: "max-content",
+                height: "fit-content",
+                color: "#282828",
+                fontWeight: "400",
+                fontSize: "0.9em",
+              }}
               dateTime={dayjs(props.room.lastMessage?.createdAt).format("")}
             >
               {dayjs(props.room.lastMessage?.createdAt).format("h:m a")}
@@ -24,7 +30,7 @@ const ChatItem = (props) => {
         </RoomTitleArea>
         {props.room?.lastMessage ? (
           <LatestMsg>
-            <span style={{ fontWeight: 600 }}>{props.room?.lastMessage?.sender}</span>
+            <span style={{ fontWeight: 600 }}>{props.room?.lastMessage?.nickname}     </span>
             {props.room?.lastMessage?.message}
           </LatestMsg>
         ) : (

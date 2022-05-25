@@ -55,9 +55,11 @@ return function (dispatch, getState, { history }) {
 export const getTeamList = (weekId) => {
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
-    axios.get(`https://achool.shop/api/admin/teams/${weekId}`
-    ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-    )
+    const bucket = {
+      headers : {"Authorization" : `Bearer ${myToken}`}
+      ,params: {weekId: weekId}
+    }
+    axios.get(`https://achool.shop/api/admin/teams`, bucket)
     .then((res) => {
       console.log(res.data)
       console.log(weekId)
@@ -84,9 +86,11 @@ export const addTeamList = (teamName, weekId) => {
     })
     .then((res) => {
       dispatch(__addTeamList(res.data));
-      axios.get(`https://achool.shop/api/admin/teams/${weekId}`
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {weekId: weekId}
+      }
+      axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
         console.log(res.data)
         console.log(weekId)
@@ -116,10 +120,14 @@ export const deleteTeamList = (teamId, weekId) => {
     })
     .then((res) => {
       dispatch(__deleteTeamList(res.data));
-      axios.get(`https://achool.shop/api/admin/teams/${weekId}`
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {weekId: weekId}
+      }
+      axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
+        console.log(res.data)
+        console.log(weekId)
         dispatch(__loadTeamList(res.data, weekId));
       })
       .catch((err)=> {
@@ -166,9 +174,11 @@ export const addMemberList = (userId, teamId, weekId) => {
     })
     .then((res) => {
       dispatch(__addMemberList(res.data));
-      axios.get(`https://achool.shop/api/admin/teams/${weekId}`
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {weekId: weekId}
+      }
+      axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
         console.log(res.data)
         console.log(weekId)
@@ -209,9 +219,11 @@ export const deleteMemberList = (memberId, userId, weekId) => {
     })
     .then(() => {
       dispatch(__deleteMemberList(memberId));
-      axios.get(`https://achool.shop/api/admin/teams/${weekId}`
-      ,{headers : {"Authorization" : `Bearer ${myToken}`}}
-      )
+      const bucket = {
+        headers : {"Authorization" : `Bearer ${myToken}`}
+        ,params: {weekId: weekId}
+      }
+      axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
         console.log(res.data)
         console.log(weekId)

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import AdminSidebar from "./admin/AdminSideBar";
+import UserSidebar from "../components/UserSideBar";
 import styled from "styled-components";
 import camera from "../assets/img/camera.svg";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,40 +8,100 @@ import { useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { getCookie } from "../shared/Cookie";
 
-import { loadMyPage } from "../redux/modules/myPage";
+import { loadMyPage, editProfile } from "../redux/modules/myPage";
+
+import Box from '@mui/material/Box';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Backdrop from '@mui/material/Backdrop';
+
 
 const MyPage = (props) => {
 
   const dispatch = useDispatch();
 
+  const teamList = useSelector((state) => state.checkIn.checkInList);
+
   // const [decode, setDecode] = useState("");
-
-    useEffect(() => {
-      // const userToken = getCookie("userToken");
-      // setDecode(jwt_decode(userToken));
-      dispatch(loadMyPage());
-    }, []);
-
-
-    const userData = useSelector((state) => state.myPage.userInfo);
-    console.log(userData)
-
-    // const UserName = decode.USER_NAME
+  const userData = useSelector((state) => state.myPage.userInfo);
 
   const [my, setMy] = useState({
-    nickname : '홍길동',
-    email: userData.userEmail,
+    nickname : userData.username,
+    // email: userData.userEmail,
     phoneNumber: userData.userPhoneNumber,
-    kakaoId: userData.userKakao,
+    kakaoId: userData.findKakaoId,
     github: userData.userGitHub,
-    tags: ["FE"],
+    tags: userData.userTag,
   });
 
-  console.log(my)
+  console.log("my.tags =", my.tags);
 
+  useEffect(() => {
+    // const userToken = getCookie("userToken");
+    // setDecode(jwt_decode(userToken));
+    dispatch(loadMyPage());
+  }, []);
+  
+  const [tagItem, setTagItem] = useState('');
+  const [tagList, setTagList] = useState(my.tags);
+
+  useEffect(() => {
+    setTagList(my.tags)
+  }, [my.tags]);
+
+  console.log("tagItem 는 =",tagItem)
+  console.log("tagList 는 =",tagList)
+
+  const onKeyPress = e => {
+    if (e.target.value.length !== 0 && e.key === 'Enter') {
+      submitTagItem()
+    }
+  }
+
+  const submitTagItem = () => {
+    let updatedTagList = [...tagList]
+    updatedTagList.push(tagItem)
+    setTagList(updatedTagList)
+    setTagItem('')
+  }
+
+  const deleteTagItem = e => {
+    const deleteTagItem = e.target.parentElement.firstChild.innerText
+    const filteredTagList = tagList.filter(tagItem => tagItem !== deleteTagItem)
+    setTagList(filteredTagList)
+  }
+
+  useEffect(() => {
+    setMy({
+      nickname : userData.username,
+      phoneNumber: userData.userPhoneNumber,
+      kakaoId: userData.findKakaoId,
+      github: userData.userGitHub,
+      tags: userData.userTag,
+    })
+  }, [userData]);
+
+
+  // const [open, setOpen] = React.useState(false);
+  // const handleOpen = () => setOpen(true);
+  // const handleClose = () => setOpen(false);
+
+  // const style = {
+  //   position: 'absolute',
+  //   top: '50%',
+  //   left: '50%',
+  //   transform: 'translate(-50%, -50%)',
+  //   width: 220,
+  //   height : 280,
+  //   bgcolor: 'background.paper',
+  //   boxShadow: 24,
+  // };
+
+
+    // const UserName = decode.USER_NAME
   return (
     <div style={{ display: "flex" }}>
-      {/* <AdminSidebar /> */}
+      <UserSidebar teamList={teamList}/>
       <BackgroundDiv>
         <PageName>팀관리</PageName>
         <Wrap>
@@ -77,7 +138,7 @@ const MyPage = (props) => {
               <input
                 id="email"
                 type="email"
-                value={my.email}
+                value={userData.userEmail}
                 onChange={(e) =>
                   setMy({ ...my, [e.target.id]: e.target.value })
                 }
@@ -113,18 +174,41 @@ const MyPage = (props) => {
                 }
               />
             </Label>
-            <Label htmlFor="tags">
+            {/* <Label htmlFor="tags" >
               <p>태그</p>
-              {my.tags?.map((tag, idx) => (
-                <div key={idx} bgColor={"cyan"}>
-                  {tag}
+              {my.tags?.map((e, idx) => (
+                <div key={idx} bgColor={"cyan"} style={{marginRight : '5px'}}>
+                  {e}
                 </div>
               ))}
-            </Label>
+
+            </Label> */}
+            <WholeBox>
+              <TagBox>
+                {tagList?.map((tagItem, index) => {
+                  return (
+                    <TagItem key={index}>
+                      <Text>{tagItem}</Text>
+                      <TagButton onClick={deleteTagItem}>X</TagButton>
+                    </TagItem>
+                  )
+                })}
+                <TagInput
+                  type='text'
+                  placeholder='Press enter to add tags'
+                  tabIndex={10}
+                  onChange={e => setTagItem(e.target.value)}
+                  value={tagItem}
+                  onKeyPress={onKeyPress}
+                />
+              </TagBox>
+            </WholeBox>
 
             <div style={{ display: "flex", justifyContent: "end" }}>
               <Button buttonType="void">취소</Button>
-              <Button buttonType="solid">완료</Button>
+              <Button buttonType="solid" onClick={() => {
+                dispatch(editProfile(my.nickname, tagList, my.github, my.kakaoId, my.phoneNumber))
+              }}>완료</Button>
             </div>
           </div>
         </Wrap>
@@ -210,6 +294,7 @@ const Label = styled.label`
     padding: 0.25rem 0.5rem;
     display: inline-flex;
     border-radius: 0.25rem;
+    
   }
 `;
 
@@ -225,5 +310,69 @@ const Button = styled.button`
   margin-top: 2rem;
   margin-left: 0.5rem;
 `;
+
+
+const WholeBox = styled.div`
+  padding: 10px;
+  height: 100px;
+`
+
+const TagBox = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 50px;
+  margin: 10px;
+  padding: 0 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+
+  &:focus-within {
+    border-color: tomato;
+  }
+`
+
+const TagItem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 5px;
+  padding: 5px;
+  background-color: tomato;
+  border-radius: 5px;
+  color: white;
+  font-size: 13px;
+`
+
+const Text = styled.span``
+
+const TagButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  background-color: white;
+  border-radius: 50%;
+  color: tomato;
+`
+
+const TagInput = styled.input`
+  display: inline-flex;
+  min-width: 150px;
+  background: transparent;
+  border: none;
+  outline: none;
+  cursor: text;
+`
+
+
+
+
+
+
+
+
 
 export default MyPage;

@@ -4,6 +4,7 @@ import axios from "axios";
 import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import api, { baseUrl } from "../../api/api";
 import cookies from "universal-cookie";
+import jwt_decode from "jwt-decode";
 // 액션
 
 const LOG_IN = "LOG_IN";
@@ -20,12 +21,13 @@ const initialState = {
   password: "",
   is_loading: true,
   is_login: false,
+  user: {},
 };
 
 // 액션 생성 함수
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const adminlogIn = createAction(LOG_IN, (user) => ({ user }));
-const authFailed = createAction(LOG_IN, () => {});
+const authFailed = createAction(AUTH_FAILED, () => {});
 export const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // const withdrawal = createAction(WITHDRAWAL, (user) => ({ user }));
 
@@ -40,19 +42,24 @@ const loginDB = (userId, password) => {
         password: password,
       })
       .then((response) => {
-        console.log(response);
         if (Math.floor(response.status / 100) === 2) {
+          console.log("로그인 성공", response);
+          const userToken = response.headers?.authorization?.split(" ")[1];
+          const decoded = jwt_decode(userToken);
+          // EXPIRED_DATE: 1653700338
+          // USER_EMAIL: ""
+          // USER_LEVEL: 0
+          // USER_NAME: ""
+          // iss: "Mr.A-Chool"
           dispatch(
             logIn({
-              is_loading: false,
-              is_login: true,
+              expiredDate: decoded.EXPIRED_DATE,
+              email: decoded.USER_EMAIL,
+              name: decoded.USER_NAME,
+              level: decoded.USER_LEVEL,
             })
           );
-          console.log("로그인 성공");
-          const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-          // localStorage.setItem("userToken", ACCESS_TOKEN);
-          // localStorage.setItem("userId", userId);
-          setCookie("userToken", ACCESS_TOKEN);
+          setCookie("userToken", userToken);
           setCookie("userId", userId);
           history.replace("/check-in");
         } else {
@@ -78,20 +85,13 @@ const getMyselfDB = (token) => {
         },
       })
       .then((response) => {
-        console.log(response);
         if (Math.floor(response.status / 100) === 2) {
-          dispatch(
-            logIn({
-              is_loading: false,
-              is_login: true,
-            })
-          );
-          console.log("로그인 성공");
-          // const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
+          console.log("로그인 성공", response);
           localStorage.setItem("userInfo", JSON.stringify(response.data));
-          // localStorage.setItem("userId", userId);
-          // setCookie("userToken", ACCESS_TOKEN);
-          // setCookie("userId", userId);
+
+          dispatch(logIn({ ...getState().user, ...response.data }));
+          const userToken = response.config.headers?.authorization?.split(" ")[1];
+          if (userToken) setCookie("userToken", userToken);
           history.replace("/check-in");
         } else {
           dispatch(authFailed());
@@ -99,7 +99,7 @@ const getMyselfDB = (token) => {
       })
       .catch((error) => {
         dispatch(authFailed());
-        // window.alert("아이디 또는 비밀번호를 확인해주세요.");
+        window.alert("유효한 토큰이 아닙니다.");
         console.log("Login Error", error);
       });
   };
@@ -213,9 +213,9 @@ export default handleActions(
   {
     [LOG_IN]: (state, action) =>
       produce(state, (draft) => {
-        draft.user = action.payload.user;
         draft.is_loading = false;
         draft.is_login = true;
+        draft.user = action.payload.user;
       }),
     [ADMINLOG_IN]: (state, action) =>
       produce(state, (draft) => {
@@ -237,7 +237,8 @@ export default handleActions(
       }),
     [AUTH_FAILED]: (state, action) =>
       produce(state, (draft) => {
-        draft.is_login = true;
+        draft.is_login = false;
+        draft.user = {};
       }),
   },
   initialState

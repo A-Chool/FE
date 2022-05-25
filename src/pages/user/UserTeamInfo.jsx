@@ -3,14 +3,16 @@ import styled from "styled-components";
 
 const UserTeamInfo = (props) => {
 
+  // console.log(props.e)
+
   return (
     <UserInfoMenu>
       <UserInfoMenuP style={{width : '10%'}}>{props.e.user.userName}</UserInfoMenuP>
-      <UserInfoMenuP style={{width : '15%'}}>준비중</UserInfoMenuP>
+      <UserInfoMenuP style={{width : '15%'}}>{props.e.user.userTag}</UserInfoMenuP>
       <UserInfoMenuP style={{width : '13%'}}>{props.e.user.phoneNumber}</UserInfoMenuP>
-      <UserInfoMenuP style={{width : '13%'}}>준비중</UserInfoMenuP>
+      <UserInfoMenuP style={{width : '13%'}}>{props.e.user.findKakaoId}</UserInfoMenuP>
       <UserInfoMenuP style={{width : '21%'}}>{props.e.user.userEmail}</UserInfoMenuP>
-      <UserInfoMenuP style={{width : '28%'}}>준비중</UserInfoMenuP>
+      <UserInfoMenuP style={{width : '28%'}}>{props.e.user.userGitHub}</UserInfoMenuP>
     </UserInfoMenu>
   );
 };
