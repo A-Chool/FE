@@ -24,7 +24,7 @@ const ChatItem = (props) => {
         </RoomTitleArea>
         {props.room?.lastMessage ? (
           <LatestMsg>
-            <span style={{ fontWeight: 600 }}>{props.room?.lastMessage?.sender}</span>
+            <span style={{ fontWeight: 600 }}>{props.room?.lastMessage?.nickname}     </span>
             {props.room?.lastMessage?.message}
           </LatestMsg>
         ) : (
