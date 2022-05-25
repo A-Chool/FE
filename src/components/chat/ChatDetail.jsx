@@ -234,7 +234,7 @@ const ChatDetail = (props) => {
                 }
                 align={item.sender === userId ? "end" : "start"}
               >
-                <ChatUser>{item.sender}</ChatUser>
+                <ChatUser>{item.nickname}</ChatUser>
                 <ChatMsg self={item.sender === userId}>{item.message}</ChatMsg>
                 <Time dateTime={dayjs(item.createdAt).format("")}>{dayjs(item.createdAt).format("hh:mm a")}</Time>
               </ChatWrap>

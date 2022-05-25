@@ -49,7 +49,7 @@ const StopWatch = (props) => {
   }, [logsa]);
 
   React.useEffect(() => {
-    dispatch(loadCheckList("1주차"));
+    dispatch(loadCheckList());
   },[]);
   
   return (
