@@ -29,19 +29,13 @@ const __setRoom = createAction(SET_ROOM, (room) => ({ room }));
 const __loadChatMessages = createAction(LOAD_CHAT_MESSAGES, (chatMessages) => ({
   chatMessages,
 }));
-const __loadChatMessagesPrev = createAction(
-  LOAD_CHAT_MESSAGES_PREV,
-  (chatMessages, chatMessagesPrevId) => ({
-    chatMessages,
-    chatMessagesPrevId,
-  })
-);
-const __setLatestMessage = createAction(
-  SET_LATEST_MESSAGE,
-  (latestMessage) => ({
-    latestMessage,
-  })
-);
+const __loadChatMessagesPrev = createAction(LOAD_CHAT_MESSAGES_PREV, (chatMessages, chatMessagesPrevId) => ({
+  chatMessages,
+  chatMessagesPrevId,
+}));
+const __setLatestMessage = createAction(SET_LATEST_MESSAGE, (latestMessage) => ({
+  latestMessage,
+}));
 
 export const toggleChatBox = () => {
   return function (dispatch, getState, { history }) {
@@ -58,6 +52,7 @@ export const loadChatList = () => {
       })
       .then((res) => {
         if (parseInt(res.status / 100) === 2) {
+          // chat 방이 하나여도 보여짐
           dispatch(__loadChatList(res.data));
         }
       })
@@ -94,17 +89,16 @@ export const loadChatMessagesPrev = (roomId) => {
   return function (dispatch, getState, { history }) {
     const userToken = getCookie("userToken");
     const prevId = getState().chat.chatMessagesPrevId;
-    const url = prevId !== null ? `?prevId=${prevId}` : "?prevId=0";
+    console.log(userToken, prevId);
+    // ?prevId=${prevId}
     axios
-      .get(`https://achool.shop/chat/message/file/${roomId}` + url, {
+      .get(`https://achool.shop/chat/message/file/${roomId}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       })
       .then((res) => {
-        dispatch(
-          __loadChatMessagesPrev(res.data.chatMessageList, res.data.prevId)
-        );
+        dispatch(__loadChatMessagesPrev(res.data.chatMessageList, res.data.prevId));
       })
       .catch((err) => console.log(err));
   };
@@ -145,9 +139,7 @@ export default handleActions(
     [SET_LATEST_MESSAGE]: (state, action) =>
       produce(state, (draft) => {
         let _chatMessages = [...state?.chatMessages];
-        draft.chatMessages = _chatMessages.concat([
-          action.payload.latestMessage,
-        ]);
+        draft.chatMessages = _chatMessages.concat([action.payload.latestMessage]);
       }),
   },
   initialState

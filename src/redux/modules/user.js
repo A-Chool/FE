@@ -44,7 +44,7 @@ const loginDB = (userId, password) => {
       .then((response) => {
         if (Math.floor(response.status / 100) === 2) {
           console.log("로그인 성공", response);
-          const userToken = response.headers.authorization.split(" ")[1];
+          const userToken = response.headers?.authorization?.split(" ")[1];
           const decoded = jwt_decode(userToken);
           // EXPIRED_DATE: 1653700338
           // USER_EMAIL: ""
@@ -91,7 +91,7 @@ const getMyselfDB = (token) => {
           localStorage.setItem("userInfo", JSON.stringify(response.data));
 
           dispatch(logIn({ ...getState().user, ...response.data }));
-          const userToken = response.headers.authorization.split(" ")[1];
+          const userToken = response.config.headers?.authorization?.split(" ")[1];
           if (userToken) setCookie("userToken", userToken);
           history.replace("/check-in");
         } else {
