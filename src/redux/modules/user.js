@@ -20,12 +20,13 @@ const initialState = {
   password: "",
   is_loading: true,
   is_login: false,
+  user: {},
 };
 
 // 액션 생성 함수
 const logIn = createAction(LOG_IN, (user) => ({ user }));
 const adminlogIn = createAction(LOG_IN, (user) => ({ user }));
-const authFailed = createAction(LOG_IN, () => {});
+const authFailed = createAction(AUTH_FAILED, () => {});
 export const logOut = createAction(LOG_OUT, (user) => ({ user }));
 // const withdrawal = createAction(WITHDRAWAL, (user) => ({ user }));
 
@@ -237,7 +238,8 @@ export default handleActions(
       }),
     [AUTH_FAILED]: (state, action) =>
       produce(state, (draft) => {
-        draft.is_login = true;
+        draft.is_login = false;
+        draft.user = {};
       }),
   },
   initialState
