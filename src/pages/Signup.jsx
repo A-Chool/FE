@@ -167,6 +167,7 @@ const CollectionBtn = styled.div`
   text-align : center;
   line-height: 40px;
   display : inline-block;
+  cursor: pointer;
   margin-top : 16px;
     @media screen and (min-width: 2560px) {
       width: 580px;
