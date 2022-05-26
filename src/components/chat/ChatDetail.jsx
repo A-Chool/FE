@@ -12,6 +12,7 @@ import {
 } from "../../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
+import jwt_decode from "jwt-decode";
 
 const ChatDetail = (props) => {
   const dispatch = useDispatch();
@@ -24,7 +25,14 @@ const ChatDetail = (props) => {
   const lastChatCreatedAt = useSelector((state) => state.chat.lastChatCreatedAt);
   // console.log(chatMessages);
 
-  const userId = getUserId();
+  const [decode, setDecode] = useState("");
+
+  useEffect(() => {
+    const userToken = getCookie("userToken");
+    setDecode(jwt_decode(userToken));
+  }, []);
+
+  const userId = decode.USER_EMAIL;
   const [content, setContent] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [isInLoadingArea, setInLoadingArea] = useState(false);
