@@ -71,7 +71,7 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userName}
-            placeholder="이름 (2글자 이상 8글자 이하)"
+            placeholder="이름 (2글자 이상 7글자 이하)"
             onChange={(e) => {setUserName(e.target.value)}}
             maxLength="8"
           />
