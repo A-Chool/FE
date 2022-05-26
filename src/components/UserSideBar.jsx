@@ -100,7 +100,7 @@ const UserSidebar = (props) => {
         </div>
         <div style={{ float: "left", width: "133px", height: "24px", marginLeft: "5px" }}>
           <p style={{ margin: "0 0 0 0", fontSize: "20px", fontWeight: "900" }}>
-            {decode.USER_NAME}
+            {userData?.username}
           </p>
         </div>
         <div style={{ width: "132px", height: "24px", margin: "8px 0 0 6px", textAlign: "center", display : 'inline-block'}}>
