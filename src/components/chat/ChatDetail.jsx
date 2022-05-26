@@ -19,7 +19,7 @@ const ChatDetail = (props) => {
 
   const room = useSelector((state) => state.chat.room);
   const chatMessages = useSelector((state) => state.chat.chatMessages);
-  const isInitialized = useSelector((state) => state.chat.isInitialized);
+  const isInitialized = useSelector((state) => state?.chat?.isInitialized);
   const chatMessagesPrevId = useSelector((state) => state.chat.chatMessagesPrevId);
   const isEnd = useSelector((state) => state.chat.isEnd);
   const lastChatCreatedAt = useSelector((state) => state.chat.lastChatCreatedAt);

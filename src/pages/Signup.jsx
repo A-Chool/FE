@@ -78,7 +78,7 @@ const Signup = () => {
           <UserInput
             type="password"
             value={userPw}
-            placeholder="비밀번호"
+            placeholder="비밀번호(특수문자 X)"
             onChange={(e) => {setUserPw(e.target.value)}}
           />
           <UserInput

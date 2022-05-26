@@ -75,7 +75,7 @@ const UserTeamBoard = () => {
                   label="week"
                   onChange={handleChange}
                   >
-                    <option>---</option>
+
                     {
                       weekTeamList && weekTeamList.map((e, idx)=>{
                       return(
@@ -159,7 +159,6 @@ const UpBar = styled.div`
 const TeamInfoBox = styled.div`
   width : auto;
   height : 291px;
-  display : inline-block;
   margin : 0 32px 0px;
   background-color : white;
   border-radius: 16px;
