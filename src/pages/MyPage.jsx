@@ -107,6 +107,7 @@ const MyPage = (props) => {
               <input
                 id="nickname"
                 value={my.nickname}
+                maxLength="7"
                 onChange={(e) =>
                   setMy({ ...my, [e.target.id]: e.target.value })
                 }
