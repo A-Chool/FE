@@ -41,17 +41,16 @@ const UserGroundRole = (props) => {
           update === false
           ? <img 
             src={editBtn}
-            style={{margin : '8px 8px 4px 0px'}} 
+            style={{margin : '8px 8px 4px 0px', cursor : 'pointer'}} 
             onClick={()=>{
             setupdate(!update)}
             
             }></img>
-          :<p 
-            style={{margin : '8px 10px 4px 0px', fontWeight : '700', color : '#1F3A5E'}} 
+          :<DoneBtn 
             onClick={() => {
             setupdate(!update)
             dispatch(editGroundRule(weekTeamId, rule));
-          }}>Done</p>
+          }}>Done</DoneBtn>
         }    
       </UpBar>
       <hr style={{width : '97%', margin : 'auto', border : '1px solid #E0E0E0'}}/>
@@ -80,6 +79,23 @@ const UpBar = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`
+
+const DoneBtn = styled.div`
+  width: 53px;
+  height: 24px;
+  margin : 8px 10px 4px 0px;
+  fontWeight : 700;
+  color : #1F3A5E;
+  background: #FFF9D9;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  color: #FF5F00;
+  text-align : center;
+  cursor : pointer;
 `
 
 const Box = styled.div`

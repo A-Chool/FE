@@ -48,13 +48,13 @@ const UserTodoList = (props) => {
       ?
       <img 
       src = {todoCheckOffImg}
-      style={{float : 'left', display : 'inlineBlock', margin : '5px 8px 5px 6px'}}
+      style={{float : 'left', display : 'inlineBlock', margin : '5px 8px 5px 6px', cursor : 'pointer'}}
       onClick={() => {dispatch(checkTodoList(props.e.todoId))}}
       />
       :
       <img 
       src = {todoCheckOnImg}
-      style={{float : 'left', display : 'inlineBlock', margin : '5px 8px 5px 6px'}}
+      style={{float : 'left', display : 'inlineBlock', margin : '5px 8px 5px 6px', cursor : 'pointer'}}
       onClick={() => {dispatch(checkTodoList(props.e.todoId))}}
       />
     }
@@ -69,14 +69,14 @@ const UserTodoList = (props) => {
     {
       edit === false 
       ?
-      <HideBtn src={editBtnImg} onClick={() => {setEdit(true)}}  style={{float : 'left'}} edit={edit}></HideBtn>
+      <HideBtn src={editBtnImg} onClick={() => {setEdit(true)}}  style={{float : 'left', cursor : 'pointer'}} edit={edit}></HideBtn>
       :
       <></>
     }
     {
       edit === false 
       ?
-      <HideBtn src={deleteBtnImg} onClick={() => {dispatch(deleteTodoList(props.e.todoId))}} edit={edit}></HideBtn>
+      <HideBtn src={deleteBtnImg} onClick={() => {dispatch(deleteTodoList(props.e.todoId))}} edit={edit} style={{cursor : 'pointer'}}></HideBtn>
       :
       <></>
     }
@@ -84,13 +84,13 @@ const UserTodoList = (props) => {
       edit === true  
       ?
       <img 
-            src={todoUpBtnImg}  
-            style={{margin : '2px 0 0 8px'}} 
-            onClick={() => {
-              dispatch(addTodoList(weekTeamId, todoWrite));
-              setAdd(!add);
-            }}>
-          </img>
+        src={todoUpBtnImg}  
+        style={{margin : '2px 0 0 8px'}} 
+        onClick={() => {
+          dispatch(editTodoList(props.e.todoId, todoEdit));
+          setEdit(false)
+        }}>
+      </img>
       :
       <></>
     }

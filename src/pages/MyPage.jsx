@@ -10,11 +10,6 @@ import { getCookie } from "../shared/Cookie";
 
 import { loadMyPage, editProfile } from "../redux/modules/myPage";
 
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Backdrop from '@mui/material/Backdrop';
-
 
 const MyPage = (props) => {
 
@@ -34,7 +29,7 @@ const MyPage = (props) => {
     tags: userData.userTag,
   });
 
-  console.log("my.tags =", my.tags);
+  // console.log("my.tags =", my.tags);
 
   useEffect(() => {
     // const userToken = getCookie("userToken");
@@ -49,8 +44,8 @@ const MyPage = (props) => {
     setTagList(my.tags)
   }, [my.tags]);
 
-  console.log("tagItem 는 =",tagItem)
-  console.log("tagList 는 =",tagList)
+  // console.log("tagItem 는 =",tagItem)
+  // console.log("tagList 는 =",tagList)
 
   const onKeyPress = e => {
     if (e.target.value.length !== 0 && e.key === 'Enter') {
@@ -82,22 +77,6 @@ const MyPage = (props) => {
   }, [userData]);
 
 
-  // const [open, setOpen] = React.useState(false);
-  // const handleOpen = () => setOpen(true);
-  // const handleClose = () => setOpen(false);
-
-  // const style = {
-  //   position: 'absolute',
-  //   top: '50%',
-  //   left: '50%',
-  //   transform: 'translate(-50%, -50%)',
-  //   width: 220,
-  //   height : 280,
-  //   bgcolor: 'background.paper',
-  //   boxShadow: 24,
-  // };
-
-
     // const UserName = decode.USER_NAME
   return (
     <div style={{ display: "flex" }}>
@@ -116,9 +95,9 @@ const MyPage = (props) => {
               src={userData.userImage}
               alt=""
             />
-            <ProfilImgIcon>
+            {/* <ProfilImgIcon>
               <img src={camera} alt="camera-icon" style={{ margin: "auto" }} />
-            </ProfilImgIcon>
+            </ProfilImgIcon> */}
           </figure>
           <div
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
@@ -195,7 +174,7 @@ const MyPage = (props) => {
                 })}
                 <TagInput
                   type='text'
-                  placeholder='Press enter to add tags'
+                  placeholder='엔터로 Tag 추가'
                   tabIndex={10}
                   onChange={e => setTagItem(e.target.value)}
                   value={tagItem}
@@ -205,10 +184,11 @@ const MyPage = (props) => {
             </WholeBox>
 
             <div style={{ display: "flex", justifyContent: "end" }}>
-              <Button buttonType="void">취소</Button>
+              {/* <Button buttonType="void">취소</Button> */}
               <Button buttonType="solid" onClick={() => {
                 dispatch(editProfile(my.nickname, tagList, my.github, my.kakaoId, my.phoneNumber))
-              }}>완료</Button>
+                window.alert("수정이 완료되었습니다!")
+              }}>수정완료</Button>
             </div>
           </div>
         </Wrap>
@@ -313,8 +293,9 @@ const Button = styled.button`
 
 
 const WholeBox = styled.div`
-  padding: 10px;
-  height: 100px;
+  padding: 0px;
+  height: auto;
+  // background-color : red;
 `
 
 const TagBox = styled.div`
@@ -322,13 +303,16 @@ const TagBox = styled.div`
   align-items: center;
   flex-wrap: wrap;
   min-height: 50px;
-  margin: 10px;
-  padding: 0 10px;
-  border: 1px solid rgba(0, 0, 0, 0.3);
-  border-radius: 10px;
+  margin-top: 0.5rem;
+  padding: 0rem 0;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  border: 0px;
+  border-bottom: 1px solid #e0e0e0;
 
   &:focus-within {
-    border-color: tomato;
+    border-color: black;
   }
 `
 
@@ -338,10 +322,11 @@ const TagItem = styled.div`
   justify-content: space-between;
   margin: 5px;
   padding: 5px;
-  background-color: tomato;
+  background-color: #FFE8F3;
   border-radius: 5px;
-  color: white;
+  color: black;
   font-size: 13px;
+  font-weight : 700;
 `
 
 const Text = styled.span``
@@ -353,9 +338,11 @@ const TagButton = styled.button`
   width: 15px;
   height: 15px;
   margin-left: 5px;
-  background-color: white;
+  background-color : transparent;
+  border : none;
   border-radius: 50%;
-  color: tomato;
+  color:  #FF5F00;
+  cursor : pointer;
 `
 
 const TagInput = styled.input`
