@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styled from "styled-components";
 import { toggleChatBox, loadChatList, setRoom } from "../../redux/modules/chat";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,17 +34,15 @@ const ChatContainer = (props) => {
           </div>
         </ChatWrapHeader>
 
-        <>
-          {room ? (
-            <ChatDetail />
-          ) : (
-            <ChatWrapContent>
-              {chatList.map((item) => (
-                <ChatItem key={item.roomId} room={item} />
-              ))}
-            </ChatWrapContent>
-          )}
-        </>
+        {room ? (
+          <ChatDetail />
+        ) : (
+          <ChatWrapContent>
+            {chatList.map((item) => (
+              <ChatItem key={item.roomId} room={item} />
+            ))}
+          </ChatWrapContent>
+        )}
       </ChatWrapper>
     </ChatWrap>
   );

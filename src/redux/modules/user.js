@@ -85,6 +85,7 @@ const getMyselfDB = (token) => {
         },
       })
       .then((response) => {
+        console.log(response);
         if (Math.floor(response.status / 100) === 2) {
           console.log("로그인 성공", response);
           localStorage.setItem("userInfo", JSON.stringify(response.data));
@@ -99,7 +100,7 @@ const getMyselfDB = (token) => {
       })
       .catch((error) => {
         dispatch(authFailed());
-        window.alert("유효한 토큰이 아닙니다.");
+        // window.alert("유효한 토큰이 아닙니다.");
         console.log("Login Error", error);
       });
   };
