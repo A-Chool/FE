@@ -77,7 +77,7 @@ const ChatDetail = (props) => {
         const res = JSON.parse(message.body);
 
         //채팅 내역 불러오기
-        const userInfo = JSON.parse(localStorage.userInfo);
+        // const userInfo = JSON.parse(localStorage.userInfo);
         //소켓 연결 후 받은 채팅 출력
         dispatch(setLatestMessage(res));
       });
