@@ -11,6 +11,11 @@ import { deleteUserList } from "../../redux/modules/userList";
 import { editUserList } from "../../redux/modules/userList";
 import { height } from "@mui/system";
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 
 const AdminUserList = (props) => {
 
@@ -22,7 +27,7 @@ const AdminUserList = (props) => {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: '130px',
+    width: '180px',
     bgcolor: 'background.paper',
     border: '2px solid #1F3A5E',
     boxShadow: 24,
@@ -42,6 +47,10 @@ const AdminUserList = (props) => {
   const handlesetLevel = (e) => {
     setLevel(e.target.value)
   }
+
+  // const handleChange = (event) => {
+  //   setLevel(event.target.value);
+  // };
 
   return (
     <React.Fragment>
@@ -63,8 +72,16 @@ const AdminUserList = (props) => {
               aria-describedby="modal-modal-description">
                 <Box sx={style}>
                     <ModalTitle>권한 설정하기</ModalTitle>
-                  
-                    <SetLevelInput defaultValue={props.e.userLevel} onChange={handlesetLevel}></SetLevelInput>
+                        <SetLevelSelector
+                          value={Level}
+                          // defaultValue={props.e.userLevel}
+                          label="Level"
+                          onChange={handlesetLevel}
+                        >
+                          <option value={0}>User</option>
+                          <option value={5}>Admin</option>
+                        </SetLevelSelector>
+                    {/* <SetLevelInput defaultValue={props.e.userLevel} onChange={handlesetLevel}></SetLevelInput> */}
                     <SetLevelBtn onClick={() => {dispatch(editUserList(props.e.userId, Number(Level)))}}>설정확인</SetLevelBtn>
 
                 </Box>
@@ -110,6 +127,12 @@ const SetLevelInput = styled.input`
   margin-right : 10px; 
 `
 
+const SetLevelSelector = styled.select`
+  height : 40px;
+  width : 80px;
+  float : left;
+`
+
 const SetLevelBtn = styled.button`
   height : 40px;
   width : 80px;
@@ -125,30 +148,5 @@ export default AdminUserList
 
 
 
-// import Box from '@mui/material/Box';
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
-// import FormControl from '@mui/material/FormControl';
-// import Select from '@mui/material/Select';
 
-// const [level, setLevel] = React.useState('');
 
-// const handleChange = (event) => {
-//   setLevel(event.target.value);
-// };
-
-// {/* <Box sx={{ minWidth: 120 }}>
-//             <FormControl>
-//               <InputLabel id="demo-simple-select-label">권한</InputLabel>
-//               <Select
-//                 labelId="demo-simple-select-label"
-//                 id="demo-simple-select"
-//                 value={level}
-//                 label="level"
-//                 onChange={handleChange}
-//               >
-//                 <MenuItem value={10}>User</MenuItem>
-//                 <MenuItem value={20}>Admin</MenuItem>
-//               </Select>
-//             </FormControl>
-//           </Box> */}

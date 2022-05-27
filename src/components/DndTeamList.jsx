@@ -112,7 +112,7 @@ const DndTeamList = (props) => {
 
 const TemaList = styled.div`
   background-color : white;
-  width : 1108px;
+  width : auto;
   height: 72px;
   margin : 0 32px 16px;
   border-radius : 8px;
