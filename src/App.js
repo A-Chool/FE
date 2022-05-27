@@ -47,17 +47,6 @@ function App() {
   //   }
   // }, []);
 
-  // useEffect(() => {
-  //   if (["/", "/register"].includes(history.location.pathname) && isLogin) {
-  //     return history.replace("/check-in");
-  //   } else if (
-  //     !["/", "/register"].includes(history.location.pathname) &&
-  //     !isLogin
-  //   ) {
-  //     return history.replace("/");
-  //   }
-  // }, [history.location.pathname, isLogin]);
-
   useEffect(() => {
     dayjs.extend(relativeTime);
     dayjs.locale("ko");
@@ -72,20 +61,28 @@ function App() {
     <ContentWrap>
       <ChatContainer />
       <ConnectedRouter history={history}>
-        <Switch>
-          <Route path="/" exact component={Login} />
-          <Route path="/admin" exact component={AdminLogin} />
-          <Route path="/signup" exact component={Signup} />
-          <Route path="/chat" exact component={ChatingPage} />
-          <Route path="/my" exact component={MyPage} />
-          <Route path="/admin/user" exact component={AdminUserPage} />
-          <Route path="/admin/team" exact component={AdminTeamPage} />
-          <Route path="/check-in" exact component={UserCheckIn} />
-          <Route path="/team-board" exact component={UserTeamBoard} />
-          <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
-          {/* 지정 외 페이지 찾을때, not found 페이지 */}
-          <Route path="/*" component={NotFound} />
-        </Switch>
+        {!isLogin ? (
+          <Switch>
+            <Route path="/" exact component={Login} />
+            <Route path="/signup" exact component={Signup} />
+            <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
+            {/* 지정 외 페이지 찾을때, not found 페이지 */}
+            <Route path="/*" component={Login} />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/admin" exact component={AdminLogin} />
+            <Route path="/chat" exact component={ChatingPage} />
+            <Route path="/my" exact component={MyPage} />
+            <Route path="/admin/user" exact component={AdminUserPage} />
+            <Route path="/admin/team" exact component={AdminTeamPage} />
+            <Route path="/check-in" exact component={UserCheckIn} />
+            <Route path="/team-board" exact component={UserTeamBoard} />
+            <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
+            {/* 지정 외 페이지 찾을때, not found 페이지 */}
+            <Route path="/*" component={NotFound} />
+          </Switch>
+        )}
       </ConnectedRouter>
     </ContentWrap>
   );

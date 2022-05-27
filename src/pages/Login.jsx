@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { actionCreators as userActions } from "../redux/modules/user";
 
@@ -28,6 +28,7 @@ const token = "3fa3aa6d41e97b2e2d44ea7d414b7a2b";
 const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const isLogin = useSelector((state) => state.user.is_login);
 
   const [userId, setUserId] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -42,14 +43,15 @@ const Login = () => {
 
   const [userLogin, setUserLogin] = React.useState(false);
 
+  useEffect(() => {
+    if (isLogin) return history.replace("/check-in");
+  }, []);
+
   return (
     <AuthGuard>
       <PageMain>
         <InputMain>
-          <img
-            src={logo}
-            style={{ position: "absolute", top: "32px", left: "30px" }}
-          />
+          <img src={logo} style={{ position: "absolute", top: "32px", left: "30px" }} />
           <LoginContentsWrapper>
             <MainContents>아출에 오신것을 환영합니다.</MainContents>
             <LoginContents>
@@ -136,7 +138,16 @@ const Login = () => {
                   onLogout={console.info}
                 /> */}
 
+<<<<<<< HEAD
                 {/* <SocialLoginKakao href={KAKAO_AUTH_URL} onClick={() => {console.log(KAKAO_AUTH_URL)}}>
+=======
+                <SocialLoginKakao
+                  href={KAKAO_AUTH_URL}
+                  onClick={() => {
+                    console.log(KAKAO_AUTH_URL);
+                  }}
+                >
+>>>>>>> 38ec0f923bb30894602837f73aded7e502c10b6d
                   <KakaoImg src={kakaoLogin} />
                 </SocialLoginKakao> */}
               </UserLoginWrapper>
@@ -205,8 +216,7 @@ const UserLoginContents = styled.div`
   text-align: center;
   margin: 8px 0;
   float: left;
-  border-bottom: ${({ userLogin }) =>
-    userLogin === false ? "4px solid #FF5F00" : "4px solid #E0E0E0"};
+  border-bottom: ${({ userLogin }) => (userLogin === false ? "4px solid #FF5F00" : "4px solid #E0E0E0")};
   @media screen and (min-width: 2560px) {
     width: 350px;
     font-size: 24px;
@@ -229,8 +239,7 @@ const AdminLoginContents = styled.div`
   display: inline-block;
   text-align: center;
   margin: 8px 0;
-  border-bottom: ${({ userLogin }) =>
-    userLogin === true ? "4px solid #FF5F00" : "4px solid #E0E0E0"};
+  border-bottom: ${({ userLogin }) => (userLogin === true ? "4px solid #FF5F00" : "4px solid #E0E0E0")};
   @media screen and (min-width: 2560px) {
     width: 350px;
     font-size: 24px;
