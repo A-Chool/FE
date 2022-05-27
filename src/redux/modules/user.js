@@ -151,6 +151,7 @@ const kakaoLoginDB = (code) => {
           // USER_LEVEL: 0
           // USER_NAME: ""
           // iss: "Mr.A-Chool"
+          setCookie("userToken", userToken);
           dispatch(
             logIn({
               expiredDate: decoded.EXPIRED_DATE,
@@ -159,7 +160,6 @@ const kakaoLoginDB = (code) => {
               level: decoded.USER_LEVEL,
             })
           );
-          setCookie("userToken", userToken);
           // setCookie("userId", userId);
           history.replace("/check-in");
       }})

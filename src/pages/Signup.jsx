@@ -73,12 +73,12 @@ const Signup = () => {
             value={userName}
             placeholder="이름 (2글자 이상 7글자 이하)"
             onChange={(e) => {setUserName(e.target.value)}}
-            maxLength="8"
+            maxLength="7"
           />
           <UserInput
             type="password"
             value={userPw}
-            placeholder="비밀번호(특수문자 X)"
+            placeholder="비밀번호(특수문자를 제외한 6~12자리)"
             onChange={(e) => {setUserPw(e.target.value)}}
           />
           <UserInput
