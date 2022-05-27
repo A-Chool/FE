@@ -71,14 +71,14 @@ const Signup = () => {
           <UserInput
             type="text"
             value={userName}
-            placeholder="사용할 닉네임(2글자 이상 8글자 이하)"
+            placeholder="이름 (2글자 이상 7글자 이하)"
             onChange={(e) => {setUserName(e.target.value)}}
             maxLength="8"
           />
           <UserInput
             type="password"
             value={userPw}
-            placeholder="비밀번호"
+            placeholder="비밀번호(특수문자 X)"
             onChange={(e) => {setUserPw(e.target.value)}}
           />
           <UserInput
@@ -167,6 +167,7 @@ const CollectionBtn = styled.div`
   text-align : center;
   line-height: 40px;
   display : inline-block;
+  cursor: pointer;
   margin-top : 16px;
     @media screen and (min-width: 2560px) {
       width: 580px;

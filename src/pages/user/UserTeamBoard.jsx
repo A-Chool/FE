@@ -75,7 +75,7 @@ const UserTeamBoard = () => {
                   label="week"
                   onChange={handleChange}
                   >
-                    <option>---</option>
+
                     {
                       weekTeamList && weekTeamList.map((e, idx)=>{
                       return(
@@ -91,15 +91,15 @@ const UserTeamBoard = () => {
           </UpBar>
 
           <TeamInfoBox>
-            <img src={teamInfo} style={{margin : '12px 0px 8px 12px'}} />
+            <UserInfoImg src={teamInfo} />
             <UserInfoBox>
               <UserInfoMenu>
                 <UserInfoMenuP style={{width : '10%'}}>이름</UserInfoMenuP>
-                <UserInfoMenuP style={{width : '15%'}}>태그</UserInfoMenuP>
+                <UserInfoMenuP style={{width : '20%'}}>태그</UserInfoMenuP>
                 <UserInfoMenuP style={{width : '13%'}}>전화번호</UserInfoMenuP>
                 <UserInfoMenuP style={{width : '13%'}}>카톡아이디</UserInfoMenuP>
                 <UserInfoMenuP style={{width : '21%'}}>이메일주소</UserInfoMenuP>
-                <UserInfoMenuP style={{width : '28%'}}>GitHub</UserInfoMenuP>
+                <UserInfoMenuP style={{width : '23%'}}>GitHub</UserInfoMenuP>
               </UserInfoMenu>
                 <UserDataWrapper>
                   {
@@ -157,14 +157,18 @@ const UpBar = styled.div`
 `
 
 const TeamInfoBox = styled.div`
+  width : auto;
   height : 291px;
-  display : inline-block;
-  margin : 0 32px 24px;
+  margin : 0 32px 0px;
   background-color : white;
   border-radius: 16px;
   @media screen and (min-width: 2560px) {
     height: 430px;
   }
+`
+
+const UserInfoImg = styled.img`
+  margin : 12px 0px 8px 3%;
 `
 
 const WorkspaceWrapper = styled.div`
@@ -184,18 +188,20 @@ const WorkspaceWrapper = styled.div`
 const UserInfoBox = styled.div`
   height : 236px;
   width : 99%;
+  min-width : 1109px;
   margin : 0px auto;
   
 `
 
 const UserInfoMenu = styled.div`
-  width : 100%;
+  width : 95%;
   height : 35px;
   background-color: #FFF9D9;
   border-radius: 8px 8px 0px 0px;
   font-weight: 700;
   font-size: 14px;
   text-align : center;
+  margin : auto;
 `
 
 const UserInfoMenuP = styled.p`
@@ -211,8 +217,10 @@ const UserInfoMenuP = styled.p`
 `
 
 const UserDataWrapper = styled.div`
+  width : 95%;
   height : 200px;
-  display: inline-block;
+
+  margin : auto;
   overflow: scroll;
   overflow-x: hidden;
   &::-webkit-scrollbar {

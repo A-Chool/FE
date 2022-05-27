@@ -36,16 +36,16 @@ function App() {
   const isLogin = useSelector((state) => state.user.is_login);
 
   // 얘는 새로고침시 내 정보 받아오기 & 인증 용으로 있어야함
-  useEffect(() => {
-    const kakaoToken = localStorage.kakaoToken;
-    const userToken = getCookie("userToken");
+  // useEffect(() => {
+  //   const kakaoToken = localStorage.kakaoToken;
+  //   const userToken = getCookie("userToken");
 
-    if (!!kakaoToken || !!userToken) {
-      // console.log(getCookie("userToken"));
-      // console.log(kakaoToken);
-      dispatch(userActions.getMyselfDB(userToken));
-    }
-  }, []);
+  //   if (!!kakaoToken || !!userToken) {
+  //     // console.log(getCookie("userToken"));
+  //     // console.log(kakaoToken);
+  //     dispatch(userActions.getMyselfDB(userToken));
+  //   }
+  // }, []);
 
   useEffect(() => {
     dayjs.extend(relativeTime);

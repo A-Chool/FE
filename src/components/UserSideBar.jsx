@@ -9,6 +9,8 @@ import { toggleChatBox } from "../redux/modules/chat";
 import { logOut } from "../redux/modules/user";
 import jwt_decode from "jwt-decode";
 import { getCookie } from "../shared/Cookie";
+import { loadMyPage } from "../redux/modules/myPage";
+import editBtn from '../assets/img/editBtn.svg'
 
 const UserSidebar = (props) => {
   const history = useHistory();
@@ -27,10 +29,12 @@ const UserSidebar = (props) => {
       return a + b;
     }, 0);
 
-    
+    const userData = useSelector((state) => state.myPage.userInfo);
+
     useEffect(() => {
       const userToken = getCookie("userToken");
       setDecode(jwt_decode(userToken));
+      dispatch(loadMyPage());
     }, []);
 
   return (
@@ -89,44 +93,19 @@ const UserSidebar = (props) => {
       </AdminLogo>
       <UserInfobox>
         <div style={{ float: "left" }}>
-          <svg
-            width="40"
-            height="40"
-            viewBox="0 0 40 40"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 20C0 8.95431 8.95431 0 20 0V0C31.0457 0 40 8.95431 40 20V20C40 31.0457 31.0457 40 20 40V40C8.95431 40 0 31.0457 0 20V20Z"
-              fill="#C4DBE1"
-            />
-            <path
-              fillRule="evenodd"
-              clipRule="evenodd"
-              d="M26.0002 16C26.0002 19.3137 23.314 22 20.0002 22C16.6865 22 14.0002 19.3137 14.0002 16C14.0002 12.6863 16.6865 10 20.0002 10C23.314 10 26.0002 12.6863 26.0002 16ZM24.0002 16C24.0002 18.2091 22.2094 20 20.0002 20C17.7911 20 16.0002 18.2091 16.0002 16C16.0002 13.7909 17.7911 12 20.0002 12C22.2094 12 24.0002 13.7909 24.0002 16Z"
-              fill="#1F3A5E"
-            />
-            <path
-              d="M20.0002 25C13.5259 25 8.00952 28.8284 5.9082 34.192C6.4201 34.7004 6.95934 35.1812 7.52353 35.6321C9.08827 30.7077 13.997 27 20.0002 27C26.0035 27 30.9122 30.7077 32.477 35.6321C33.0412 35.1812 33.5804 34.7004 34.0923 34.1921C31.991 28.8284 26.4746 25 20.0002 25Z"
-              fill="#1F3A5E"
-            />
-          </svg>
+          <ProfileImg
+            src={userData?.userImage}
+            alt=""
+          />
         </div>
-        <div style={{ float: "left", width: "56px", height: "48px", marginLeft: "16px" }}>
+        <div style={{ float: "left", width: "133px", height: "24px", marginLeft: "5px" }}>
           <p style={{ margin: "0 0 0 0", fontSize: "20px", fontWeight: "900" }}>
-            {decode.USER_NAME}
-          </p>
-          <p style={{ margin: "0 0 0 0", fontSize: "14px" }}>
-              {/* {
-                decode.USER_LEVEL > 4 
-                ? "Admin"
-                : "User"
-              } */}
-              항해99
+            {userData?.username}
           </p>
         </div>
-        <div style={{ width: "40px", height: "40px", float: "left", marginLeft: "9px", textAlign: "center" }}>
-          <p style={{ fontSize: "16px", textDecoration: "underline", textUnderlinePosition: "under", cursor : 'pointer' }} onClick={() => history.push("/my")}>수정</p>
+        <div style={{ width: "132px", height: "24px", margin: "8px 0 0 6px", textAlign: "center", display : 'inline-block'}}>
+          <p style={{ margin: "0 0 0 0", fontSize: "14px", float: "left", lineHeight : '24px' }}>항해99</p>
+          <img src={editBtn} style={{ width: "24px", height: "24px", margin: "0 0 10px 0", cursor : 'pointer' }} onClick={() => history.push("/my")}></img>
         </div>
       </UserInfobox>
 
@@ -198,10 +177,27 @@ const Sidebar = styled.div`
 `;
 
 const UserInfobox = styled.div`
-  width: auto;
-  height: 48px;
+  width: 196px;
+  height: 58px;
   margin: 64px 0 8px 32px;
+  // background-color : green;
 `;
+
+const ProfileImg = styled.img`
+  object-fit: cover;
+  object-position: center;
+  width: 58px;
+  height: 58px;
+  overflow: hidden;
+  border-radius: 100%;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  float : left;
+`;
+
+
+
+
+
 
 const AdminLogo = styled.h2`
   color: white;
