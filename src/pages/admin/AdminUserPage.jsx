@@ -26,7 +26,7 @@ const AdminUserPage = () => {
         <TableName>
           유저관리
         </TableName>
-        <FnLine>
+        {/* <FnLine>
           <SelectBoxWrapper>
             <Selecter>
               <option>전체</option>
@@ -56,7 +56,7 @@ const AdminUserPage = () => {
             <path d="M27.4987 18.332V15.832H25.832V18.332H23.332V19.9987H25.832V22.4987H27.4987V19.9987H29.9987V18.332H27.4987Z" fill="#1F3A5E"/>
           </UserAddSVG>
           
-        </FnLine>
+        </FnLine> */}
         <UserList>
           <Userdata style={{width : "6%"}}></Userdata>
           <Userdata style={{width : "11%"}}>이름</Userdata>
