@@ -8,9 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { getCookie } from "../shared/Cookie";
 
-import { loadMyPage, editProfile } from "../redux/modules/myPage";
+import { loadMyPage, editProfile, uploadImage } from "../redux/modules/myPage";
 import axios from "axios";
-import { baseUrl } from "../api/api";
 
 const MyPage = (props) => {
   const dispatch = useDispatch();
@@ -45,26 +44,13 @@ const MyPage = (props) => {
     setTagList(my.tags);
   }, [my.tags]);
 
-  // console.log("tagItem 는 =",tagItem)
-  // console.log("tagList 는 =",tagList)
+  // console.log("tagItem 는 =", tagItem);
+  // console.log("tagList 는 =", tagList);
 
   const handleUploadImage = async (e) => {
     if (e.target.files?.length > 0) {
-      const userToken = getCookie("userToken");
-      const res = await axios({
-        method: "put",
-        url: `https://achool.shop/api/user/mypage/image`,
-        headers: { Authorization: `Bearer ${userToken}` },
-        data: { userImage: e.target.files[0] },
-      })
-        .then((response) => {
-          if (Math.floor(response.status / 100) === 2) {
-            console.log(response);
-          }
-        })
-        .catch((err) => {
-          console.log("소셜로그인 에러", err);
-        });
+      dispatch(uploadImage(URL.createObjectURL(e.target.files[0])));
+
       // setUserImage(URL.createObjectURL(e.target.files[0]));
       // e.target.value = "";
     }
@@ -78,14 +64,14 @@ const MyPage = (props) => {
 
   const submitTagItem = () => {
     let updatedTagList = [...tagList];
-    updatedTagList.push(tagItem);
+    updatedTagList.push(tagItem?.trim());
     setTagList(updatedTagList);
     setTagItem("");
   };
 
-  const deleteTagItem = (e) => {
-    const deleteTagItem = e.target.parentElement.firstChild.innerText;
-    const filteredTagList = tagList.filter((tagItem) => tagItem !== deleteTagItem);
+  const deleteTagItem = (index) => {
+    // const tagSelected = e.target.parentElement.firstChild.innerText;
+    const filteredTagList = tagList.filter((tag, idx) => idx !== index);
     setTagList(filteredTagList);
   };
 
@@ -184,8 +170,8 @@ const MyPage = (props) => {
                   {tagList?.map((tagItem, index) => {
                     return (
                       <TagItem key={index}>
-                        <Text>{tagItem}</Text>
-                        <TagButton onClick={deleteTagItem}>X</TagButton>
+                        <Text>{`${tagItem}`}</Text>
+                        <TagButton onClick={() => deleteTagItem(index)}>X</TagButton>
                       </TagItem>
                     );
                   })}
@@ -193,7 +179,11 @@ const MyPage = (props) => {
                     type="text"
                     placeholder="엔터로 Tag 추가"
                     tabIndex={10}
-                    onChange={(e) => setTagItem(e.target.value)}
+                    onChange={(e) => {
+                      if (!!e.target.value?.trim() || e.target.value === "") {
+                        setTagItem(e.target.value);
+                      }
+                    }}
                     value={tagItem}
                     onKeyPress={onKeyPress}
                   />

@@ -152,8 +152,9 @@ const kakaoLoginDB = (code) => {
           // USER_LEVEL: 0
           // USER_NAME: ""
           // iss: "Mr.A-Chool"
-          setCookie("userToken", userToken);
-          setCookie("testtest", "뭐니넌");
+          setTimeout(() => {
+            setCookie("userToken", userToken);
+          }, 100);
           dispatch(
             logIn({
               expiredDate: decoded.EXPIRED_DATE,
