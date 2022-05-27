@@ -103,10 +103,11 @@ const MyPage = (props) => {
             style={{ display: "flex", flexDirection: "column", width: "100%" }}
           >
             <Label htmlFor="nickname">
-              <p>닉네임</p>
+              <p>이름</p>
               <input
                 id="nickname"
                 value={my.nickname}
+                maxLength="7"
                 onChange={(e) =>
                   setMy({ ...my, [e.target.id]: e.target.value })
                 }

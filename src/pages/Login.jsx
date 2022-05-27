@@ -136,9 +136,9 @@ const Login = () => {
                   onLogout={console.info}
                 /> */}
 
-                <SocialLoginKakao href={KAKAO_AUTH_URL} onClick={() => {console.log(KAKAO_AUTH_URL)}}>
+                {/* <SocialLoginKakao href={KAKAO_AUTH_URL} onClick={() => {console.log(KAKAO_AUTH_URL)}}>
                   <KakaoImg src={kakaoLogin} />
-                </SocialLoginKakao>
+                </SocialLoginKakao> */}
               </UserLoginWrapper>
             )}
           </LoginContentsWrapper>
@@ -329,6 +329,7 @@ const SignupContents = styled.div`
 
 const SingUpImg = styled.img`
   margin: 3px 0 0 110px;
+  cursor: pointer;
   @media screen and (min-width: 2560px) {
     height: 30px;
     margin: 4.5px 0 0 115px;

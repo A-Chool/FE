@@ -140,14 +140,29 @@ const kakaoLoginDB = (code) => {
     await axios
       .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
       .then((response) => {
-        
-        const ACCESS_TOKEN = response.headers.authorization.split(" ")[1];
-        console.log(ACCESS_TOKEN);
-        localStorage.setItem("kakaoToken", ACCESS_TOKEN);
-        setCookie("userToken", ACCESS_TOKEN);
-        history.replace("/check-in");
-        console.log(response);
-      })
+        if (Math.floor(response.status / 100) === 2) {
+          console.log("로그인 성공", response);
+          const userToken = response.headers?.authorization?.split(" ")[1];
+          console.log("userToken 성공", userToken);
+          const decoded = jwt_decode(userToken);
+          console.log("decoded 성공", decoded);
+          // EXPIRED_DATE: 1653700338
+          // USER_EMAIL: ""
+          // USER_LEVEL: 0
+          // USER_NAME: ""
+          // iss: "Mr.A-Chool"
+          setCookie("userToken", userToken);
+          dispatch(
+            logIn({
+              expiredDate: decoded.EXPIRED_DATE,
+              email: decoded.USER_EMAIL,
+              name: decoded.USER_NAME,
+              level: decoded.USER_LEVEL,
+            })
+          );
+          // setCookie("userId", userId);
+          history.replace("/check-in");
+      }})
       .catch((err) => {
         console.log("소셜로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
