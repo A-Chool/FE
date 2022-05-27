@@ -125,28 +125,8 @@ const Login = () => {
                 >
                   로그인
                 </CollectionBtn>
-
-                {/* <KakaoLogin
-                  token={token}
-                  onSuccess={(res) => {
-                    console.log(res.response.access_token);
-                    dispatch(
-                      userActions.kakaoLoginDB(res.response.access_token)
-                    );
-                  }}
-                  onFail={console.error}
-                  onLogout={console.info}
-                /> */}
-
-                <SocialLoginKakao
-                  href={KAKAO_AUTH_URL}
-                  onClick={() => {
-                    console.log(KAKAO_AUTH_URL);
-                  }}
-                >
-                  <KakaoImg src={kakaoLogin} />
-                </SocialLoginKakao>
               </UserLoginWrapper>
+              
             )}
           </LoginContentsWrapper>
         </InputMain>
