@@ -108,6 +108,8 @@ const PageMain = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  min-width : 1440px;
+  min-height : 812px;
 `;
 
 const PageInput = styled.form`

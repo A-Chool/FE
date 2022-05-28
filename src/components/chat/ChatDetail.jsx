@@ -19,6 +19,7 @@ const ChatDetail = (props) => {
 
   const room = useSelector((state) => state.chat.room);
   const chatMessages = useSelector((state) => state.chat.chatMessages);
+  const latestChatMessageCreatedAt = chatMessages[chatMessages.length - 1]?.createdAt || null;
   const isInitialized = useSelector((state) => state?.chat?.isInitialized);
   const chatMessagesPrevId = useSelector((state) => state.chat.chatMessagesPrevId);
   const isEnd = useSelector((state) => state.chat.isEnd);
@@ -76,9 +77,9 @@ const ChatDetail = (props) => {
         const res = JSON.parse(message.body);
 
         //채팅 내역 불러오기
-        const userInfo = JSON.parse(localStorage.userInfo);
-        dispatch(setLatestMessage(res));
+        // const userInfo = JSON.parse(localStorage.userInfo);
         //소켓 연결 후 받은 채팅 출력
+        dispatch(setLatestMessage(res));
       });
     }, 100);
 
@@ -170,9 +171,9 @@ const ChatDetail = (props) => {
     }
   }, [chatMessagesPrevId]);
 
-  const loadChatPrev = async () => {
+  const loadChatPrev = () => {
     setLoading(true);
-    await dispatch(loadChatMessagesPrev(room?.roomId));
+    dispatch(loadChatMessagesPrev(room?.roomId));
     setLoading(false);
   };
 
@@ -181,6 +182,10 @@ const ChatDetail = (props) => {
       loadChatPrev();
     }
   }, [isInLoadingArea, isEnd]);
+
+  useEffect(() => {
+    chattingRef.current?.scrollIntoView({ block: "end" });
+  }, [latestChatMessageCreatedAt]);
 
   useEffect(() => {
     console.log(isLoading);
@@ -217,7 +222,7 @@ const ChatDetail = (props) => {
             textAlign: "center",
             fontSize: "0.85rem",
             color: "#ff5e00",
-            position: "fixed",
+            position: "absolute",
             top: "20",
           }}
         >

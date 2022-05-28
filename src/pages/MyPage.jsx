@@ -8,20 +8,18 @@ import { useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import { getCookie } from "../shared/Cookie";
 
-import { loadMyPage, editProfile } from "../redux/modules/myPage";
-
+import { loadMyPage, editProfile, uploadImage } from "../redux/modules/myPage";
+import axios from "axios";
 
 const MyPage = (props) => {
-
   const dispatch = useDispatch();
 
   const teamList = useSelector((state) => state.checkIn.checkInList);
-
   // const [decode, setDecode] = useState("");
   const userData = useSelector((state) => state.myPage.userInfo);
 
   const [my, setMy] = useState({
-    nickname : userData.username,
+    nickname: userData.username,
     // email: userData.userEmail,
     phoneNumber: userData.userPhoneNumber,
     kakaoId: userData.findKakaoId,
@@ -30,131 +28,135 @@ const MyPage = (props) => {
   });
 
   // console.log("my.tags =", my.tags);
+  // console.log(userData.userImage);
 
   useEffect(() => {
     // const userToken = getCookie("userToken");
     // setDecode(jwt_decode(userToken));
     dispatch(loadMyPage());
   }, []);
-  
-  const [tagItem, setTagItem] = useState('');
+
+  const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState(my.tags);
+  const [userImage, setUserImage] = useState(userData?.userImage || "");
 
   useEffect(() => {
-    setTagList(my.tags)
+    setTagList(my.tags);
   }, [my.tags]);
 
-  // console.log("tagItem 는 =",tagItem)
-  // console.log("tagList 는 =",tagList)
+  // console.log("tagItem 는 =", tagItem);
+  // console.log("tagList 는 =", tagList);
 
-  const onKeyPress = e => {
-    if (e.target.value.length !== 0 && e.key === 'Enter') {
-      submitTagItem()
+  const handleUploadImage = async (e) => {
+    if (e.target.files?.length > 0) {
+      dispatch(uploadImage(URL.createObjectURL(e.target.files[0])));
+
+      // setUserImage(URL.createObjectURL(e.target.files[0]));
+      // e.target.value = "";
     }
-  }
+  };
+
+  const onKeyPress = (e) => {
+    if (e.target.value.length !== 0 && e.key === "Enter") {
+      submitTagItem();
+    }
+  };
 
   const submitTagItem = () => {
-    let updatedTagList = [...tagList]
-    updatedTagList.push(tagItem)
-    setTagList(updatedTagList)
-    setTagItem('')
-  }
+    let updatedTagList = [...tagList];
+    updatedTagList.push(tagItem?.trim());
+    setTagList(updatedTagList);
+    setTagItem("");
+  };
 
-  const deleteTagItem = e => {
-    const deleteTagItem = e.target.parentElement.firstChild.innerText
-    const filteredTagList = tagList.filter(tagItem => tagItem !== deleteTagItem)
-    setTagList(filteredTagList)
-  }
+  const deleteTagItem = (index) => {
+    // const tagSelected = e.target.parentElement.firstChild.innerText;
+    const filteredTagList = tagList.filter((tag, idx) => idx !== index);
+    setTagList(filteredTagList);
+  };
 
   useEffect(() => {
     setMy({
-      nickname : userData.username,
+      nickname: userData.username,
       phoneNumber: userData.userPhoneNumber,
       kakaoId: userData.findKakaoId,
       github: userData.userGitHub,
       tags: userData.userTag,
-    })
+    });
   }, [userData]);
 
-
-    // const UserName = decode.USER_NAME
+  // const UserName = decode.USER_NAME
   return (
     <div style={{ display: "flex" }}>
-      <UserSidebar teamList={teamList}/>
+      <UserSidebar teamList={teamList} />
       <BackgroundDiv>
         <PageName>팀관리</PageName>
-        <Wrap>
-          <figure
-            style={{
-              position: "relative",
-              width: "fit-content",
-              height: "fit-content",
-            }}
-          >
-            <ProfileImg
-              src={userData.userImage}
-              alt=""
-            />
-            {/* <ProfilImgIcon>
-              <img src={camera} alt="camera-icon" style={{ margin: "auto" }} />
-            </ProfilImgIcon> */}
-          </figure>
-          <div
-            style={{ display: "flex", flexDirection: "column", width: "100%" }}
-          >
-            <Label htmlFor="nickname">
-              <p>이름</p>
-              <input
-                id="nickname"
-                value={my.nickname}
-                maxLength="7"
-                onChange={(e) =>
-                  setMy({ ...my, [e.target.id]: e.target.value })
-                }
-              />
-            </Label>
-            <Label htmlFor="email">
-              <p>이메일</p>
-              <input
-                id="email"
-                type="email"
-                value={userData.userEmail}
-                onChange={(e) =>
-                  setMy({ ...my, [e.target.id]: e.target.value })
-                }
-              />
-            </Label>
-            <Label htmlFor="phoneNumber">
-              <p>전화번호</p>
-              <input
-                id="phoneNumber"
-                value={my.phoneNumber}
-                onChange={(e) =>
-                  setMy({ ...my, [e.target.id]: e.target.value })
-                }
-              />
-            </Label>
-            <Label htmlFor="kakaoId">
-              <p>카톡아이디</p>
-              <input
-                id="kakaoId"
-                value={my.kakaoId}
-                onChange={(e) =>
-                  setMy({ ...my, [e.target.id]: e.target.value })
-                }
-              />
-            </Label>
-            <Label htmlFor="github">
-              <p>github</p>
-              <input
-                id="github"
-                value={my.github}
-                onChange={(e) =>
-                  setMy({ ...my, [e.target.id]: e.target.value })
-                }
-              />
-            </Label>
-            {/* <Label htmlFor="tags" >
+        <FlexWrap>
+          <Wrap>
+            <figure
+              style={{
+                position: "relative",
+                width: "fit-content",
+                height: "fit-content",
+              }}
+            >
+              <ProfileImg src={userImage || userData.userImage} alt="" />
+              <ProfilImgIcon htmlFor="image-upload">
+                <img src={camera} alt="camera-icon" style={{ margin: "auto" }} />
+                <input
+                  id="image-upload"
+                  name="image-upload"
+                  type="file"
+                  accept="image/*"
+                  style={{ height: 0, width: 0 }}
+                  onChange={handleUploadImage}
+                />
+              </ProfilImgIcon>
+            </figure>
+            <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+              <Label htmlFor="nickname">
+                <p>이름</p>
+                <input
+                  id="nickname"
+                  value={my.nickname || ""}
+                  maxLength="7"
+                  onChange={(e) => setMy({ ...my, [e.target.id]: e.target.value })}
+                />
+              </Label>
+              <Label htmlFor="email">
+                <p>이메일</p>
+                <input
+                  id="email"
+                  type="email"
+                  value={userData.userEmail}
+                  onChange={(e) => setMy({ ...my, [e.target.id]: e.target.value })}
+                />
+              </Label>
+              <Label htmlFor="phoneNumber">
+                <p>전화번호</p>
+                <input
+                  id="phoneNumber"
+                  value={my.phoneNumber || ""}
+                  onChange={(e) => setMy({ ...my, [e.target.id]: e.target.value })}
+                />
+              </Label>
+              <Label htmlFor="kakaoId">
+                <p>카톡아이디</p>
+                <input
+                  id="kakaoId"
+                  value={my.kakaoId || ""}
+                  onChange={(e) => setMy({ ...my, [e.target.id]: e.target.value })}
+                />
+              </Label>
+              <Label htmlFor="github">
+                <p>github</p>
+                <input
+                  id="github"
+                  value={my.github || ""}
+                  onChange={(e) => setMy({ ...my, [e.target.id]: e.target.value })}
+                />
+              </Label>
+              {/* <Label htmlFor="tags" >
               <p>태그</p>
               {my.tags?.map((e, idx) => (
                 <div key={idx} bgColor={"cyan"} style={{marginRight : '5px'}}>
@@ -163,36 +165,46 @@ const MyPage = (props) => {
               ))}
 
             </Label> */}
-            <WholeBox>
-              <TagBox>
-                {tagList?.map((tagItem, index) => {
-                  return (
-                    <TagItem key={index}>
-                      <Text>{tagItem}</Text>
-                      <TagButton onClick={deleteTagItem}>X</TagButton>
-                    </TagItem>
-                  )
-                })}
-                <TagInput
-                  type='text'
-                  placeholder='엔터로 Tag 추가'
-                  tabIndex={10}
-                  onChange={e => setTagItem(e.target.value)}
-                  value={tagItem}
-                  onKeyPress={onKeyPress}
-                />
-              </TagBox>
-            </WholeBox>
+              <WholeBox>
+                <TagBox>
+                  {tagList?.map((tagItem, index) => {
+                    return (
+                      <TagItem key={index}>
+                        <Text>{`${tagItem}`}</Text>
+                        <TagButton onClick={() => deleteTagItem(index)}>X</TagButton>
+                      </TagItem>
+                    );
+                  })}
+                  <TagInput
+                    type="text"
+                    placeholder="엔터로 Tag 추가"
+                    tabIndex={10}
+                    onChange={(e) => {
+                      if (!!e.target.value?.trim() || e.target.value === "") {
+                        setTagItem(e.target.value);
+                      }
+                    }}
+                    value={tagItem}
+                    onKeyPress={onKeyPress}
+                  />
+                </TagBox>
+              </WholeBox>
 
-            <div style={{ display: "flex", justifyContent: "end" }}>
-              {/* <Button buttonType="void">취소</Button> */}
-              <Button buttonType="solid" onClick={() => {
-                dispatch(editProfile(my.nickname, tagList, my.github, my.kakaoId, my.phoneNumber))
-                window.alert("수정이 완료되었습니다!")
-              }}>수정완료</Button>
+              <div style={{ display: "flex", justifyContent: "end" }}>
+                {/* <Button buttonType="void">취소</Button> */}
+                <Button
+                  buttonType="solid"
+                  onClick={() => {
+                    dispatch(editProfile(my.nickname, tagList, my.github, my.kakaoId, my.phoneNumber));
+                    window.alert("수정이 완료되었습니다!");
+                  }}
+                >
+                  수정완료
+                </Button>
+              </div>
             </div>
-          </div>
-        </Wrap>
+          </Wrap>
+        </FlexWrap>
       </BackgroundDiv>
     </div>
   );
@@ -203,13 +215,23 @@ const BackgroundDiv = styled.div`
   float: left;
   background-color: #f4f6f9;
   flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+const FlexWrap = styled.div`
+  display: flex;
+  align-items: center;
+  margin: auto;
+  flex-grow: 1;
 `;
 
 const Wrap = styled.div`
-  background-color: white;
+  background-color: #fff;
   border-radius: 2rem;
-  max-width: 50rem;
-  margin: 0 auto;
+  min-width: 50rem;
+  flex-grow: 1;
   padding: 1rem 2rem;
   display: flex;
 `;
@@ -224,7 +246,7 @@ const ProfileImg = styled.img`
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 `;
 
-const ProfilImgIcon = styled.i`
+const ProfilImgIcon = styled.label`
   position: absolute;
   right: 10px;
   bottom: 20px;
@@ -261,6 +283,7 @@ const Label = styled.label`
     box-sizing: border-box;
     border: 0px;
     border-bottom: 1px solid #e0e0e0;
+    background-color: transparent;
     color: #828282;
     :focus {
       color: #282828;
@@ -275,13 +298,11 @@ const Label = styled.label`
     padding: 0.25rem 0.5rem;
     display: inline-flex;
     border-radius: 0.25rem;
-    
   }
 `;
 
 const Button = styled.button`
-  background-color: ${(props) =>
-    props.buttonType === "solid" ? "#FF5F00" : "transparent"};
+  background-color: ${(props) => (props.buttonType === "solid" ? "#FF5F00" : "transparent")};
   color: ${(props) => (props.buttonType === "solid" ? "white" : "#FF5F00")};
   padding: 0.5rem 2rem;
   border-radius: 99rem;
@@ -292,12 +313,11 @@ const Button = styled.button`
   margin-left: 0.5rem;
 `;
 
-
 const WholeBox = styled.div`
   padding: 0px;
   height: auto;
   // background-color : red;
-`
+`;
 
 const TagBox = styled.div`
   display: flex;
@@ -315,7 +335,7 @@ const TagBox = styled.div`
   &:focus-within {
     border-color: black;
   }
-`
+`;
 
 const TagItem = styled.div`
   display: flex;
@@ -323,14 +343,14 @@ const TagItem = styled.div`
   justify-content: space-between;
   margin: 5px;
   padding: 5px;
-  background-color: #FFE8F3;
+  background-color: #ffe8f3;
   border-radius: 5px;
   color: black;
   font-size: 13px;
-  font-weight : 700;
-`
+  font-weight: 700;
+`;
 
-const Text = styled.span``
+const Text = styled.span``;
 
 const TagButton = styled.button`
   display: flex;
@@ -339,12 +359,12 @@ const TagButton = styled.button`
   width: 15px;
   height: 15px;
   margin-left: 5px;
-  background-color : transparent;
-  border : none;
+  background-color: transparent;
+  border: none;
   border-radius: 50%;
-  color:  #FF5F00;
-  cursor : pointer;
-`
+  color: #ff5f00;
+  cursor: pointer;
+`;
 
 const TagInput = styled.input`
   display: inline-flex;
@@ -353,14 +373,6 @@ const TagInput = styled.input`
   border: none;
   outline: none;
   cursor: text;
-`
-
-
-
-
-
-
-
-
+`;
 
 export default MyPage;

@@ -126,6 +126,7 @@ const Login = () => {
                   로그인
                 </CollectionBtn>
               </UserLoginWrapper>
+              
             )}
           </LoginContentsWrapper>
         </InputMain>
@@ -137,6 +138,8 @@ const Login = () => {
 
 const PageMain = styled.div`
   display: flex;
+  min-width : 1440px;
+  min-height : 812px;
 `;
 
 const LogoMain = styled.img`
