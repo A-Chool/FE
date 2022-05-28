@@ -52,6 +52,21 @@ const AdminUserList = (props) => {
   //   setLevel(event.target.value);
   // };
 
+  // function test() {
+  //   if (confirm("삭제하시겠습니까?")) {
+  //     alert("취소(아니오)를 누르셨습니다.");
+  // } else {
+  //     alert("확인(예)을 누르셨습니다.");
+  // }
+  // }
+
+  const deleteUserAlert = () => {
+    const msg = window.confirm("삭제하시겠습니까?")
+    if( msg === true ) {
+      dispatch(deleteUserList(props.e.userId))
+    }
+  }
+
   return (
     <React.Fragment>
           <UserList>
@@ -61,7 +76,10 @@ const AdminUserList = (props) => {
             <Userdata style={{width : "18%"}}>{props.e.phoneNumber}</Userdata>
             <Userdata style={{width : "18%"}}>{props.e.createdAt}</Userdata>
             <Userdata id="level" style={{width : "11%"}} onClick={handleOpen}>{props.e.userLevel >= 5 ? "Admin" : "User"}</Userdata>
-            <DeleteSvg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => {dispatch(deleteUserList(props.e.userId))}}>
+            {/* <DeleteSvg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => {dispatch(deleteUserList(props.e.userId))}}>
+              <path d="M31.875 8.25H25.3125L24.7656 7.26562C24.5469 6.82812 24.1094 6.5 23.6172 6.5H17.3281C16.8359 6.5 16.3984 6.82812 16.1797 7.26562L15.6875 8.25H9.125C8.63281 8.25 8.25 8.6875 8.25 9.125V10.875C8.25 11.3672 8.63281 11.75 9.125 11.75H31.875C32.3125 11.75 32.75 11.3672 32.75 10.875V9.125C32.75 8.6875 32.3125 8.25 31.875 8.25ZM11.1484 32.0391C11.2031 33.4609 12.3516 34.5 13.7734 34.5H27.1719C28.5938 34.5 29.7422 33.4609 29.7969 32.0391L31 13.5H10L11.1484 32.0391Z" fill="#8F9CAF"/>
+            </DeleteSvg> */}
+            <DeleteSvg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={deleteUserAlert}>
               <path d="M31.875 8.25H25.3125L24.7656 7.26562C24.5469 6.82812 24.1094 6.5 23.6172 6.5H17.3281C16.8359 6.5 16.3984 6.82812 16.1797 7.26562L15.6875 8.25H9.125C8.63281 8.25 8.25 8.6875 8.25 9.125V10.875C8.25 11.3672 8.63281 11.75 9.125 11.75H31.875C32.3125 11.75 32.75 11.3672 32.75 10.875V9.125C32.75 8.6875 32.3125 8.25 31.875 8.25ZM11.1484 32.0391C11.2031 33.4609 12.3516 34.5 13.7734 34.5H27.1719C28.5938 34.5 29.7422 33.4609 29.7969 32.0391L31 13.5H10L11.1484 32.0391Z" fill="#8F9CAF"/>
             </DeleteSvg>
 
@@ -82,7 +100,11 @@ const AdminUserList = (props) => {
                           <option value={5}>Admin</option>
                         </SetLevelSelector>
                     {/* <SetLevelInput defaultValue={props.e.userLevel} onChange={handlesetLevel}></SetLevelInput> */}
-                    <SetLevelBtn onClick={() => {dispatch(editUserList(props.e.userId, Number(Level)))}}>설정확인</SetLevelBtn>
+                    <SetLevelBtn onClick={() => {
+                      dispatch(editUserList(props.e.userId, Number(Level)))
+                      handleClose()
+                      window.alert("권한이 변경되었습니다!")
+                      }}>설정확인</SetLevelBtn>
 
                 </Box>
               </Modal>

@@ -21,7 +21,7 @@ const StopWatch = (props) => {
   const logList = useSelector((state) => state.checkIn.checkIn);
 
   const logs = logList?.todayLog
-  const logsa = logs?.length === 0 ? logs?.[logs?.length-1] : logs?.[logs?.length-1].checkOut
+  const lastLog = logs?.length === 0 ? logs?.[logs?.length-1] : logs?.[logs?.length-1].checkOut
   
   React.useEffect(() => {
     let interval = null;
@@ -39,14 +39,14 @@ const StopWatch = (props) => {
   }, [isActive, isPaused]);
 
   React.useEffect(() => {
-    if (logsa === null){
+    if (lastLog === null){
       setIsActive(true);
       setIsPaused(!isPaused);
     } else {
       setIsActive(false);
       setIsPaused(true);
     }
-  }, [logsa]);
+  }, [lastLog]);
 
   React.useEffect(() => {
     dispatch(loadCheckList());
@@ -62,6 +62,7 @@ const StopWatch = (props) => {
           <div className="btn btn-one btn-start"
           onClick={() => {
             dispatch(userCheckIn());
+
             setIsActive(true);
             setIsPaused(!isPaused);
           }}>start</div>
@@ -69,6 +70,7 @@ const StopWatch = (props) => {
           <div className="btn btn-one btn-start"
           onClick={() => {
             dispatch(userCheckOut());
+
             setIsPaused(false);
             setIsPaused(!isPaused);
           }}>stop</div>
