@@ -143,7 +143,7 @@ const AdminTeamPage = () => {
 
             <TeamListWrapper>
               {
-                teamList.map((e, idx)=>{
+                teamList?.map((e, idx)=>{
                   return(
                   <DndTeamList key={idx} e={e} week={week} />
                   )
@@ -161,11 +161,11 @@ const AdminTeamPage = () => {
             ?
             <MemberDiv>
               <AddMember>
-                <OpenBtn src={memberAdd} onClick={() => {setTest(!test)}}/>
+                <OpenBtn src={addMember} onClick={() => {setTest(!test)}}/>
               </AddMember>
               <Members>
                 {
-                  memberList.map((e, idx)=>{
+                  memberList?.map((e, idx)=>{
                     return(
                       <AdminMemberList key={idx} e={e} teamList={teamList} weekBucket={weekBucket} week={week}/>
                     )
@@ -175,7 +175,7 @@ const AdminTeamPage = () => {
             </MemberDiv>
             :
               <AddMemberOff>
-                <OpenBtnOff src={addMember} onClick={() => {setTest(!test)}}/>
+                <OpenBtnOff  src={memberAdd}onClick={() => {setTest(!test)}}/>
               </AddMemberOff>
           }
     </React.Fragment>
