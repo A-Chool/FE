@@ -152,7 +152,9 @@ const kakaoLoginDB = (code) => {
           // USER_LEVEL: 0
           // USER_NAME: ""
           // iss: "Mr.A-Chool"
-          setCookie("userToken", userToken);
+          setTimeout(() => {
+            setCookie("userToken", userToken);
+          }, 100);
           dispatch(
             logIn({
               expiredDate: decoded.EXPIRED_DATE,
@@ -161,9 +163,9 @@ const kakaoLoginDB = (code) => {
               level: decoded.USER_LEVEL,
             })
           );
-          // setCookie("userId", userId);
           history.replace("/check-in");
-      }})
+        }
+      })
       .catch((err) => {
         console.log("소셜로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
