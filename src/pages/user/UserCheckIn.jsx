@@ -21,7 +21,7 @@ const UserCheckIn = () => {
   useEffect(() => {
     setInterval(() => {
       dispatch(loadCheckList());
-    }, 300000);
+    }, 1000*60*5);
   }, []);
 
   const teamList = useSelector((state) => state.checkIn.checkInList);
