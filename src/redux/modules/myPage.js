@@ -88,8 +88,8 @@ export const uploadImage = (userImage) => {
       headers: { Authorization: `Bearer ${myToken}` },
     })
       .then((res) => {
-        console.log(res);
-        console.log(res.data);
+        // console.log(res);
+        // console.log(res.data);
         // dispatch(__editProfile(res.data));
         // const bucket = {
         //   headers : {"Authorization" : `Bearer ${myToken}`}

@@ -58,8 +58,8 @@ const UserTeamBoard = () => {
     
     const MemberList = TeamBoard.memberList
 
-    console.log(TeamBoard);
-    console.log(MemberList);
+    // console.log(TeamBoard);
+    // console.log(MemberList);
 
   return (
     <React.Fragment>
