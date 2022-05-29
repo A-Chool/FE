@@ -96,9 +96,7 @@ const AdminWeekList = (props) => {
                 {props.e.weekName}
               </EditTeamNameP>
               :
-              <EditTeamNameInput defaultValue={props.e.weekName} onChange={teamEdithandleEvent}>
-
-              </EditTeamNameInput>
+              <EditTeamNameInput defaultValue={props.e.weekName} onChange={teamEdithandleEvent} />
             } 
             {
               weekNameEdit === false 
@@ -107,10 +105,10 @@ const AdminWeekList = (props) => {
                 setWeekNameEdit(true);
                 }} ></HideBtn>
               :
-              <HideBtn src={editBtnImg} onClick={() => {
+              <DoneBtn src={editBtnImg} onClick={() => {
                 dispatch(editWeekName(props.e.weekId, weekName));
                 setWeekNameEdit(false);
-                }} ></HideBtn>
+                }} >Done</DoneBtn>
             }
           </EditWrapper>
           <FnWrapper>
@@ -173,6 +171,7 @@ const WeekTagName = styled.div`
   float : left;
   position : absolute;
   line-height : 33px;
+  cursor : pointer;
 `
 
 const WeekTagEdit = styled.div`
@@ -182,6 +181,7 @@ const WeekTagEdit = styled.div`
   display : none;
   padding-top : 7px;
   margin-left : 100px;
+  cursor : pointer;
   ${WeekTag}:hover & {
     display : inline-block;
     position: relative;
@@ -190,7 +190,7 @@ const WeekTagEdit = styled.div`
 `
 
 const EditWrapper = styled.div`
-  width: 200px;
+  width: 250px;
   height: 24px; 
   margin : 23px 0 0 20px;
 `
@@ -219,9 +219,28 @@ const EditTeamNameInput = styled.input`
 `
 
 const HideBtn = styled.img`
-    display : inline-block;
-    width: 28px;
-    height: 24px; 
+  display : inline-block;
+  width: 28px;
+  height: 24px; 
+  cursor : pointer;
+`
+
+const DoneBtn = styled.div`
+  width: 53px;
+  display : inline-block;
+  height: 24px;
+  margin : 0px 0px 0px 10px;
+  fontWeight : 700;
+  color : #1F3A5E;
+  background: #FFF9D9;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+  color: #FF5F00;
+  text-align : center;
+  cursor : pointer;
 `
 
 const FnWrapper = styled.div`
@@ -241,6 +260,7 @@ const WeekDeleteDiv = styled.div`
   display : inline-block;
   float : left;
   margin-right : 8px;
+  cursor : pointer;
 `
 
 const WeekDisplayDiv = styled.div`
@@ -254,6 +274,7 @@ const WeekDisplayDiv = styled.div`
   font-weight: 700;
   font-size: 14px;
   color : white;
+  cursor : pointer;
 `
 
 const TeamListHeader = styled.p`
@@ -305,7 +326,7 @@ const TeamNameListP = styled.p`
 `
 
 const TeamNameListImg = styled.svg`
-  
+  cursor : pointer;
 `
 
 const TeamAddWrapper = styled.div`

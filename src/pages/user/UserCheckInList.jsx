@@ -73,6 +73,7 @@ const UserTag = styled.div`
   height : 36px;
   margin : 10px 10px;
   display : inline-block;
+  cursor : pointer;
 `
 
 const UserDetail = styled.p`

@@ -121,7 +121,7 @@ const TemaList = styled.div`
 
 const TeamName = styled.div`
   float : left;
-  width: 117px;
+  width: auto;
   min-width : 117px;
   height: 72px;
   text-align : center;
@@ -133,28 +133,31 @@ const TeamName = styled.div`
 `
 
 const MemberList = styled.div`
-display : flex;
-border-radius : 0 8px 8px 0;
-padding : 16px 8px;
-overflow : hidden;
-overflow-x : scroll;
-&::-webkit-scrollbar {
-  height : 4px;
-}
-&::-webkit-scrollbar-thumb {
-  width : 100px;
-  background: #C4C4C4;
-  border-radius: 4px;
-}
-&::-webkit-scrollbar-track {
-  background: transition;
-}
+  width : 1012px;
+  display: flex;
+  flex-grow : 1;
+  border-radius : 0 8px 8px 0;
+  padding : 16px 8px;
+  overflow : hidden;
+  overflow-x : scroll;
+  &::-webkit-scrollbar {
+    height : 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    width : 100px;
+    background: #C4C4C4;
+    border-radius: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transition;
+  }
 `
 
 const DeleteMemberImg = styled.img`
   height : 42px;
   margin : 0px 8px;
   float : left;
+  cursor : pointer;
 `
 
 const DeleteMemberHeader = styled.div`
@@ -190,7 +193,7 @@ const TeamNameListP = styled.p`
 `
 
 const TeamNameListImg = styled.svg`
-  
+  cursor : pointer;
 `
 
 

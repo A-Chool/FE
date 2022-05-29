@@ -58,7 +58,7 @@ const Signup = () => {
   return (
     <PageMain>
       <InputMain>
-        <img src={logo} style={{position : 'absolute',top : '32px',left : '30px'}} onClick={() => {history.push('/')}}/>
+        <img src={logo} style={{position : 'absolute',top : '32px',left : '30px', cursor : 'pointer'}} onClick={() => {history.push('/')}}/>
         <SingUpContentsWrapper>
           <MainContents>회원가입</MainContents>
           <SubContents>가입정보를 입력 후 회원가입 버튼을 클릭해 주세요.</SubContents>

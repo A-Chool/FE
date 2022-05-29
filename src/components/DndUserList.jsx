@@ -16,9 +16,11 @@ const AddMember = styled.div`
   border : 1px solid black;
   background-color : #fff;
   margin : 5px auto;
+  cursor : pointer;
 `
 const Userdata = styled.p`
   margin : 10px auto;
   text-align : center;
+  cursor : pointer;
 `
 export default DndUserList;

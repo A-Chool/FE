@@ -259,6 +259,7 @@ const Selecter = styled.select`
 width: 118px;
 height : 40px;
 padding: .5em .9em;
+cursor : pointer;
   border: 1px solid #999;
   font-weight: 700;
   font-size: 16px;
