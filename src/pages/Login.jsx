@@ -51,7 +51,7 @@ const Login = () => {
     <AuthGuard>
       <PageMain>
         <InputMain>
-          <img src={logo} style={{ position: "absolute", top: "32px", left: "30px", cursor : 'pointer' }} />
+          <img src={logo} style={{ position: "absolute", top: "32px", left: "30px", cursor: "pointer" }} />
           <LoginContentsWrapper>
             <MainContents>아출에 오신것을 환영합니다.</MainContents>
             <LoginContents>
@@ -126,7 +126,6 @@ const Login = () => {
                   로그인
                 </CollectionBtn>
               </UserLoginWrapper>
-              
             )}
           </LoginContentsWrapper>
         </InputMain>
@@ -138,8 +137,8 @@ const Login = () => {
 
 const PageMain = styled.div`
   display: flex;
-  min-width : 1440px;
-  min-height : 812px;
+  min-width: 1440px;
+  min-height: 812px;
 `;
 
 const LogoMain = styled.img`

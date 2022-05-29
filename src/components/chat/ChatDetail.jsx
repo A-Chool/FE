@@ -148,7 +148,7 @@ const ChatDetail = (props) => {
 
   useEffect(() => {
     if (isInitialized) {
-      chattingRef.current.scrollIntoView({ block: "end" });
+      chattingRef.current?.scrollIntoView({ block: "end" });
       setInLoadingArea(false);
       chatContentsRefCurrent?.addEventListener("scroll", listenScrollChange);
     }
@@ -163,11 +163,13 @@ const ChatDetail = (props) => {
         theChat.current.scrollIntoView({ block: "start" });
         theChat.current.style.borderTop = "1px solid #ff5e00";
         theChat.current.style.backgroundColor = "#ff5e0033";
-        setTimeout(() => {
+      }
+      setTimeout(() => {
+        if (theChat.current) {
           theChat.current.style.borderTop = "0px solid transparent";
           theChat.current.style.backgroundColor = "transparent";
-        }, 3000);
-      }
+        }
+      }, 3000);
     }
   }, [chatMessagesPrevId]);
 
@@ -186,10 +188,6 @@ const ChatDetail = (props) => {
   useEffect(() => {
     chattingRef.current?.scrollIntoView({ block: "end" });
   }, [latestChatMessageCreatedAt]);
-
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
 
   if (!userId) return <>로그인이 필요합니다.</>;
   if (!room?.roomId) return <>연결된 방이 존재하지 않습니다.</>;

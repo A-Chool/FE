@@ -34,19 +34,11 @@ import UserRankingPage from "./pages/user/UserRankingPage";
 
 function App() {
   const dispatch = useDispatch();
-  const isLogin = useSelector((state) => state.user.is_login);
 
-  // 얘는 새로고침시 내 정보 받아오기 & 인증 용으로 있어야함
-  // useEffect(() => {
-  //   const kakaoToken = localStorage.kakaoToken;
-  //   const userToken = getCookie("userToken");
-
-  //   if (!!kakaoToken || !!userToken) {
-  //     // console.log(getCookie("userToken"));
-  //     // console.log(kakaoToken);
-  //     dispatch(userActions.getMyselfDB(userToken));
-  //   }
-  // }, []);
+  useEffect(() => {
+    const userToken = getCookie("userToken");
+    if (!!userToken) dispatch(userActions.getMyselfDB(userToken));
+  }, []);
 
   useEffect(() => {
     dayjs.extend(relativeTime);
@@ -62,29 +54,22 @@ function App() {
     <ContentWrap>
       <ChatContainer />
       <ConnectedRouter history={history}>
-        {!isLogin ? (
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/signup" exact component={Signup} />
-            <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
-            {/* 지정 외 페이지 찾을때, not found 페이지 */}
-            <Route path="/*" component={Login} />
-          </Switch>
-        ) : (
-          <Switch>
-            <Route path="/admin" exact component={AdminLogin} />
-            <Route path="/chat" exact component={ChatingPage} />
-            <Route path="/my" exact component={MyPage} />
-            <Route path="/admin/user" exact component={AdminUserPage} />
-            <Route path="/admin/team" exact component={AdminTeamPage} />
-            <Route path="/check-in" exact component={UserCheckIn} />
-            <Route path="/team-board" exact component={UserTeamBoard} />
-            <Route path="/rank" exact component={UserRankingPage} />
-            <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
-            {/* 지정 외 페이지 찾을때, not found 페이지 */}
-            <Route path="/*" component={NotFound} />
-          </Switch>
-        )}
+        <Switch>
+          <Route path="/" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+          <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
+          <Route path="/admin" exact component={AdminLogin} />
+          <Route path="/chat" exact component={ChatingPage} />
+          <Route path="/my" exact component={MyPage} />
+          <Route path="/admin/user" exact component={AdminUserPage} />
+          <Route path="/admin/team" exact component={AdminTeamPage} />
+          <Route path="/check-in" exact component={UserCheckIn} />
+          <Route path="/team-board" exact component={UserTeamBoard} />
+          <Route path="/rank" exact component={UserRankingPage} />
+          <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
+          {/* 지정 외 페이지 찾을때, not found 페이지 */}
+          <Route path="/*" component={NotFound} />
+        </Switch>
       </ConnectedRouter>
     </ContentWrap>
   );

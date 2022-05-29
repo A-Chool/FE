@@ -76,32 +76,23 @@ export const editProfile = (userName, userTag, userGitHub, findKakaoId, phoneNum
 };
 
 // 수정 미들웨어
-export const uploadImage = (userImage) => {
+export const uploadImage = (imageUrl) => {
   return function (dispatch, getState, { history }) {
+    const formData = new FormData();
+    formData.append("imageUrl", imageUrl);
     const myToken = getCookie("Authorization");
     axios({
       method: "put",
       url: `https://achool.shop/api/user/mypage/image`,
-      data: {
-        userImage,
+      data: formData,
+      headers: {
+        Authorization: `Bearer ${myToken}`,
+        "Content-Type": `multipart/form-data`,
       },
-      headers: { Authorization: `Bearer ${myToken}` },
     })
       .then((res) => {
-        // console.log(res);
-        // console.log(res.data);
-        // dispatch(__editProfile(res.data));
-        // const bucket = {
-        //   headers : {"Authorization" : `Bearer ${myToken}`}
-        //   ,params: {teamId: teamId}
-        // }
-        // axios.get('https://achool.shop/api/user/teamBoard', bucket)
-        // .then((res) => {
-        //   dispatch(__loadTeamBoard(res.data));
-        // })
-        // .catch((err)=> {
-        //   console.log(err);
-        // })
+        dispatch(__uploadImage(res.data));
+        return res.data;
       })
       .catch((err) => {
         console.log("프로필 사진 수정 에러: ", err);

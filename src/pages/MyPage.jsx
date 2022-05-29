@@ -36,6 +36,7 @@ const MyPage = (props) => {
     dispatch(loadMyPage());
   }, []);
 
+  const [isLoading, setLoading] = useState(false);
   const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState(my.tags);
   const [userImage, setUserImage] = useState(userData?.userImage || "");
@@ -48,11 +49,10 @@ const MyPage = (props) => {
   // console.log("tagList 는 =", tagList);
 
   const handleUploadImage = async (e) => {
+    setLoading(true);
     if (e.target.files?.length > 0) {
-      dispatch(uploadImage(URL.createObjectURL(e.target.files[0])));
-
-      // setUserImage(URL.createObjectURL(e.target.files[0]));
-      // e.target.value = "";
+      dispatch(uploadImage(e.target.files[0]));
+      setLoading(false);
     }
   };
 
@@ -85,6 +85,10 @@ const MyPage = (props) => {
     });
   }, [userData]);
 
+  useEffect(() => {
+    setUserImage(userData.userImage || "");
+  }, [userData.userImage]);
+
   // const UserName = decode.USER_NAME
   return (
     <div style={{ display: "flex" }}>
@@ -101,7 +105,7 @@ const MyPage = (props) => {
               }}
             >
               <ProfileImg src={userImage || userData.userImage} alt="" />
-              <ProfilImgIcon htmlFor="image-upload">
+              <ProfilImgIcon htmlFor="image-upload" loading={isLoading}>
                 <img src={camera} alt="camera-icon" style={{ margin: "auto" }} />
                 <input
                   id="image-upload"
@@ -257,7 +261,8 @@ const ProfilImgIcon = styled.label`
   height: 2.5rem;
   display: flex;
   box-shadow: 0 2px 3px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  cursor: pointer;
+  cursor: ${({ loading }) => (loading ? "wait" : "pointer")};
+  pointer-events: ${({ loading }) => loading && "none"};
 `;
 
 const PageName = styled.p`
