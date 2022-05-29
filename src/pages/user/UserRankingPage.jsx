@@ -45,7 +45,7 @@ const UserRankingPage = () => {
   // 랜덤 숫자 불러오기
   const randomNum = Math.floor(Math.random() * 13 + 1)
 
-  console.log(randomNum)
+  // console.log(randomNum)
   
   return (
     <React.Fragment>
@@ -103,7 +103,7 @@ const UserRankingPage = () => {
                 </DetailDataWrapper>
                 <DetailDataWrapper>
                   <DataTitle>오늘 누적 공부시간</DataTitle>
-                  <MainData>{ upStudyData.todayTime === null ? "0" : upStudyData.todayTime?.split(':')[0] }</MainData>
+                  <MainData>{ upStudyData.todayTime === null ? "0" : upStudyData?.todayTime?.split(':')[0] }</MainData>
                   <MainDataFont>시간</MainDataFont>
                 </DetailDataWrapper>
                 <DetailDataWrapper>
@@ -130,7 +130,7 @@ const UserRankingPage = () => {
               <RankingTitle>항해99 주간 학습 랭킹</RankingTitle>
               <RankingListWrapper>
                 {
-                  rankingList?.map((e, idx) => {
+                  rankingList && rankingList?.map((e, idx) => {
                     return (
                       <RankingListData idx={idx}>
                         <RankingNum>

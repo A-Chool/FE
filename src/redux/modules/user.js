@@ -140,9 +140,9 @@ const kakaoLoginDB = (code) => {
         if (Math.floor(response.status / 100) === 2) {
           console.log("로그인 성공", response);
           const userToken = response.headers?.authorization?.split(" ")[1];
-          console.log("userToken 성공", userToken);
+          // console.log("userToken 성공", userToken);
           const decoded = jwt_decode(userToken);
-          console.log("decoded 성공", decoded);
+          // console.log("decoded 성공", decoded);
           localStorage.setItem("kakaoToken", decoded);
           // EXPIRED_DATE: 1653700338
           // USER_EMAIL: ""

@@ -10,7 +10,7 @@ const CarrotGraph = () => {
 
   const dispatch = useDispatch();
   
-  const carrot = useSelector((state) => state.rank.carrot)
+  const carrot = useSelector((state) => state?.rank?.carrot)
   
   // console.log(carrot)
 
