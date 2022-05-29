@@ -28,6 +28,7 @@ import { actionCreators as userActions } from "./redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
 import KakaoOauth from "./pages/KakaoOauth";
 import { getCookie } from "./shared/Cookie";
+import UserRankingPage from "./pages/user/UserRankingPage";
 
 // import AuthGuard from "./shared/AuthGuard";
 
@@ -78,6 +79,7 @@ function App() {
             <Route path="/admin/team" exact component={AdminTeamPage} />
             <Route path="/check-in" exact component={UserCheckIn} />
             <Route path="/team-board" exact component={UserTeamBoard} />
+            <Route path="/rank" exact component={UserRankingPage} />
             <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
             {/* 지정 외 페이지 찾을때, not found 페이지 */}
             <Route path="/*" component={NotFound} />
