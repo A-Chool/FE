@@ -21,6 +21,7 @@ const CarrotGraph = () => {
     dispatch(loadCarrot());
   }, []);
   
+  
   return (
     <div style={{ height: 140 }}>
     <ResponsiveCalendar
