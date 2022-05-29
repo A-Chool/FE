@@ -10,11 +10,11 @@ const CarrotGraph = () => {
 
   const dispatch = useDispatch();
   
-  const carrot = useSelector((state) => state?.rank?.carrot)
+  const data = useSelector((state) => state.rank.carrot)
   
   // console.log(carrot)
 
-  const data = carrot
+  // const data = carrot
   
   // 상단 통계 데이터 볼러오기
   React.useEffect(() => {
@@ -25,7 +25,7 @@ const CarrotGraph = () => {
   return (
     <div style={{ height: 140 }}>
     <ResponsiveCalendar
-      data={carrot}
+      data={data && data}
       from="2022-01-01"
       to="2022-12-31"
       emptyColor="#eeeeee"
