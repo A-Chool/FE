@@ -14,7 +14,7 @@ const ChatContainer = (props) => {
   const chatWrapperRef = useRef(null);
 
   useEffect(() => {
-    if (isLogin) {
+    if (isLogin && isOpen) {
       dispatch(loadChatList());
     }
   }, [isLogin, isOpen]);
