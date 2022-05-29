@@ -88,6 +88,7 @@ const Userdata = styled.div`
   text-align : center;
   margin : 8px 8px;
   display : inline-block;
+  cursor : pointer;
 `
 
 const TeamChoice = styled.p`
@@ -133,6 +134,7 @@ const TeamChoiceList = styled.div`
   margin : 0px auto;
   border-bottom: 1px solid #EEEEEE;
   padding : 0px 12px;
+  cursor : pointer;
   &:hover{
     background: rgba(59, 135, 155, 0.3);
     border-radius: 4px;

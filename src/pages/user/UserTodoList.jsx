@@ -85,7 +85,7 @@ const UserTodoList = (props) => {
       ?
       <img 
         src={todoUpBtnImg}  
-        style={{margin : '2px 0 0 8px'}} 
+        style={{margin : '2px 0 0 8px', cursor : 'pointer'}} 
         onClick={() => {
           dispatch(editTodoList(props.e.todoId, todoEdit));
           setEdit(false)

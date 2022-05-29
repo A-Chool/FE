@@ -39,7 +39,7 @@ const UserSidebar = (props) => {
 
   return (
     <Sidebar>
-      <AdminLogo onClick={() => history.push("/check-in")}>
+      <UserLogo onClick={() => history.push("/check-in")}>
         <svg
           width="161"
           height="65"
@@ -90,7 +90,7 @@ const UserSidebar = (props) => {
             fill="#FF5F00"
           />
         </svg>
-      </AdminLogo>
+      </UserLogo>
       <UserInfobox>
         <div style={{ float: "left" }}>
           <ProfileImg
@@ -121,7 +121,7 @@ const UserSidebar = (props) => {
             fontWeight: "700",
           }}
         >
-          <Adminmenu>체크인</Adminmenu>
+          <Usermenu>체크인</Usermenu>
         </Link>
 
         <Link
@@ -133,7 +133,19 @@ const UserSidebar = (props) => {
             fontWeight: "700",
           }}
         >
-          <Adminmenu>팀보드</Adminmenu>
+          <Usermenu>팀보드</Usermenu>
+        </Link>
+
+        <Link
+          to="rank"
+          style={{
+            textDecoration: "none",
+            color: "black",
+            fontSize: "20px",
+            fontWeight: "700",
+          }}
+        >
+          <Usermenu>학습 통계</Usermenu>
         </Link>
       </div>
 
@@ -199,7 +211,7 @@ const ProfileImg = styled.img`
 
 
 
-const AdminLogo = styled.h2`
+const UserLogo = styled.h2`
   color: white;
   display: inline-block;
   margin-top: 31px;
@@ -207,7 +219,7 @@ const AdminLogo = styled.h2`
   cursor : pointer; 
 `;
 
-const Adminmenu = styled.p`
+const Usermenu = styled.p`
   font-size: 28px;
   font-family: yg-jalnan;
 `;

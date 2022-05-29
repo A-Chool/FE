@@ -44,9 +44,9 @@ const UserCheckIn = () => {
                 <Mascot src={mascot}></Mascot>
                 <StudyData onClick={() => {history.push("/rank");}}>
                       {decode.USER_NAME}님 지금까지 <span style={{color : '#FF5F00', fontWeight : '600'}}>{logList?.totalSumTime}</span> 시간 <br />학습하셨어요!
-                  <div style={{marginLeft : '55%'}}>
+                  {/* <div style={{marginLeft : '55%'}}>
                     <img src={studyData}></img>
-                  </div>
+                  </div> */}
                 </StudyData>
               </UpDataLeftBox>
               
@@ -130,6 +130,7 @@ const StudyData = styled.div`
   padding: 20px;
   font-weight: 500;
   font-size: 22px;
+  cursor : pointer;
   @media screen and (min-width: 1920px) {
     width: 580px;
     font-weight: 500;

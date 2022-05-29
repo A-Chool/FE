@@ -51,7 +51,7 @@ const Login = () => {
     <AuthGuard>
       <PageMain>
         <InputMain>
-          <img src={logo} style={{ position: "absolute", top: "32px", left: "30px" }} />
+          <img src={logo} style={{ position: "absolute", top: "32px", left: "30px", cursor : 'pointer' }} />
           <LoginContentsWrapper>
             <MainContents>아출에 오신것을 환영합니다.</MainContents>
             <LoginContents>
