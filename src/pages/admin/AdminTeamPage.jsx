@@ -237,6 +237,7 @@ const WeekTagName = styled.div`
   line-height: 26px;
   text-align : center;
   margin-left: auto;
+  cursor : pointer;
 `
 
 const WeekTagEdit = styled.div`
@@ -429,12 +430,14 @@ animation: slide-in-right 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 `
 
 const OpenBtn = styled.img`
-position : absolute;
-margin : 92px 0 0 -38px;
+  position : absolute;
+  margin : 92px 0 0 -38px;
+  cursor : pointer;
 `
 const OpenBtnOff = styled.img`
-position : absolute;
-margin : 92px 0 0 -11px;
+  position : absolute;
+  margin : 92px 0 0 -11px;
+  cursor : pointer;
 `
 
 const AddWeekInput = styled.input`

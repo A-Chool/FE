@@ -160,6 +160,7 @@ const AdminLogo = styled.h2`
   display: inline-block;
   margin-top: 31px;
   margin-left: 32px;
+  cursor : pointer;
 `;
 
 const UserInfobox = styled.div`

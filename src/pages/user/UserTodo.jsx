@@ -58,7 +58,7 @@ const UserTodo = (props) => {
       }
       <img 
         src={todoAddBtnImg}  
-        style={{margin : '8px 0 0 10px', float : 'left'}} 
+        style={{margin : '8px 0 0 10px', float : 'left', cursor : 'pointer'}} 
         onClick={() => {setAdd(!add)}}>
       </img>
       {
@@ -71,7 +71,7 @@ const UserTodo = (props) => {
         ? <></> 
         : <img 
             src={todoUpBtnImg}  
-            style={{margin : '5px 0 0 5px', float : 'left'}} 
+            style={{margin : '5px 0 0 5px', float : 'left', cursor : 'pointer'}} 
             onClick={() => {
               dispatch(addTodoList(weekTeamId, todoWrite));
               setAdd(!add);

@@ -7,7 +7,7 @@ const DeleteMember = (props) => {
   // DndTeamList 에서 props 로 데이터 받아옴
 
   return (
-    <Userdata>{props.e.user.userName}바꿈</Userdata>
+    <Userdata>{props.e.user.userName}</Userdata>
 
   );
 };

@@ -10,13 +10,15 @@ const UserTeamList = (props) => {
   return (
     <TeamTable>
       <TeamNameTable>{props.e.teamName}</TeamNameTable>
-      {
-        userCheckInList.map((e, idx)=>{
-          return(
-            <UserCheckInList key={idx} e={e}></UserCheckInList>
-          )
-        })
-      }
+      <UserNameTable>
+        {
+          userCheckInList.map((e, idx)=>{
+            return(
+              <UserCheckInList key={idx} e={e}></UserCheckInList>
+            )
+          })
+        }
+      </UserNameTable>
     </TeamTable>
   );
 };
@@ -30,16 +32,6 @@ const TeamTable = styled.div`
   margin : 10px 10px;
   display: inline-block;
   text-align: center;
-  overflow : scroll;
-  overflow-x : hidden;
-  &::-webkit-scrollbar {
-    width: 0px;
-  }
-  &::-webkit-scrollbar-thumb {
-    height: 100%;
-    background: black;
-    border-radius: 50px;
-  }
   @media screen and (min-width: 2560px) {
     width : 384px;
     height : 325px;
@@ -56,12 +48,27 @@ const TeamNameTable = styled.div`
   font-size: 16px;
   line-height: 40px;
   color: #FFFFFF;
-  margin-bottom : 10px;
+  margin-bottom : 0px;
   @media screen and (min-width: 2560px) {
     width : 384px;
     height: 60px;
     font-size: 22px;
     line-height: 60px;
+  }
+`
+
+const UserNameTable = styled.div`
+  width: 259px;
+  height: 158px;
+  overflow : scroll;
+  overflow-x : hidden;
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 100%;
+    background: black;
+    border-radius: 50px;
   }
 `
 

@@ -75,7 +75,7 @@ const AdminUserList = (props) => {
             <Userdata style={{width : "25%"}}>{props.e.userEmail}</Userdata>
             <Userdata style={{width : "18%"}}>{props.e.phoneNumber}</Userdata>
             <Userdata style={{width : "18%"}}>{props.e.createdAt}</Userdata>
-            <Userdata id="level" style={{width : "11%"}} onClick={handleOpen}>{props.e.userLevel >= 5 ? "Admin" : "User"}</Userdata>
+            <Userdata id="level" style={{width : "11%", cursor : 'pointer'}} onClick={handleOpen}>{props.e.userLevel >= 5 ? "Admin" : "User"}</Userdata>
             {/* <DeleteSvg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" onClick={() => {dispatch(deleteUserList(props.e.userId))}}>
               <path d="M31.875 8.25H25.3125L24.7656 7.26562C24.5469 6.82812 24.1094 6.5 23.6172 6.5H17.3281C16.8359 6.5 16.3984 6.82812 16.1797 7.26562L15.6875 8.25H9.125C8.63281 8.25 8.25 8.6875 8.25 9.125V10.875C8.25 11.3672 8.63281 11.75 9.125 11.75H31.875C32.3125 11.75 32.75 11.3672 32.75 10.875V9.125C32.75 8.6875 32.3125 8.25 31.875 8.25ZM11.1484 32.0391C11.2031 33.4609 12.3516 34.5 13.7734 34.5H27.1719C28.5938 34.5 29.7422 33.4609 29.7969 32.0391L31 13.5H10L11.1484 32.0391Z" fill="#8F9CAF"/>
             </DeleteSvg> */}
@@ -130,6 +130,7 @@ const Userdata = styled.p`
 `
 
 const DeleteSvg = styled.svg`
+  cursor : pointer;
   @media screen and (max-height: 1000px) {
     height : 30px;
     width : 30px;
@@ -163,6 +164,7 @@ const SetLevelBtn = styled.button`
   border-radius: 50px;
   color : white;
   font-weight : 700;
+  cursor : pointer;
 `
 
 
