@@ -80,16 +80,13 @@ const getMyselfDB = (token) => {
     await api
       .get(`/api/user/mypage`, {
         headers: {
-          // "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
       .then((response) => {
-        console.log(response);
         if (Math.floor(response.status / 100) === 2) {
           console.log("로그인 성공", response);
           localStorage.setItem("userInfo", JSON.stringify(response.data));
-
           dispatch(logIn({ ...getState().user, ...response.data }));
           const userToken = response.config.headers?.authorization?.split(" ")[1];
           if (userToken) setCookie("userToken", userToken);
@@ -100,7 +97,6 @@ const getMyselfDB = (token) => {
       })
       .catch((error) => {
         dispatch(authFailed());
-        // window.alert("유효한 토큰이 아닙니다.");
         console.log("Login Error", error);
       });
   };
@@ -147,14 +143,13 @@ const kakaoLoginDB = (code) => {
           console.log("userToken 성공", userToken);
           const decoded = jwt_decode(userToken);
           console.log("decoded 성공", decoded);
+          localStorage.setItem("kakaoToken", decoded);
           // EXPIRED_DATE: 1653700338
           // USER_EMAIL: ""
           // USER_LEVEL: 0
           // USER_NAME: ""
           // iss: "Mr.A-Chool"
-          setTimeout(() => {
-            setCookie("userToken", userToken);
-          }, 100);
+          // setCookie("userToken", userToken);
           dispatch(
             logIn({
               expiredDate: decoded.EXPIRED_DATE,
@@ -197,16 +192,6 @@ const signupDB = (email, userName, userPw, userPwCheck, phoneNumber) => {
   };
 };
 
-// export const logOutDb = (dispatch, getState, { history }) => {
-//   console.log("로그아웃");
-//   localStorage.removeItem("userToken");
-//   localStorage.removeItem("userId");
-//   localStorage.removeItem("kakaoToken");
-//   history.replace("/");
-
-//   const token = sessionStorage.getItem("token");
-// };
-
 // 회원탈퇴 액션
 // const withdrawalAC = (userId, userPw) => {
 //   return function (dispatch, getState, { history }) {
@@ -246,6 +231,7 @@ export default handleActions(
         deleteCookie("userId");
         deleteCookie("userToken");
         deleteCookie("is_login");
+        localStorage?.removeItem("userInfo");
         draft.is_loading = false;
         draft.is_login = false;
       }),
