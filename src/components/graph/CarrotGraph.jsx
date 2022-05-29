@@ -24,7 +24,7 @@ const CarrotGraph = () => {
   return (
     <div style={{ height: 140 }}>
     <ResponsiveCalendar
-      data={data}
+      data={carrot}
       from="2022-01-01"
       to="2022-12-31"
       emptyColor="#eeeeee"
