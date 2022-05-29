@@ -20,7 +20,7 @@ const CarrotGraph = () => {
   React.useEffect(() => {
     dispatch(loadCarrot());
   }, []);
-  
+
   
   return (
     <div style={{ height: 140 }}>
@@ -36,8 +36,8 @@ const CarrotGraph = () => {
         "rgba(255, 95, 0, 0.8)",
         "#FF5F00",
       ]}
-      minValue={1}
-      maxValue={15}
+      minValue={0}
+      maxValue={24}
       margin={{
         top: 0,
         right: 0,
