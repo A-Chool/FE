@@ -6,13 +6,13 @@ import { ResponsiveCalendar } from '@nivo/calendar'
 
 import { loadCarrot } from "../../redux/modules/rank";
 
-const CarrotGraph = () => {
+const CarrotGraph = (props) => {
 
   const dispatch = useDispatch();
   
-  const data = useSelector((state) => state.rank.carrot)
-  
-  // console.log(carrot)
+  // const carrot = useSelector((state) => state.rank.carrot)
+
+  const data = [{day: '2022-01-01', value: 0}]
 
   // const data = carrot
   
@@ -21,7 +21,9 @@ const CarrotGraph = () => {
     dispatch(loadCarrot());
   }, []);
 
-  
+  // const data = props
+
+  console.log(data)
   return (
     <div style={{ height: 140 }}>
     <ResponsiveCalendar
@@ -36,8 +38,8 @@ const CarrotGraph = () => {
         "rgba(255, 95, 0, 0.8)",
         "#FF5F00",
       ]}
-      minValue={0}
-      maxValue={24}
+      minValue={1}
+      maxValue={15}
       margin={{
         top: 0,
         right: 0,

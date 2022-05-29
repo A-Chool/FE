@@ -8,7 +8,7 @@ import CarrotGraph from "../../components/graph/CarrotGraph";
 import LineGraph from "../../components/graph/LineGraph";
 
 // 리덕스 import 
-import { loadUserStudy, loadRankList } from "../../redux/modules/rank";
+import { loadUserStudy, loadRankList, loadCarrot } from "../../redux/modules/rank";
 
 // SVG import
 import studyavr from '../../assets/img/Studyavr.svg';
@@ -36,12 +36,17 @@ const UserRankingPage = () => {
   // 랭킹 데이터 볼러오기
   const rankingList = useSelector((state) => state.rank.rankList)
   
+  // const data = useSelector((state) => state.rank.carrot)
   // 상단 통계 데이터 볼러오기
   // 랭킹 통계 데이터 불러오기
   React.useEffect(() => {
     dispatch(loadUserStudy());
     dispatch(loadRankList());
+    // dispatch(loadCarrot());
   }, []);
+
+
+
   // 랜덤 숫자 불러오기
   const randomNum = Math.floor(Math.random() * 13 + 1)
 
