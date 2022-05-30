@@ -11,7 +11,30 @@ const LOAD_RANKLIST = 'LOAD_RANKLIST';
 
 // 초기값
 const initialState = {
-  rank : []
+  rank : [],
+  carrot : [
+    {
+      day: '2022-01-01', 
+      value: 0
+    },
+    {
+      day: '2022-01-02', 
+      value: 1
+    },
+  ],
+  line : {
+      usersAvg:[
+      "1:10",
+      "2:12",
+      "3:15",
+      ],
+      myTotal:[
+      "1:0",
+      "2:14",
+      "3:11",
+      ]
+    }
+  
 }
 
 // 액션 생성 함수
@@ -90,7 +113,7 @@ export default handleActions(
     }),
     [LOAD_CARROT]: (state, action) =>
       produce(state, (draft) => {
-      draft.carrot = action.payload?.carrot || [];
+      draft.carrot = action.payload?.carrot;
     }),
     [LOAD_LINE]: (state, action) =>
       produce(state, (draft) => {
