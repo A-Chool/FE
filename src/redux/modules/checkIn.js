@@ -72,7 +72,7 @@ export const userCheckIn = (week) => {
       },
     })
     .then((res) => {
-      console.log(res)
+      // console.log(res)
       dispatch(__userCheckIn(res.data))
     })
     .catch((err) => {

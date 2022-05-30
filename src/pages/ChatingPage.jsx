@@ -42,7 +42,7 @@ const ChatingPage = (props) => {
 
           //채팅 내역 불러오기
           getMessageList();
-          console.log(recv);
+          // console.log(recv);
           // if (recv.type === "ENTER") {
           setLoaded(true);
           setEnterMsg(recv);
@@ -62,7 +62,7 @@ const ChatingPage = (props) => {
       (error) => {
         if (reconnect++ < 5) {
           setTimeout(function () {
-            console.log("connection reconnect");
+            // console.log("connection reconnect");
             sock = new SockJS(devTarget);
             ws = Stomp.over(sock);
             connect();
