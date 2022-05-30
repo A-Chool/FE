@@ -23,18 +23,9 @@ const initialState = {
     },
   ],
   line : {
-      usersAvg:[
-      "1:10",
-      "2:12",
-      "3:15",
-      ],
-      myTotal:[
-      "1:0",
-      "2:14",
-      "3:11",
-      ]
+      usersAvg:[],
+      myTotal:[]
     }
-  
 }
 
 // 액션 생성 함수

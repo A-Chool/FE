@@ -31,7 +31,7 @@ const UserTeamBoard = () => {
   const [team, setTeam] = React.useState();
 
   const handleChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setTeam(event.target.value);
     dispatch(loadTeamBoard(event.target.value));
   };

@@ -61,7 +61,7 @@ const ChatDetail = (props) => {
     ws.connect(headers, subscribe, (error) => {
       if (reconnect++ < 5) {
         setTimeout(function () {
-          console.log("connection reconnect");
+          // console.log("connection reconnect");
           sock = new SockJS(devTarget);
           ws = Stomp.over(sock);
           connect();
@@ -72,7 +72,7 @@ const ChatDetail = (props) => {
 
   const subscribe = (frame) => {
     setTimeout(() => {
-      console.log("ㄴsubscribe");
+      // console.log("ㄴsubscribe");
       ws.subscribe("/sub/chat/room/" + room?.roomId, (message) => {
         const res = JSON.parse(message.body);
 

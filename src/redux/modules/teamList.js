@@ -61,8 +61,8 @@ export const getTeamList = (weekId) => {
     }
     axios.get(`https://achool.shop/api/admin/teams`, bucket)
     .then((res) => {
-      console.log(res.data)
-      console.log(weekId)
+      // console.log(res.data)
+      // console.log(weekId)
       dispatch(__loadTeamList(res.data, weekId));
     })
     .catch((err)=> {
@@ -92,8 +92,8 @@ export const addTeamList = (teamName, weekId) => {
       }
       axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
-        console.log(res.data)
-        console.log(weekId)
+        // console.log(res.data)
+        // console.log(weekId)
         dispatch(__loadTeamList(res.data, weekId));
       })
       .catch((err)=> {
@@ -126,8 +126,8 @@ export const deleteTeamList = (teamId, weekId) => {
       }
       axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
-        console.log(res.data)
-        console.log(weekId)
+        // console.log(res.data)
+        // console.log(weekId)
         dispatch(__loadTeamList(res.data, weekId));
       })
       .catch((err)=> {
@@ -159,7 +159,7 @@ export const loadMemberList = (weekId) => {
 
 // member 추가 미들웨어
 export const addMemberList = (userId, teamId, weekId) => {
-  console.log(userId, teamId, weekId)
+  // console.log(userId, teamId, weekId)
   return function (dispatch, getState, {history}) {
     if(!userId) {window.alert("유저 이름이 없습니다!")}
     const myToken = getCookie("Authorization");
@@ -180,8 +180,8 @@ export const addMemberList = (userId, teamId, weekId) => {
       }
       axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
-        console.log(res.data)
-        console.log(weekId)
+        // console.log(res.data)
+        // console.log(weekId)
         dispatch(__loadTeamList(res.data, weekId));
       })
       .catch((err)=> {
@@ -225,8 +225,8 @@ export const deleteMemberList = (memberId, userId, weekId) => {
       }
       axios.get(`https://achool.shop/api/admin/teams`, bucket)
       .then((res) => {
-        console.log(res.data)
-        console.log(weekId)
+        // console.log(res.data)
+        // console.log(weekId)
         dispatch(__loadTeamList(res.data, weekId));
       })
       .catch((err)=> {

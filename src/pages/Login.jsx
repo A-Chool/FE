@@ -92,9 +92,9 @@ const Login = () => {
                 />
                 <CollectionBtn onClick={login}>로그인</CollectionBtn>
                 <OrImg src={or} />
-                <SocialLoginKakao href={KAKAO_AUTH_URL}>
+                {/* <SocialLoginKakao href={KAKAO_AUTH_URL}>
                   <KakaoImg src={kakaoLogin} />
-                </SocialLoginKakao>
+                </SocialLoginKakao> */}
                 <InfutSingup>
                   <SignupContents>아직 계정이 없으신가요?</SignupContents>
                   <SingUpImg src={singUp} onClick={gosignup} />

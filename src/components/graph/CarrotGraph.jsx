@@ -12,7 +12,7 @@ const CarrotGraph = (props) => {
   
   const data = useSelector((state) => state?.rank?.carrot)
 
-  console.log(data)
+  // console.log(data)
   
   const carrot = [
     {
@@ -26,7 +26,7 @@ const CarrotGraph = (props) => {
   ]
 
   
-  console.log(carrot)
+  // console.log(carrot)
   // const data = () => {
   //   if (carrot === undefined){
   //     return [{day: '2022-01-01', value: 0}]
