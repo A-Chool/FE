@@ -29,11 +29,11 @@ const LineGraph = () => {
     // console.log('TotallineY은 = ' , TotallineY)
 
     const MylineData = MylineX?.map((e, idx) => {
-        return ({'x' : Number(MylineX[idx]), 'y' : Number(MylineY[idx])})
+        return ({'x' : MylineX[idx], 'y' : MylineY[idx]})
     })
 
     const TotallineData = TotallineX?.map((e, idx) => {
-        return ({'x' : Number(TotallineX[idx]), 'y' : Number(TotallineY[idx])})
+        return ({'x' : TotallineX[idx], 'y' : TotallineY[idx]})
     })
 
     
