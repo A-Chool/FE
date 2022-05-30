@@ -10,24 +10,39 @@ const CarrotGraph = (props) => {
 
   const dispatch = useDispatch();
   
-  // const carrot = useSelector((state) => state.rank.carrot)
+  const data = useSelector((state) => state?.rank?.carrot)
 
-  const data = [{day: '2022-01-01', value: 0}]
+  console.log(data)
+  
+  const carrot = [
+    {
+      day: '2022-01-01', 
+      value: 0
+    },
+    {
+      day: '2022-01-02', 
+      value: 1
+    },
+  ]
+  
+  
+  console.log(carrot)
+  // const data = () => {
+  //   if (carrot === undefined){
+  //     return [{day: '2022-01-01', value: 0}]
+  //   }
+  // };
 
-  // const data = carrot
   
   // 상단 통계 데이터 볼러오기
   React.useEffect(() => {
     dispatch(loadCarrot());
   }, []);
 
-  // const data = props
-
-  console.log(data)
   return (
     <div style={{ height: 140 }}>
     <ResponsiveCalendar
-      data={data && data}
+      data={carrot}
       from="2022-01-01"
       to="2022-12-31"
       emptyColor="#eeeeee"

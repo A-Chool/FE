@@ -29,16 +29,14 @@ const LineGraph = () => {
     // console.log('TotallineY은 = ' , TotallineY)
 
     const MylineData = MylineX?.map((e, idx) => {
-        return ({'x' : MylineX[idx], 'y' : MylineY[idx]})
+        return ({'x' : Number(MylineX[idx]), 'y' : Number(MylineY[idx])})
     })
 
     const TotallineData = TotallineX?.map((e, idx) => {
-        return ({'x' : TotallineX[idx], 'y' : TotallineY[idx]})
+        return ({'x' : Number(TotallineX[idx]), 'y' : Number(TotallineY[idx])})
     })
 
-    // console.log('MylineData은 = ' , MylineData)
-    // console.log('TotallineData은 = ' , TotallineData)
-
+    
     const total = [
         {
             id : '나의 학습시간',
@@ -49,8 +47,6 @@ const LineGraph = () => {
             data : TotallineData
         }
     ]
-
-
 
     // 상단 통계 데이터 볼러오기
     React.useEffect(() => {
