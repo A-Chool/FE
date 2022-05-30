@@ -37,11 +37,11 @@ export const loadMyPage = () => {
 
 // 수정 미들웨어
 export const editProfile = (userName, userTag, userGitHub, findKakaoId, phoneNumber) => {
-  console.log(userName, userTag, userGitHub, findKakaoId, phoneNumber);
+  // console.log(userName, userTag, userGitHub, findKakaoId, phoneNumber);
   return function (dispatch, getState, { history }) {
     // if(!) {window.alert("팀 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");
-    console.log(myToken);
+    // console.log(myToken);
     axios({
       method: "put",
       url: `https://achool.shop/api/user/mypage`,
@@ -55,7 +55,7 @@ export const editProfile = (userName, userTag, userGitHub, findKakaoId, phoneNum
       headers: { Authorization: `Bearer ${myToken}` },
     })
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         dispatch(__editProfile(res.data));
         // const bucket = {
         //   headers : {"Authorization" : `Bearer ${myToken}`}

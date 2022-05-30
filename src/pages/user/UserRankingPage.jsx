@@ -36,21 +36,15 @@ const UserRankingPage = () => {
   // 랭킹 데이터 볼러오기
   const rankingList = useSelector((state) => state.rank.rankList)
   
-  // const data = useSelector((state) => state.rank.carrot)
   // 상단 통계 데이터 볼러오기
   // 랭킹 통계 데이터 불러오기
   React.useEffect(() => {
     dispatch(loadUserStudy());
     dispatch(loadRankList());
-    // dispatch(loadCarrot());
   }, []);
-
-
 
   // 랜덤 숫자 불러오기
   const randomNum = Math.floor(Math.random() * 13 + 1)
-
-  // console.log(randomNum)
   
   return (
     <React.Fragment>
@@ -130,6 +124,7 @@ const UserRankingPage = () => {
                 </MonthDataZone>
             </GraphWrapper>
             </div>
+
 
             <RankingWrapper>
               <RankingTitle>항해99 주간 학습 랭킹</RankingTitle>
