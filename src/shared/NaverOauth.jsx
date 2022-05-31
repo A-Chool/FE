@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { actionCreators as userActions } from "../redux/modules/user";
 import { useDispatch } from "react-redux";
 
-const KakaoOauth = (props) => {
+const NaverOauth = (props) => {
   const dispatch = useDispatch();
   const code = new URL(window.location.href).searchParams.get("code");
 
@@ -16,4 +16,4 @@ const KakaoOauth = (props) => {
   return <></>;
 };
 
-export default KakaoOauth;
+export default NaverOauth;
