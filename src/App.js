@@ -26,7 +26,8 @@ import "dayjs/locale/ko";
 import ChatContainer from "./components/chat/ChatContainer";
 import { actionCreators as userActions } from "./redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
-import KakaoOauth from "./pages/KakaoOauth";
+import KakaoOauth from "./shared/KakaoOauth";
+import NaverOauth from "./shared/NaverOauth";
 import { getCookie } from "./shared/Cookie";
 import UserRankingPage from "./pages/user/UserRankingPage";
 
@@ -58,6 +59,7 @@ function App() {
           <Route path="/" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
+          <Route path="/api/user/naver/callback" exact component={NaverOauth} />
           <Route path="/admin" exact component={AdminLogin} />
           <Route path="/chat" exact component={ChatingPage} />
           <Route path="/my" exact component={MyPage} />
@@ -66,7 +68,6 @@ function App() {
           <Route path="/check-in" exact component={UserCheckIn} />
           <Route path="/team-board" exact component={UserTeamBoard} />
           <Route path="/rank" exact component={UserRankingPage} />
-          <Route path="/api/user/kakao/callback" exact component={KakaoOauth} />
           {/* 지정 외 페이지 찾을때, not found 페이지 */}
           <Route path="/*" component={NotFound} />
         </Switch>

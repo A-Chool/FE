@@ -9,11 +9,11 @@ const KakaoOauth = (props) => {
 
   useEffect(() => {
     if (!!code) {
-      dispatch(userActions.kakaoLoginDB(code));
+      dispatch(userActions.naverLoginDB(code));
     }
   }, [code]);
 
-  return <div />;
+  return;
 };
 
 export default KakaoOauth;

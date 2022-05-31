@@ -15,7 +15,7 @@ import kakaoLogin from "../assets/img/kakaoLogin.svg";
 import or from "../assets/img/or.svg";
 import singUp from "../assets/img/singUp.svg";
 
-import { KAKAO_AUTH_URL } from "../api/Oauth";
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../api/Oauth";
 import AuthGuard from "../shared/AuthGuard";
 
 const token = "3fa3aa6d41e97b2e2d44ea7d414b7a2b";
@@ -93,6 +93,9 @@ const Login = () => {
                 <CollectionBtn onClick={login}>로그인</CollectionBtn>
                 <OrImg src={or} />
                 <SocialLoginKakao href={KAKAO_AUTH_URL}>
+                  <KakaoImg src={kakaoLogin} />
+                </SocialLoginKakao>
+                <SocialLoginKakao href={NAVER_AUTH_URL}>
                   <KakaoImg src={kakaoLogin} />
                 </SocialLoginKakao>
                 <InfutSingup>
