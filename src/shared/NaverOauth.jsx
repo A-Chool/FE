@@ -13,7 +13,7 @@ const KakaoOauth = (props) => {
     }
   }, [code]);
 
-  return;
+  return <></>;
 };
 
 export default KakaoOauth;
