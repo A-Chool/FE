@@ -144,11 +144,8 @@ const kakaoLoginDB = (code) => {
           // console.log("userToken 성공", userToken);
           const decoded = jwt_decode(userToken);
           // console.log("decoded 성공", decoded);
-          localStorage.setItem("kakaoToken", userToken);
-          localStorage.setItem("test", "test");
           setCookie("userToken", userToken);
-          setCookie("test", "test");
-          Cookies.set("kakaoToken-library", userToken);
+          // Cookies.set("userToken", userToken);
 
           // EXPIRED_DATE: 1653700338
           // USER_EMAIL: ""
