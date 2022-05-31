@@ -143,7 +143,7 @@ const kakaoLoginDB = (code) => {
           // console.log("userToken 성공", userToken);
           const decoded = jwt_decode(userToken);
           // console.log("decoded 성공", decoded);
-          localStorage.setItem("kakaoToken", JSON.stringify(decoded));
+          localStorage.setItem("kakaoToken", userToken);
           localStorage.setItem("test", "test");
           setCookie("userToken", userToken);
           setCookie("test", "test");
