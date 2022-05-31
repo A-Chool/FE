@@ -5,6 +5,7 @@ import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import api, { baseUrl } from "../../api/api";
 import cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
+import Cookies from "js-cookie";
 // 액션
 
 const LOG_IN = "LOG_IN";
@@ -147,6 +148,7 @@ const kakaoLoginDB = (code) => {
           localStorage.setItem("test", "test");
           setCookie("userToken", userToken);
           setCookie("test", "test");
+          Cookies.set("kakaoToken-library", userToken);
 
           // EXPIRED_DATE: 1653700338
           // USER_EMAIL: ""
