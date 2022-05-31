@@ -143,13 +143,16 @@ const kakaoLoginDB = (code) => {
           // console.log("userToken 성공", userToken);
           const decoded = jwt_decode(userToken);
           // console.log("decoded 성공", decoded);
-          localStorage.setItem("kakaoToken", decoded);
+          localStorage.setItem("kakaoToken", JSON.stringify(decoded));
+          localStorage.setItem("test", "test");
+          setCookie("userToken", userToken);
+          setCookie("test", "test");
+
           // EXPIRED_DATE: 1653700338
           // USER_EMAIL: ""
           // USER_LEVEL: 0
           // USER_NAME: ""
           // iss: "Mr.A-Chool"
-          // setCookie("userToken", userToken);
           dispatch(
             logIn({
               expiredDate: decoded.EXPIRED_DATE,
