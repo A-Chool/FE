@@ -15,6 +15,7 @@ import kakaoLogin from "../assets/img/kakaoLogin.svg";
 import naverLogin from "../assets/img/naverLogin.png";
 import or from "../assets/img/or.svg";
 import singUp from "../assets/img/singUp.svg";
+import naver from '../assets/img/naver.svg'
 
 import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../api/Oauth";
 import AuthGuard from "../shared/AuthGuard";
@@ -97,7 +98,7 @@ const Login = () => {
                   <SocialImg src={kakaoLogin} />
                 </SocialLoginKakao>
                 <SocialLoginKakao href={NAVER_AUTH_URL} style={{ position: "relative" }}>
-                  <SocialImg src={naverLogin} style={{ width: 380, height: 40, objectFit: "contain" }} />
+                  <SocialImg src={naver} style={{ width: 380, height: 40, objectFit: "contain" }} />
                 </SocialLoginKakao>
                 <InfutSingup>
                   <SignupContents>아직 계정이 없으신가요?</SignupContents>
