@@ -55,7 +55,7 @@ const UserWorkSpace = (props) => {
         {
           update === false
           ? <Box>{split}</Box>
-          :<UpdateBox defaultValue={workSpace} onChange={handleChange}></UpdateBox>
+          :<UpdateBox defaultValue={workSpace} onChange={handleChange} maxLength="1000"></UpdateBox>
         }    
 
     </WorkspaceWrapper>

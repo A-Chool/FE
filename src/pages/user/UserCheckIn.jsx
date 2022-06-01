@@ -14,14 +14,22 @@ import jwt_decode from "jwt-decode";
 
 import { history } from "../../redux/configureStore";
 
+import { getUserId, getCookie } from "../../shared/Cookie";
+
+import axios from 'axios';
+
+import { Link, Redirect, useLocation } from "react-router-dom";
+
+import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
+
 const UserCheckIn = () => {
   const dispatch = useDispatch();
 
   // checkInList 조회를 위한 useEffect
   useEffect(() => {
-    setInterval(() => {
+    // setInterval(() => {
       dispatch(loadCheckList());
-    }, 1000*60*5);
+    // }, 1000*60*5);
   }, []);
 
   const teamList = useSelector((state) => state.checkIn.checkInList);
@@ -32,7 +40,41 @@ const UserCheckIn = () => {
 
   const parts = value.split('; userToken=');
 
-  const decode = jwt_decode ( parts[1] ) ; 
+  const [decode, setDecode] = React.useState("");
+
+  const [sseData, setSseData] = React.useState(null);
+  // console.log(sseData)
+
+  useEffect(() => {
+    const userToken = getCookie("userToken");
+    setDecode(jwt_decode(userToken));
+
+    const userSSEId = decode.EXPIRED_DATE;
+  
+    const myToken = getCookie("Authorization")
+  
+    const EventSource = EventSourcePolyfill || NativeEventSource;
+    
+    const source = new EventSource(`https://achool.shop/api/subscribe/${userSSEId}`, {headers : {Authorization : `Bearer ${myToken}`},});
+    // console.log(source)
+  
+    source.addEventListener('message', function(e) {
+      setSseData(e.data);
+      // console.log("data는 =", e.data);
+    });
+
+    source.addEventListener('open', function(e) {
+      // Connection was opened.
+    }, false);
+    
+    source.addEventListener('error', function(e) {
+      if (e.readyState == EventSource.CLOSED) {
+        // Connection was closed.
+      }
+    }, false);
+  }, []);
+
+  
 
   return (
     <React.Fragment>
@@ -61,7 +103,7 @@ const UserCheckIn = () => {
               {
                 teamList.map((e, idx)=>{
                   return(
-                    <UserTeamList key={idx} e={e}></UserTeamList>
+                    <UserTeamList key={idx} e={e} sseData={sseData}></UserTeamList>
                   )
                 })
               }

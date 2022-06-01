@@ -57,7 +57,7 @@ const UserGroundRole = (props) => {
         {
           update === false
           ? <Box>{split}</Box>
-          :<UpdateBox defaultValue={groundRule} onChange={handleChange}></UpdateBox>
+          :<UpdateBox defaultValue={groundRule} onChange={handleChange} maxLength="1000"></UpdateBox>
         }    
 
     </GroundRuleWrapper>

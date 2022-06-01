@@ -236,8 +236,6 @@ const LogOutBtn = styled.button`
   color: #ffffff;
   font-weight: 700;
   font-size: 16px;
-  font-family: Roboto;
-  font-style: normal;
   cursor : pointer;
 `;
 
