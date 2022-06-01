@@ -20,7 +20,7 @@ export const phoneCheck = (phone) => {
 //핸드폰번호는 000-0000-0000 의 형태로 숫자를 입력해주세요
 
 export const nickCheck = (nickname) => {
-  let regNick = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,7}$/;
+  let regNick = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,7}$/;
   return regNick.test(nickname);
 };
 

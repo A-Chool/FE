@@ -7,6 +7,11 @@ const UserTeamList = (props) => {
 
   const userCheckInList = props.e.memberList
 
+  const sse = props.sseData
+
+  // console.log(userCheckInList)
+  // console.log(sse)
+
   return (
     <TeamTable>
       <TeamNameTable>{props.e.teamName}</TeamNameTable>
@@ -14,7 +19,7 @@ const UserTeamList = (props) => {
         {
           userCheckInList.map((e, idx)=>{
             return(
-              <UserCheckInList key={idx} e={e}></UserCheckInList>
+              <UserCheckInList key={idx} e={e} sse={sse}></UserCheckInList>
             )
           })
         }

@@ -8,7 +8,7 @@ import CarrotGraph from "../../components/graph/CarrotGraph";
 import LineGraph from "../../components/graph/LineGraph";
 
 // 리덕스 import 
-import { loadUserStudy, loadRankList } from "../../redux/modules/rank";
+import { loadUserStudy, loadRankList, loadCarrot } from "../../redux/modules/rank";
 
 // SVG import
 import studyavr from '../../assets/img/Studyavr.svg';
@@ -42,10 +42,9 @@ const UserRankingPage = () => {
     dispatch(loadUserStudy());
     dispatch(loadRankList());
   }, []);
+
   // 랜덤 숫자 불러오기
   const randomNum = Math.floor(Math.random() * 13 + 1)
-
-  // console.log(randomNum)
   
   return (
     <React.Fragment>
@@ -125,6 +124,7 @@ const UserRankingPage = () => {
                 </MonthDataZone>
             </GraphWrapper>
             </div>
+
 
             <RankingWrapper>
               <RankingTitle>항해99 주간 학습 랭킹</RankingTitle>

@@ -34,7 +34,6 @@ const __checkTodoList = createAction(CHECK_TODO_LIST, (todoId) => ({todoId}))
 
 // 유저 팀보드 불러오기 미들웨어
 export const loadTeamBoard = (teamId) => {
-  console.log(teamId)
   return function (dispatch, getState, { history }) {
     const myToken = getCookie("Authorization");
     const bucket = {
@@ -69,7 +68,6 @@ export const setWeekTeamBoard = (teamId) => {
 
 // 유저 팀보드 그라운드룰 수정 미들웨어
 export const editGroundRule = (teamId, groundRule, weekId) => {
-  console.log(teamId, groundRule)
   return function (dispatch, getState, {history}) {
     if(!teamId) {window.alert("팀 아이디가 없습니다!")}
     const myToken = getCookie("Authorization");

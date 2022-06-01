@@ -89,6 +89,10 @@ const TodoWrapper = styled.div`
   height : 180px;
   background-color: #FFFFFF;
   border-radius: 16px;
+  @media screen and (min-width: 1920px) {
+    height: 300px;
+    font-size: 16px;
+  }
   @media screen and (min-width: 2560px) {
     height: 400px;
   }
@@ -119,6 +123,9 @@ overflow-x: hidden;
 }
 &::-webkit-scrollbar-track {
   background: transition;
+}
+@media screen and (min-width: 1920px) {
+  height: 235px;
 }
 @media screen and (min-width: 2560px) {
   height: 340px;

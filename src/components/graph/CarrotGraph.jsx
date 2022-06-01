@@ -6,21 +6,39 @@ import { ResponsiveCalendar } from '@nivo/calendar'
 
 import { loadCarrot } from "../../redux/modules/rank";
 
-const CarrotGraph = () => {
+const CarrotGraph = (props) => {
 
   const dispatch = useDispatch();
   
-  const carrot = useSelector((state) => state?.rank?.carrot)
+  const data = useSelector((state) => state?.rank?.carrot)
+
+  // console.log(data)
+  
+  const carrot = [
+    {
+      day: '2022-01-01', 
+      value: 0
+    },
+    {
+      day: '2022-01-02', 
+      value: 1
+    },
+  ]
+
   
   // console.log(carrot)
+  // const data = () => {
+  //   if (carrot === undefined){
+  //     return [{day: '2022-01-01', value: 0}]
+  //   }
+  // };
 
-  const data = carrot
   
   // 상단 통계 데이터 볼러오기
   React.useEffect(() => {
     dispatch(loadCarrot());
   }, []);
-  
+
   return (
     <div style={{ height: 140 }}>
     <ResponsiveCalendar

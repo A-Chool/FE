@@ -36,9 +36,7 @@ const LineGraph = () => {
         return ({'x' : TotallineX[idx], 'y' : TotallineY[idx]})
     })
 
-    // console.log('MylineData은 = ' , MylineData)
-    // console.log('TotallineData은 = ' , TotallineData)
-
+    
     const total = [
         {
             id : '나의 학습시간',
@@ -49,8 +47,6 @@ const LineGraph = () => {
             data : TotallineData
         }
     ]
-
-
 
     // 상단 통계 데이터 볼러오기
     React.useEffect(() => {
