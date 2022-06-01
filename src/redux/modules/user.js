@@ -5,8 +5,8 @@ import { setCookie, getCookie, deleteCookie } from "../../shared/Cookie";
 import api, { baseUrl } from "../../api/api";
 import cookies from "universal-cookie";
 import jwt_decode from "jwt-decode";
-// 액션
 
+// 액션
 const LOG_IN = "LOG_IN";
 const ADMINLOG_IN = "ADMINLOG_IN";
 const LOG_OUT = "LOG_OUT";
@@ -138,18 +138,16 @@ const kakaoLoginDB = (code) => {
       .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
       .then((response) => {
         if (Math.floor(response.status / 100) === 2) {
-          console.log("로그인 성공", response);
+          console.log("카카오 로그인 성공", response);
           const userToken = response.headers?.authorization?.split(" ")[1];
-          // console.log("userToken 성공", userToken);
           const decoded = jwt_decode(userToken);
-          // console.log("decoded 성공", decoded);
-          localStorage.setItem("kakaoToken", decoded);
+          setCookie("userToken", userToken);
+
           // EXPIRED_DATE: 1653700338
           // USER_EMAIL: ""
           // USER_LEVEL: 0
           // USER_NAME: ""
           // iss: "Mr.A-Chool"
-          // setCookie("userToken", userToken);
           dispatch(
             logIn({
               expiredDate: decoded.EXPIRED_DATE,
@@ -162,7 +160,42 @@ const kakaoLoginDB = (code) => {
         }
       })
       .catch((err) => {
-        console.log("소셜로그인 에러", err);
+        console.log("카카오 로그인 에러", err);
+        window.alert("로그인에 실패하였습니다.");
+        history.replace("/");
+      });
+  };
+};
+
+const naverLoginDB = (code) => {
+  return async function (dispatch, getState, { history }) {
+    await axios
+      .get(`${baseUrl}/api/user/naver/callback?code=${code}`)
+      .then((response) => {
+        if (Math.floor(response.status / 100) === 2) {
+          console.log("네이버 로그인 성공", response);
+          const userToken = response.headers?.authorization?.split(" ")[1];
+          const decoded = jwt_decode(userToken);
+          setCookie("userToken", userToken);
+
+          // EXPIRED_DATE: 1653700338
+          // USER_EMAIL: ""
+          // USER_LEVEL: 0
+          // USER_NAME: ""
+          // iss: "Mr.A-Chool"
+          dispatch(
+            logIn({
+              expiredDate: decoded.EXPIRED_DATE,
+              email: decoded.USER_EMAIL,
+              name: decoded.USER_NAME,
+              level: decoded.USER_LEVEL,
+            })
+          );
+          history.replace("/check-in");
+        }
+      })
+      .catch((err) => {
+        console.log("네이버 로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
         history.replace("/");
       });
@@ -256,6 +289,7 @@ const actionCreators = {
   signupDB,
   getMyselfDB,
   kakaoLoginDB,
+  naverLoginDB,
   adminloginDB,
   // loadToken,
   // withdrawalAC,

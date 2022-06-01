@@ -12,10 +12,12 @@ import { adminloginDB } from "../redux/modules/user";
 import loginPage from "../assets/img/loginPage.png";
 import logo from "../assets/img/로고.svg";
 import kakaoLogin from "../assets/img/kakaoLogin.svg";
+import naverLogin from "../assets/img/naverLogin.png";
 import or from "../assets/img/or.svg";
 import singUp from "../assets/img/singUp.svg";
+import naver from '../assets/img/naver.svg'
 
-import { KAKAO_AUTH_URL } from "../api/Oauth";
+import { KAKAO_AUTH_URL, NAVER_AUTH_URL } from "../api/Oauth";
 import AuthGuard from "../shared/AuthGuard";
 
 const token = "3fa3aa6d41e97b2e2d44ea7d414b7a2b";
@@ -92,9 +94,12 @@ const Login = () => {
                 />
                 <CollectionBtn onClick={login}>로그인</CollectionBtn>
                 <OrImg src={or} />
-                {/* <SocialLoginKakao href={KAKAO_AUTH_URL}>
-                  <KakaoImg src={kakaoLogin} />
-                </SocialLoginKakao> */}
+                <SocialLoginKakao href={KAKAO_AUTH_URL}>
+                  <SocialImg src={kakaoLogin} />
+                </SocialLoginKakao>
+                <SocialLoginKakao href={NAVER_AUTH_URL} style={{ position: "relative" }}>
+                  <SocialImg src={naver} style={{ width: 380, height: 40, objectFit: "contain" }} />
+                </SocialLoginKakao>
                 <InfutSingup>
                   <SignupContents>아직 계정이 없으신가요?</SignupContents>
                   <SingUpImg src={singUp} onClick={gosignup} />
@@ -270,7 +275,7 @@ const UserInput = styled.input`
   }
 `;
 
-const KakaoImg = styled.img`
+const SocialImg = styled.img`
   margin: 8px 0 8px;
   @media screen and (min-width: 2560px) {
     width: 580px;

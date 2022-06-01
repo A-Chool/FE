@@ -179,7 +179,9 @@ const WorkspaceWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
+  @media screen and (min-width: 1920px) {
+    height: 300px;
+  }
   @media screen and (min-width: 2560px) {
     height: 430px;
   }

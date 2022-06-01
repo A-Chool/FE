@@ -69,6 +69,10 @@ const GroundRuleWrapper = styled.div`
   height : 180px;
   background-color: #FFFFFF;
   border-radius: 16px;
+  @media screen and (min-width: 1920px) {
+    height: 300px;
+    font-size: 16px;
+  }
   @media screen and (min-width: 2560px) {
     height: 400px;
   }
@@ -115,6 +119,10 @@ const Box = styled.div`
   &::-webkit-scrollbar-track {
     background: transition;
   }
+  @media screen and (min-width: 1920px) {
+    height: 235px;
+    font-size: 16px;
+  }
   @media screen and (min-width: 2560px) {
     height: 330px;
     font-size: 20px;
@@ -130,6 +138,10 @@ const UpdateBox = styled.textarea`
   border : 1px solid black;
   border-radius : 10px;
   resize : none;
+  @media screen and (min-width: 1920px) {
+    height: 235px;
+    font-size: 16px;
+  }
   @media screen and (min-width: 2560px) {
     height: 330px;
     font-size: 20px;
