@@ -97,8 +97,8 @@ const Login = () => {
                 <SocialLoginKakao href={KAKAO_AUTH_URL}>
                   <SocialImg src={kakaoLogin} />
                 </SocialLoginKakao>
-                <SocialLoginKakao href={NAVER_AUTH_URL} style={{ position: "relative" }}>
-                  <SocialImg src={naver} style={{ width: 380, height: 40, objectFit: "contain" }} />
+                <SocialLoginKakao href={NAVER_AUTH_URL}>
+                  <SocialImg src={naver}/>
                 </SocialLoginKakao>
                 <InfutSingup>
                   <SignupContents>아직 계정이 없으신가요?</SignupContents>

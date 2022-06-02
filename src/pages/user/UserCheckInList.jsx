@@ -33,11 +33,11 @@ const UserCheckInList = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-    // const sseEmail = props.sse !== null ? props.sse.split(",")[1].split(":")[1] : props.sse;
-    // const sseOnline = props.sse !== null ? props.sse.split(",")[4].split(":")[1] : props.sse;
-    // const BooleanSseOnline = sseOnline === "true" ? true : false
-    // const sseLate = props.sse !== null ? props.sse.split(",")[5].split(":")[1].split("}")[0] : props.sse;
-    // const BooleanSseLate = sseLate === "true" ? true : false
+    const sseEmail = props.sse !== null ? props.sse.split(",")[1].split(":")[1] : props.sse;
+    const sseOnline = props.sse !== null ? props.sse.split(",")[4].split(":")[1] : props.sse;
+    const BooleanSseOnline = sseOnline === "true" ? true : false
+    const sseLate = props.sse !== null ? props.sse.split(",")[5].split(":")[1].split("}")[0] : props.sse;
+    const BooleanSseLate = sseLate === "true" ? true : false
   
     // console.log(BooleanSseLate)
     // console.log(sseOnline)
@@ -47,19 +47,19 @@ const UserCheckInList = (props) => {
     // console.log("결과는3333? =", '"' + props.e.userEmail + '"')
     // console.log("결과는? =",sseEmail === '"' + props.e.userEmail + '"')
     
-    // const SSE = (e) => {
-    //   if (sseEmail === '"' + props.e.userEmail + '"'){
-    //     return {...props.e, online : BooleanSseOnline, lateCheck : BooleanSseLate}
-    //   } 
-    //   return props.e
-    // }
+    const SSE = (e) => {
+      if (sseEmail === '"' + props.e.userEmail + '"'){
+        return {...props.e, online : BooleanSseOnline, lateCheck : BooleanSseLate}
+      } 
+      return props.e
+    }
     
     // console.log(SSE())
 
   return (
     <UserTag style={{
-      backgroundColor : props.e.online === false ? 'rgba(224, 224, 224, 0.5)' : props.e.lateCheck === false ? 'white' : 'rgba(242, 3, 3, 0.1)' ,
-      border : props.e.online === false ? '1.5px solid #C4C4C4' : props.e.lateCheck === false ? '1.5px solid #3B879B' : '1.5px solid #F20303' ,
+      backgroundColor : SSE().online === false ? 'rgba(224, 224, 224, 0.5)' : SSE().lateCheck === false ? 'white' : 'rgba(242, 3, 3, 0.1)' ,
+      border : SSE().online === false ? '1.5px solid #C4C4C4' : SSE().lateCheck === false ? '1.5px solid #3B879B' : '1.5px solid #F20303' ,
       borderRadius : '24px'
       }}>
       <UserDetail onClick={handleOpen}>{props.e.userName}</UserDetail>

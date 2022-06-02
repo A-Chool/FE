@@ -45,7 +45,7 @@ const LineGraph = () => {
         {
             id : '유저 평균',
             data : TotallineData
-        }
+        },
     ]
 
     // 상단 통계 데이터 볼러오기
@@ -63,7 +63,7 @@ return (
             type: 'linear',
             min: '0',
             max: '24',
-            stacked: true,
+            stacked: false,
             reverse: false
         }}
         yFormat=" >-.2f"
@@ -92,8 +92,8 @@ return (
             "rgba(59, 135, 155, 0.5)",
         ]}
         lineWidth={4}
-        enablePoints={false}
-        pointSize={10}
+        enablePoints={true}
+        pointSize={0}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={2}
         pointBorderColor={{ from: 'serieColor' }}
