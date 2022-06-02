@@ -75,6 +75,10 @@ const UserNameTable = styled.div`
     background: black;
     border-radius: 50px;
   }
+  @media screen and (min-width: 2560px) {
+    width : 384px;
+    height: 258px;
+  }
 `
 
 export default UserTeamList;

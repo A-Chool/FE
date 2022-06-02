@@ -45,34 +45,34 @@ const UserCheckIn = () => {
   const [sseData, setSseData] = React.useState(null);
   // console.log(sseData)
 
-  // useEffect(() => {
-  //   const userToken = getCookie("userToken");
-  //   setDecode(jwt_decode(userToken));
+  useEffect(() => {
+    const userToken = getCookie("userToken");
+    setDecode(jwt_decode(userToken));
 
-  //   const userSSEId = decode.EXPIRED_DATE;
+    const userSSEId = decode.EXPIRED_DATE;
   
-  //   const myToken = getCookie("Authorization")
+    const myToken = getCookie("Authorization")
   
-  //   const EventSource = EventSourcePolyfill || NativeEventSource;
+    const EventSource = EventSourcePolyfill || NativeEventSource;
     
-  //   const source = new EventSource(`https://achool.shop/api/subscribe/${userSSEId}`, {headers : {Authorization : `Bearer ${myToken}`},});
-  //   // console.log(source)
+    const source = new EventSource(`https://achool.shop/api/subscribe/${userSSEId}`, {headers : {Authorization : `Bearer ${myToken}`},});
+    // console.log(source)
   
-  //   source.addEventListener('message', function(e) {
-  //     setSseData(e.data);
-  //     // console.log("data는 =", e.data);
-  //   });
+    source.addEventListener('message', function(e) {
+      setSseData(e.data);
+      // console.log("data는 =", e.data);
+    });
 
-  //   source.addEventListener('open', function(e) {
-  //     // Connection was opened.
-  //   }, false);
+    source.addEventListener('open', function(e) {
+      // Connection was opened.
+    }, false);
     
-  //   source.addEventListener('error', function(e) {
-  //     if (e.readyState == EventSource.CLOSED) {
-  //       // Connection was closed.
-  //     }
-  //   }, false);
-  // }, []);
+    source.addEventListener('error', function(e) {
+      if (e.readyState == EventSource.CLOSED) {
+        // Connection was closed.
+      }
+    }, false);
+  }, []);
 
   
 
