@@ -94,7 +94,6 @@ const UserTodoList = (props) => {
       :
       <></>
     }
-          
   </Todo>
   );
 };
