@@ -43,7 +43,7 @@ const loginDB = (userId, password) => {
       })
       .then((response) => {
         if (Math.floor(response.status / 100) === 2) {
-          console.log("로그인 성공", response);
+          // console.log("로그인 성공", response);
           const userToken = response.headers?.authorization?.split(" ")[1];
           const decoded = jwt_decode(userToken);
           // EXPIRED_DATE: 1653700338
@@ -110,7 +110,7 @@ export const adminloginDB = (userId, password) => {
         password: password,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         dispatch(
           adminlogIn({
             is_loading: false,
@@ -135,19 +135,13 @@ export const adminloginDB = (userId, password) => {
 const kakaoLoginDB = (code) => {
   return async function (dispatch, getState, { history }) {
     await axios
-      .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
+    .get(`${baseUrl}/api/user/kakao/callback?code=${code}`)
       .then((response) => {
         if (Math.floor(response.status / 100) === 2) {
-          console.log("카카오 로그인 성공", response);
+          // console.log("카카오 로그인 성공", response);
           const userToken = response.headers?.authorization?.split(" ")[1];
           const decoded = jwt_decode(userToken);
           setCookie("userToken", userToken);
-
-          // EXPIRED_DATE: 1653700338
-          // USER_EMAIL: ""
-          // USER_LEVEL: 0
-          // USER_NAME: ""
-          // iss: "Mr.A-Chool"
           dispatch(
             logIn({
               expiredDate: decoded.EXPIRED_DATE,
@@ -163,7 +157,7 @@ const kakaoLoginDB = (code) => {
         console.log("카카오 로그인 에러", err);
         window.alert("로그인에 실패하였습니다.");
         history.replace("/");
-      });
+    });
   };
 };
 
@@ -173,7 +167,7 @@ const naverLoginDB = (code) => {
       .get(`${baseUrl}/api/user/naver/callback?code=${code}`)
       .then((response) => {
         if (Math.floor(response.status / 100) === 2) {
-          console.log("네이버 로그인 성공", response);
+          // console.log("네이버 로그인 성공", response);
           const userToken = response.headers?.authorization?.split(" ")[1];
           const decoded = jwt_decode(userToken);
           setCookie("userToken", userToken);
@@ -214,7 +208,7 @@ const signupDB = (email, userName, userPw, userPwCheck, phoneNumber) => {
         phoneNumber: phoneNumber,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         window.alert("회원가입을 축하합니다!");
         history.push("/");
       })
