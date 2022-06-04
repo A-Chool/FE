@@ -46,7 +46,7 @@
 
 | 이름     | 구현기능                                                | 포지션     |
 |:--------:|:----------------------------------------------------------|:-----------:|
-| 이경태🔰 | Admin page : <p>유저관리, 팀관리</p> Client page : <p>체크인 / 체크아웃, 팀 대시보드, 학습통계 / 랭킹 </p>                  | Frontend     |
+| 이경태🔰 | Admin page : <p>유저관리, 팀관리</p> Client page : <p>체크인 / 체크아웃, 팀 대시보드, 학습통계 / 랭킹 </p> Common : <p>CI/CD</p>                 | Frontend     |
 | 최경민   | Client page : <p>채팅,프로필 수정</p>       | Frontend     |
 | 김호빈   | Admin page : <p>주차/멤버/팀 조회, 추가, 삭제, 수정</p> Client page : <p>팀 대시보드, Redis 를 이용한 채팅, 랭킹</p> Common : <p>Jmeter Test</p>| Backend     |
 | 심현웅   | Admin page : <p>전체 유저 조회, 삭제, 권한 변경</p> Client page : <p>체크인 시스템, 학습통계, 소셜로그인(kakao, naver),</p><p>마이페이지 이미지 업로드, 수정, 태그</p>Common : <p>CI/CD, RefreshToken, Security, SSL</p>                     | Backend |
@@ -88,24 +88,28 @@
 > ## Frontend
 
 <p align="center">
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-<img src="https://img.shields.io/badge/Axios-764ABC?style=for-the-badge&logo=Axios&logoColor=white">
+
 <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-  
-<br>
-<img src="https://img.shields.io/badge/WebRTC-333333?style=for-the-badge&logo=WebRTC&logoColor=white">
-<img src="https://img.shields.io/badge/Route53-E68B49?style=for-the-badge&logo=Route53s&logoColor=white">
-<img src="https://img.shields.io/badge/Amplify-FBBD62?style=for-the-badge&logo=Amplify&logoColor=white">
-  
-<br>
 <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
+  
+<br>
 
- <br>
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=black">
  <img src="https://img.shields.io/badge/Redux-764ABC?style=for-the-badge&logo=Redux&logoColor=white"> 
+<img src="https://img.shields.io/badge/Axios-764ABC?style=for-the-badge&logo=Axios&logoColor=white">
+  
+<br>
+
  <img src="https://img.shields.io/badge/Styled Components-F893D1?style=for-the-badge&logo=styledComponents&logoColor=white">
  <img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=Socket.io&logoColor=white">
+
+ <br>
+
+<img src="https://img.shields.io/badge/Route53-E68B49?style=for-the-badge&logo=Route53s&logoColor=white">
+<img src="https://img.shields.io/badge/Amplify-FBBD62?style=for-the-badge&logo=Amplify&logoColor=white">
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/Notion-181818?style=for-the-badge&logo=Notion&logoColor=white">
   
 <br>
 <br>
