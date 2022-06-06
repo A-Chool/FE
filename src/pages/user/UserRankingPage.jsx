@@ -146,7 +146,7 @@ const UserRankingPage = () => {
                         </RankingNum>
                         <RankingName>{e.value.userName}</RankingName>
                         <RankingTime idx={idx}>
-                          {("0" + Math.floor((e.score / 3600) % 60)).slice(-2)}h
+                          {("0" + Math.floor((e.score / 3600))).slice(-2)}h
                           {("0" + Math.floor((e.score / 60) % 60)).slice(-2)}m
                         </RankingTime>
                       </RankingListData>
