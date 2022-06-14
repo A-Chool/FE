@@ -111,15 +111,6 @@ export default handleActions(
       produce(state, (draft) => {
         draft.userInfo.userImage = action.payload.userImage;
       }),
-    // [EDIT_TODO_LIST]: (state, action) =>
-    //   produce(state, (draft) => {
-    //   draft.teamBoard.toDoList = state.teamBoard.toDoList.map((e) => {
-    //     if (e.todoId === action.payload.todoId.todoId){
-    //       return {...e, todoContent : action.payload.todoId.todoContent}
-    //     }
-    //     return e
-    //     })
-    // }),
   },
   initialState
 );
