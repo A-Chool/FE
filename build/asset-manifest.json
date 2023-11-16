@@ -1,20 +1,31 @@
 {
   "files": {
-    "main.css": "/static/css/main.42453911.css",
-    "main.js": "/static/js/main.2f4edf95.js",
+    "main.css": "/static/css/main.816053a2.css",
+    "main.js": "/static/js/main.f042ac6b.js",
     "static/js/787.a68f3164.chunk.js": "/static/js/787.a68f3164.chunk.js",
     "static/media/loginPage.png": "/static/media/loginPage.61a93dbe30a0cb2fdaef.png",
+    "static/media/notFound.png": "/static/media/notFound.fc04cdcf245d148586a7.png",
+    "static/media/naverLogin.png": "/static/media/naverLogin.a0ae8cc07be2ebc5ec1d.png",
+    "static/media/3rd.svg": "/static/media/3rd.915d18965d6df7de3630487d0375dae1.svg",
     "static/media/todo.svg": "/static/media/todo.e4154f7a929976895a410d2b3783a120.svg",
+    "static/media/mascotCarrot.svg": "/static/media/mascotCarrot.19c5dae43af2aefd87fbb13be0b2f943.svg",
+    "static/media/2nd.svg": "/static/media/2nd.25bf098deb5a0f4e6bb1d6e0825c6193.svg",
     "static/media/mascot.svg": "/static/media/mascot.4d72d3211d48ea5416430b306ae16211.svg",
     "static/media/로고.svg": "/static/media/로고.86bdb562ff488aebeea59947df59c1bc.svg",
+    "static/media/1st.svg": "/static/media/1st.088bbb07ca77bec6e779dfcedb9331db.svg",
+    "static/media/carrotImg.svg": "/static/media/carrotImg.9fcac9acf5e715cefeaab530a922aa83.svg",
     "static/media/studydata.svg": "/static/media/studydata.22cef0357714c3dd2a351ed746f44984.svg",
+    "static/media/Studyavr.svg": "/static/media/Studyavr.36dd9738c4c9213c135fb0d4d5863e8a.svg",
+    "static/media/ carrot.svg": "/static/media/ carrot.1ebbd1bcb78816bedbad37dc1f05f977.svg",
     "static/media/workSpace.svg": "/static/media/workSpace.23a95e7a67d1b32c9581c798e150f95e.svg",
     "static/media/groundRule.svg": "/static/media/groundRule.e50e2bf55aec906b51adf94db1c122a2.svg",
     "static/media/kakaoLogin.svg": "/static/media/kakaoLogin.a13bb31b48965751eed6266fc7dd6e21.svg",
     "static/media/teamAdd.svg": "/static/media/teamAdd.d5e53983042979a8acd4439ec0223228.svg",
+    "static/media/naver.svg": "/static/media/naver.5a5ab600ba80c38b236564f3dfacd081.svg",
     "static/media/deleteUser.svg": "/static/media/deleteUser.e1123420e0525b85a066558145791d5f.svg",
     "static/media/singUp.svg": "/static/media/singUp.032e23b5149f42e9038cb8c5608a520e.svg",
     "static/media/chatIcon.svg": "/static/media/chatIcon.0e35a50b32886ca613cffdd3d243b673.svg",
+    "static/media/dailyData.svg": "/static/media/dailyData.01c4a2263bc0cfa05fa807a30ded6647.svg",
     "static/media/teamInfo.svg": "/static/media/teamInfo.1b5f9505fe7c5c8d332942e5d07ae020.svg",
     "static/media/camera.svg": "/static/media/camera.a98efd003e1005e6e86280e6ace952e6.svg",
     "static/media/onlineUser.svg": "/static/media/onlineUser.b3bad21c485374e72fc69907c663d415.svg",
@@ -28,13 +39,13 @@
     "static/media/deleteBtn.svg": "/static/media/deleteBtn.02d703b52016e41b80256b9f5195dcf3.svg",
     "static/media/todoCheckOn.svg": "/static/media/todoCheckOn.8b4fe9bab0b1908a7a27090e8f32bc66.svg",
     "static/media/todoAddBtn.svg": "/static/media/todoAddBtn.2048c9182d51a5bc13e9ba087c9eb18b.svg",
-    "static/media/etc.svg": "/static/media/etc.7fdc14f5b3216bf91d7f0ff171ab130e.svg",
-    "main.42453911.css.map": "/static/css/main.42453911.css.map",
-    "main.2f4edf95.js.map": "/static/js/main.2f4edf95.js.map",
+    "static/media/etc.svg": "/static/media/etc.2546c3fa2c49a694f824b99f0a8ee05a.svg",
+    "main.816053a2.css.map": "/static/css/main.816053a2.css.map",
+    "main.f042ac6b.js.map": "/static/js/main.f042ac6b.js.map",
     "787.a68f3164.chunk.js.map": "/static/js/787.a68f3164.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.42453911.css",
-    "static/js/main.2f4edf95.js"
+    "static/css/main.816053a2.css",
+    "static/js/main.f042ac6b.js"
   ]
 }
